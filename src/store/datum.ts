@@ -1,3 +1,5 @@
+import * as d3 from 'd3';
+
 export type CurveInfo = {
     name: string;
     curve: d3.CurveFactory | d3.CurveBundleFactory;
