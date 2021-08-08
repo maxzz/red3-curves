@@ -1,4 +1,5 @@
 import React from 'react';
+import * as d3 from 'd3';
 import { useAtom } from 'jotai';
 import { linePathesAtom, linesAtom, pointsAtom } from '../store/store';
 import { styled } from '@stitches/react';
@@ -13,23 +14,24 @@ const LinePoint = styled('circle', {
 });
 
 const LinePath = styled('path', {
-    stroke: 'blue',
     strokeWidth: '7',
     fill: 'none',
     variants: {
         lineStyle: {
             0: {
-                fill: 'red',
             },
             1: {
-                fill: 'tomato',
+                strokeDasharray: '2,2',
             },
             2: {
-                fill: 'green',
+                strokeDasharray: '8,8',
             },
         }
     }
 });
+
+const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
+function colorScale(d: number) { return categoryScale(d); }
 
 function LinePlayground() {
     const [points] = useAtom(pointsAtom);
@@ -54,6 +56,7 @@ function LinePlayground() {
                             key={line.idx}
                             d={linePathes[line.idx]}
                             lineStyle={CURVEINFO[line.idx].lineStyle}
+                            stroke={colorScale(CURVEINFO[line.idx].grpIdx)}
                         />
                     ))}
                 </g>
