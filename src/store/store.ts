@@ -26,10 +26,8 @@ export type LineData = {
 
 export const linesAtom = atom<LineData[]>(CURVEINFO.map((curve, idx) => ({ idx, active: curve.active })));
 
-export const linePathesAtom = atomWithDefault<string[]>(() => {
-    const [points] = useAtom(pointsAtom);
-    const [nActive] = useAtom(nActiveAtom);
-    return generatePathes(points, nActive);
+export const linePathesAtom = atomWithDefault<string[]>((get) => {
+    return generatePathes(get(pointsAtom), get(nActiveAtom));
 });
 
 function generatePathes(points: LinePointData[], numActivePoints: number): string[] {
