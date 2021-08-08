@@ -1,9 +1,16 @@
-import { atom } from 'jotai';
+import * as d3 from 'd3';
+import { atom, useAtom } from 'jotai';
+import {atomWithDefault} from 'jotai/utils';
 import { InputData } from '../components/OldLinePlayground';
+import { CURVEINFO } from './datum';
 
-export const pointsAtom = atom<[number, number][]>([[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]]); // control points coordinates as [x, y][]
+export type LinePointData = [number, number];
 
-export const nActiveAtom = atom(7);
+const initialPoints: [number, number][] = [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]]; // control points coordinates as [x, y][]
+
+export const pointsAtom = atom<LinePointData[]>(initialPoints);
+
+export const nActiveAtom = atom(7); // Number of active points
 
 export const inputDataAtom = atom<InputData>(
     get => ({
@@ -11,3 +18,26 @@ export const inputDataAtom = atom<InputData>(
         active: get(nActiveAtom),
     })
 );
+
+export type LineData = {
+    idx: number;        // index in global CURVEINFO.
+    active: boolean;    // true if line activated.
+};
+
+export const linesAtom = atom<LineData[]>(CURVEINFO.map((curve, idx) => ({ idx, active: curve.active })));
+
+export const linePathesAtom = atomWithDefault<string[]>(() => {
+    const [points] = useAtom(pointsAtom);
+    const [nActive] = useAtom(nActiveAtom);
+    return generatePathes(points, nActive);
+});
+
+function generatePathes(points: LinePointData[], numActivePoints: number): string[] {
+    const lineGenerator = d3.line();
+    const pts = points.slice(0, numActivePoints) as any as [number, number][]; // <any> cast to remove possible trailing data from type.
+
+    return CURVEINFO.map((curve) => {
+        lineGenerator.curve(curve.curve);
+        return lineGenerator(pts) || '';
+    });
+}
