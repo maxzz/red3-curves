@@ -18,8 +18,6 @@ const LinePath = styled('path', {
     fill: 'none',
     variants: {
         lineStyle: {
-            0: {
-            },
             1: {
                 strokeDasharray: '2,2',
             },
@@ -30,7 +28,31 @@ const LinePath = styled('path', {
     }
 });
 
-const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
+const gColor = [
+    '#3366cc',
+    '#ff9900',
+    '#109618',
+    '#990099',
+    '#dc3912',
+    '#0099c6',
+    '#dd4477',
+    '#66aa00',
+    '#b82e2e',
+    '#316395',
+    '#994499',
+    '#22aa99',
+    '#aaaa11',
+    '#6633cc',
+    '#e67300',
+    '#8b0707',
+    '#651067',
+    '#329262',
+    '#5574a6',
+    '#3b3eac'
+  ];
+
+//const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
+const categoryScale = d3.scaleOrdinal<number, string>(gColor);
 function colorScale(d: number) { return categoryScale(d); }
 
 function LinePlayground() {
@@ -51,8 +73,8 @@ function LinePlayground() {
                     ))}
                 </g>
                 <g>
-                    {lines.map((line) => (
-                        line.active && <LinePath
+                    {lines.map((line) => (line.active &&
+                        <LinePath
                             key={line.idx}
                             d={linePathes[line.idx]}
                             lineStyle={CURVEINFO[line.idx].lineStyle}
