@@ -2,6 +2,7 @@ import React from 'react';
 import { useAtom } from 'jotai';
 import { linePathesAtom, linesAtom, pointsAtom } from '../store/store';
 import { styled } from '@stitches/react';
+import { CURVEINFO } from '../store/datum';
 
 const LinePoint = styled('circle', {
     fill: '#00d7ff5a',
@@ -12,7 +13,22 @@ const LinePoint = styled('circle', {
 });
 
 const LinePath = styled('path', {
-
+    stroke: 'blue',
+    strokeWidth: '7',
+    fill: 'none',
+    variants: {
+        lineStyle: {
+            0: {
+                fill: 'red',
+            },
+            1: {
+                fill: 'tomato',
+            },
+            2: {
+                fill: 'green',
+            },
+        }
+    }
 });
 
 function LinePlayground() {
@@ -34,7 +50,11 @@ function LinePlayground() {
                 </g>
                 <g>
                     {lines.map((line) => (
-                        line.active && <LinePath d={linePathes[line.idx]} key={line.idx} />
+                        line.active && <LinePath
+                            key={line.idx}
+                            d={linePathes[line.idx]}
+                            lineStyle={CURVEINFO[line.idx].lineStyle}
+                        />
                     ))}
                 </g>
             </svg>
