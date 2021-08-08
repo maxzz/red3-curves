@@ -1,8 +1,9 @@
 import React from 'react';
 import * as d3 from 'd3';
 import styles from './XOrgLinePlayground.module.scss';
-import CheckboxTw from '../ui/checkbox/CheckboxTw';
-import { LinesPlay } from '../../store';
+import CheckboxTw from './CheckboxTw';
+import { useAtom } from 'jotai';
+import { inputDataAtom, nActiveAtom, pointsAtom } from '../store';
 
 type API = {
     setAll: (onOff: boolean) => void;
@@ -256,21 +257,6 @@ function initial(mainGroup: SVGGElement, inputData: InputData, onSelectionChange
         setAll
     };
 }
-/*
-const importedPoints: [number, number][] = [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]];
-
-const inputData: InputData = {
-    points: importedPoints,
-    active: importedPoints.length
-};
-*/
-function storeSelector(store: LinesPlay.Store) {
-    return {
-        inputData: store.inputData,
-        setActivePoint: store.setActivePoint,
-        setPoints: store.setPoints,
-    };
-}
 
 function LineEditor() {
     const svgRef = React.useRef<SVGGElement>(null);
@@ -278,7 +264,9 @@ function LineEditor() {
 
     const [allChecked, setAllChecked] = React.useState(false);
 
-    const { inputData, setActivePoint, setPoints } = LinesPlay.useStore(storeSelector);
+    const [points, setPoints] = useAtom(pointsAtom);
+    const [nActive, setNActive] = useAtom(nActiveAtom);
+    const [inputData] = useAtom(inputDataAtom);
 
     function onSelectionChange(allOn: boolean) {
         setAllChecked(allOn);
