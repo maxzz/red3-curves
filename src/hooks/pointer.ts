@@ -5,11 +5,7 @@ export function pointer(event: React.PointerEvent<Element> | PointerEvent, node?
         if (svg.createSVGPoint) {
             var point = svg.createSVGPoint();
             point.x = event.clientX, point.y = event.clientY;
-            point = point.matrixTransform((node as any as SVGGraphicsElement).getScreenCTM()?.inverse());
-            
-            //console.log('svg', node, svg, point, (node as any as SVGGraphicsElement).getScreenCTM()?.inverse());
-            //console.log('svg', point);
-
+            point = point.matrixTransform((node as SVGGraphicsElement).getScreenCTM()?.inverse());
             return [point.x, point.y];
         }
         if (node.getBoundingClientRect) {
