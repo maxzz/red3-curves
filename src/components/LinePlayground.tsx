@@ -49,7 +49,7 @@ const gColor = [
     '#329262',
     '#5574a6',
     '#3b3eac'
-];
+];``
 
 // const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
 // const categoryScale = d3.scaleOrdinal<number, string>(gColor);
@@ -89,11 +89,11 @@ function LinePlayground() {
                 <div className="">
                     Info
                 </div>
-                <div className="bg-[tomato] flex">
+                <div className="px-2 bg-[tomato] flex flex-col">
                     {lines.map((line, idx) => {
-                        return <label className="flex flex-col items-center">
+                        return <label className="flex items-center" key={idx}>
                             <input type="checkbox" />
-                            <div className="" style={{writingMode: 'vertical-lr'}}>{CURVEINFO[idx].name}</div>
+                            <span className="line-test">{CURVEINFO[idx].name}</span>
                         </label>;
                     })}
                 </div>
