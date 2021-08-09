@@ -2,18 +2,26 @@ import React from 'react';
 import * as d3 from 'd3';
 import { useAtom } from 'jotai';
 import { colorScale, lineCheckAtom, LineData, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
-import { styled } from '@stitches/react';
+import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { useDrag } from 'react-use-gesture';
 import { pointer } from '../hooks/pointer';
 
-const LinePointRow = styled('circle', {
+const LinePointRow = css({
     fill: '#00d7ff5a',
     stroke: '#0018aa',
     strokeWidth: '2',
     cursor: 'move',
     r: 14,
 });
+
+// const LinePointRow = styled('circle', {
+//     fill: '#00d7ff5a',
+//     stroke: '#0018aa',
+//     strokeWidth: '2',
+//     cursor: 'move',
+//     r: 14,
+// });
 
 function LinePoint(props: { idx: number, cx: number, cy: number; }) {
     const { idx, ...rest } = props;
@@ -33,12 +41,14 @@ function LinePoint(props: { idx: number, cx: number, cy: number; }) {
             <circle
                 ref={ref}
                 {...bind()}
-                style={{
-                    fill: '#00d7ff5a',
-                    stroke: '#0018aa',
-                    strokeWidth: '2',
-                    cursor: 'move',
-                }}
+
+                className={LinePointRow()}
+                // style={{
+                //     fill: '#00d7ff5a',
+                //     stroke: '#0018aa',
+                //     strokeWidth: '2',
+                //     cursor: 'move',
+                // }}
                 {...rest} r={14} />
         </>
     );
@@ -91,7 +101,7 @@ function LinePlayground() {
     const svgH = 600;
 
     return (
-        <div className="bg-purple-100 mt-16">
+        <div className="bg-purple-100">
             <svg viewBox={`0 0 ${svgW} ${svgH}`} className="bg-yellow-50">
                 <g>
                     {points.map((pt, idx) => (
