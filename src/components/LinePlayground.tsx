@@ -6,13 +6,30 @@ import { styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { useDrag } from 'react-use-gesture';
 
-function Name<T>(pros: T) {
-    return (
-        <circle {...pros} />
-    )
+function pointer(event: React.PointerEvent<Element> | PointerEvent, node?: HTMLElement | SVGElement | null): [number, number] {
+    if (node === undefined) node = event.currentTarget as any;
+    if (node) {
+        var svg = ((node as any).ownerSVGElement || node) as SVGSVGElement;
+        if (svg.createSVGPoint) {
+            var point = svg.createSVGPoint();
+            point.x = event.clientX, point.y = event.clientY;
+            point = point.matrixTransform((node as any as SVGGraphicsElement).getScreenCTM()?.inverse());
+            
+            //console.log('svg', node, svg, point, (node as any as SVGGraphicsElement).getScreenCTM()?.inverse());
+            //console.log('svg', point);
+
+            return [point.x, point.y];
+        }
+        if (node.getBoundingClientRect) {
+            var rect = node.getBoundingClientRect();
+            return [event.clientX - rect.left - node.clientLeft, event.clientY - rect.top - node.clientTop];
+        }
+    }
+    return [event.pageX, event.pageY];
 }
 
-const LinePointRow = styled(Name, {
+
+const LinePointRow = styled('circle', {
     fill: '#00d7ff5a',
     stroke: '#0018aa',
     strokeWidth: '2',
@@ -20,24 +37,32 @@ const LinePointRow = styled(Name, {
     r: 14,
 });
 
-// const LinePointRow = styled('circle', {
-//     fill: '#00d7ff5a',
-//     stroke: '#0018aa',
-//     strokeWidth: '2',
-//     cursor: 'move',
-//     r: 14,
-// });
-
-function LinePoint<T>(props: T) {
+function LinePoint(props: { idx: number, cx: number, cy: number; }) {
+    const { idx, ...rest } = props;
     const [_, setPoint] = useAtom(setPointAtom);
+    const ref = React.useRef(null);
 
-    const bind = useDrag((event) => {
-        console.log('event', event);
+    const bind = useDrag(({ event, xy }) => {
+        //console.log('event', xy);
+
+        const newxy = pointer(event, ref.current);
+        setPoint({ idx, value: newxy });
     });
 
-
     return (
-        <LinePointRow {...bind()} {...props} />
+        <>
+            {/* <LinePointRow {...bind()} {...rest} /> */}
+            <circle
+                ref={ref}
+                {...bind()}
+                style={{
+                    fill: '#00d7ff5a',
+                    stroke: '#0018aa',
+                    strokeWidth: '2',
+                    cursor: 'move',
+                }}
+                {...rest} r={14} />
+        </>
     );
 }
 
@@ -87,11 +112,11 @@ function LinePlayground() {
     const svgH = 600;
 
     return (
-        <div className="bg-purple-100">
+        <div className="bg-purple-100 mt-16">
             <svg viewBox={`0 0 ${svgW} ${svgH}`} className="bg-yellow-50">
                 <g>
                     {points.map((pt, idx) => (
-                        <LinePoint cx={pt[0]} cy={pt[1]} key={idx} />
+                        <LinePoint idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />
                     ))}
                 </g>
                 <g>

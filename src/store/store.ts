@@ -10,6 +10,15 @@ const initialPoints: [number, number][] = [[46, 179], [123, 404], [123, 56], [29
 
 export const pointsAtom = atom<LinePointData[]>(initialPoints);
 
+export const setPointAtom = atom(
+    null,
+    (get, set, {idx, value}: {idx: number; value: [number, number]}) => {
+        let pts = get(pointsAtom);
+        pts[idx] = value;
+        set(pointsAtom, [...pts]);
+    }
+);
+
 export const nActiveAtom = atom(7); // Number of active points
 
 export const inputDataAtom = atom<InputData>(
@@ -47,12 +56,12 @@ export const linesAtom = atom<LineData[]>(CURVEINFO.map((curve, idx) => ({ idx, 
 
 export const lineCheckAtom = atom(
     (get) => (idx: number) => get(linesAtom)[idx].active,
-    (get, set, {idx, value}: {idx: number, value: boolean}) => {
+    (get, set, { idx, value }: { idx: number, value: boolean; }) => {
         let arr = get(linesAtom);
         arr[idx].active = value;
         set(linesAtom, [...arr]);
     }
-)
+);
 
 // Colors
 
@@ -77,7 +86,7 @@ const gColor = [
     '#329262',
     '#5574a6',
     '#3b3eac'
-];``
+]; ``;
 
 // const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
 // const categoryScale = d3.scaleOrdinal<number, string>(gColor);
