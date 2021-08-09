@@ -89,11 +89,12 @@ function LinePlayground() {
                 <div className="">
                     Info
                 </div>
-                <div className="px-2 bg-[tomato] flex flex-col">
+                <div className="p-2 bg-[tomato] flex flex-col text-sm">
                     {lines.map((line, idx) => {
-                        return <label className="flex items-center" key={idx}>
-                            <input type="checkbox" />
-                            <span className="line-test">{CURVEINFO[idx].name}</span>
+                        return <label className="flex items-center space-x-2" key={idx}>
+                            <div className="w-16 h-4" style={{backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx)}}></div>
+                            <input className="mt-0.5" type="checkbox" />
+                            <div className="">{CURVEINFO[idx].name}</div>
                         </label>;
                     })}
                 </div>
