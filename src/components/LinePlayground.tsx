@@ -51,11 +51,9 @@ const gColor = [
     '#3b3eac'
 ];
 
-//const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
-
+// const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
 // const categoryScale = d3.scaleOrdinal<number, string>(gColor);
 // function colorScale(d: number) { return categoryScale(d); }
-
 function colorScale(n: number) { return gColor[n % gColor.length]; }
 
 function LinePlayground() {
@@ -87,6 +85,20 @@ function LinePlayground() {
                 </g>
             </svg>
 
+            <div className="">
+                <div className="">
+                    Info
+                </div>
+                <div className="bg-[tomato] flex">
+                    {lines.map((line, idx) => {
+                        return <label className="flex flex-col items-center">
+                            <input type="checkbox" />
+                            <div className="" style={{writingMode: 'vertical-lr'}}>{CURVEINFO[idx].name}</div>
+                        </label>;
+                    })}
+                </div>
+
+            </div>
         </div>
     );
 }
