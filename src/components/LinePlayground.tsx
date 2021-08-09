@@ -1,7 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 import { useAtom } from 'jotai';
-import { colorScale, LineData, linePathesAtom, linesAtom, pointsAtom } from '../store/store';
+import { colorScale, lineCheckAtom, LineData, linePathesAtom, linesAtom, pointsAtom } from '../store/store';
 import { styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 
@@ -28,18 +28,29 @@ const LinePath = styled('path', {
     }
 });
 
-function CheckboxRow({ line, idx }: { line: LineData, idx: number }) {
+function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
+    const [value, setValue] = useAtom(lineCheckAtom);
     return (
-        <label className="flex items-center  cursor-pointer" key={idx}>
-            <input className="h-4 w-4 appearance-none rounded
+        <label className="flex items-center cursor-pointer" key={idx}>
+            {/* space-x-2 */}
+            <input
+                className="ml-2 h-4 w-4 appearance-none rounded
                     text-green-600 border border-[#006f94]
                     bg-[#ffffff70] 
-                    checked:bg-blue-600 checked:border-transparent 
+                    checked:bg-[#ffffff70] checked:border-transparent 
                     checked:bg-ui-check
                     focus:outline-none
-                    z-10" type="checkbox" />
-            <div className="-ml-4 w-12 h-4" style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
-            <div className="">{CURVEINFO[idx].name}</div>
+                    z-10" type="checkbox"
+                checked={value(idx)}
+                // onChange={(e) => setValue({idx, value: e.target.checked})}
+                onChange={(e) => {
+                    console.log('1', e.target.checked);
+                    
+                    setValue({idx, value: e.target.checked});
+                }}
+            />
+            <div className="-ml-6 w-12 h-7 rounded" style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
+            <div className="ml-2">{CURVEINFO[idx].name}</div>
         </label>
     );
 }
@@ -76,7 +87,7 @@ function LinePlayground() {
                 <div className="">
                     Info
                 </div>
-                <div className="p-2 bg-[tomato] flex flex-col text-sm select-none">
+                <div className="p-2 bg-[tomato] space-y-1 flex flex-col text-sm select-none">
                     {lines.map((line, idx) => <CheckboxRow line={line} idx={idx} key={idx} />)}
                 </div>
 

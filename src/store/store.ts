@@ -45,6 +45,15 @@ export type LineData = {
 //export const linesAtom = atom<LineData[]>(CURVEINFO.map((curve, idx) => ({ idx, active: curve.active })));
 export const linesAtom = atom<LineData[]>(CURVEINFO.map((curve, idx) => ({ idx, active: true })));
 
+export const lineCheckAtom = atom(
+    (get) => (idx: number) => get(linesAtom)[idx].active,
+    (get, set, {idx, value}: {idx: number, value: boolean}) => {
+        let arr = get(linesAtom);
+        arr[idx].active = value;
+        set(linesAtom, arr);
+    }
+)
+
 // Colors
 
 const gColor = [
