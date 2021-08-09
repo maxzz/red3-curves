@@ -1,17 +1,45 @@
 import React from 'react';
 import * as d3 from 'd3';
 import { useAtom } from 'jotai';
-import { colorScale, lineCheckAtom, LineData, linePathesAtom, linesAtom, pointsAtom } from '../store/store';
+import { colorScale, lineCheckAtom, LineData, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
 import { styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
+import { useDrag } from 'react-use-gesture';
 
-const LinePoint = styled('circle', {
+function Name<T>(pros: T) {
+    return (
+        <circle {...pros} />
+    )
+}
+
+const LinePointRow = styled(Name, {
     fill: '#00d7ff5a',
     stroke: '#0018aa',
     strokeWidth: '2',
     cursor: 'move',
     r: 14,
 });
+
+// const LinePointRow = styled('circle', {
+//     fill: '#00d7ff5a',
+//     stroke: '#0018aa',
+//     strokeWidth: '2',
+//     cursor: 'move',
+//     r: 14,
+// });
+
+function LinePoint<T>(props: T) {
+    const [_, setPoint] = useAtom(setPointAtom);
+
+    const bind = useDrag((event) => {
+        console.log('event', event);
+    });
+
+
+    return (
+        <LinePointRow {...bind()} {...props} />
+    );
+}
 
 const LinePath = styled('path', {
     strokeWidth: '7',
@@ -42,7 +70,7 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                     focus:outline-none
                     z-10" type="checkbox"
                 checked={value(idx)}
-                onChange={(e) => setValue({idx, value: e.target.checked})}
+                onChange={(e) => setValue({ idx, value: e.target.checked })}
             />
             <div className="-ml-6 w-12 h-7 rounded" style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
             <div className="ml-2">{CURVEINFO[idx].name}</div>
@@ -82,7 +110,7 @@ function LinePlayground() {
                 <div className="">
                     Info
                 </div>
-                <div className="p-2 bg-[tomato] space-y-1 flex flex-col text-sm select-none">
+                <div className="p-2 space-y-1 flex flex-col text-sm select-none">
                     {lines.map((line, idx) => <CheckboxRow line={line} idx={idx} key={idx} />)}
                 </div>
 
