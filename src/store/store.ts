@@ -46,11 +46,16 @@ export type LineData = {
 export const linesAtom = atom<LineData[]>(CURVEINFO.map((curve, idx) => ({ idx, active: true })));
 
 export const lineCheckAtom = atom(
-    (get) => (idx: number) => get(linesAtom)[idx].active,
+    // (get) => (idx: number) => get(linesAtom)[idx].active,
+    (get) => (idx: number) => {
+        console.log('a');
+        let arr = get(linesAtom);
+        return arr[idx].active
+    },
     (get, set, {idx, value}: {idx: number, value: boolean}) => {
         let arr = get(linesAtom);
         arr[idx].active = value;
-        set(linesAtom, arr);
+        set(linesAtom, [...arr]);
     }
 )
 
