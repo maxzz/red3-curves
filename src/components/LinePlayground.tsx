@@ -15,14 +15,6 @@ const LinePointRow = css({
     r: 14,
 });
 
-// const LinePointRow = styled('circle', {
-//     fill: '#00d7ff5a',
-//     stroke: '#0018aa',
-//     strokeWidth: '2',
-//     cursor: 'move',
-//     r: 14,
-// });
-
 function LinePoint(props: { idx: number, cx: number, cy: number; }) {
     const { idx, ...rest } = props;
     const [_, setPoint] = useAtom(setPointAtom);
@@ -36,21 +28,7 @@ function LinePoint(props: { idx: number, cx: number, cy: number; }) {
     });
 
     return (
-        <>
-            {/* <LinePointRow {...bind()} {...rest} /> */}
-            <circle
-                ref={ref}
-                {...bind()}
-
-                className={LinePointRow()}
-                // style={{
-                //     fill: '#00d7ff5a',
-                //     stroke: '#0018aa',
-                //     strokeWidth: '2',
-                //     cursor: 'move',
-                // }}
-                {...rest} r={14} />
-        </>
+        <circle ref={ref} {...bind()} className={LinePointRow()} {...rest} />
     );
 }
 
