@@ -45,4 +45,34 @@ export type LineData = {
 //export const linesAtom = atom<LineData[]>(CURVEINFO.map((curve, idx) => ({ idx, active: curve.active })));
 export const linesAtom = atom<LineData[]>(CURVEINFO.map((curve, idx) => ({ idx, active: true })));
 
+// Colors
+
+const gColor = [
+    '#3366cc',
+    '#ff9900',
+    '#109618',
+    '#990099',
+    '#dc3912',
+    '#0099c6',
+    '#dd4477',
+    '#66aa00',
+    '#b82e2e',
+    '#316395',
+    '#994499',
+    '#22aa99',
+    '#aaaa11',
+    '#6633cc',
+    '#e67300',
+    '#8b0707',
+    '#651067',
+    '#329262',
+    '#5574a6',
+    '#3b3eac'
+];``
+
+// const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
+// const categoryScale = d3.scaleOrdinal<number, string>(gColor);
+// function colorScale(d: number) { return categoryScale(d); }
+export function colorScale(n: number) { return gColor[n % gColor.length]; }
+
 //
