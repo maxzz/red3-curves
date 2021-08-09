@@ -42,12 +42,7 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                     focus:outline-none
                     z-10" type="checkbox"
                 checked={value(idx)}
-                // onChange={(e) => setValue({idx, value: e.target.checked})}
-                onChange={(e) => {
-                    console.log('1', e.target.checked);
-                    
-                    setValue({idx, value: e.target.checked});
-                }}
+                onChange={(e) => setValue({idx, value: e.target.checked})}
             />
             <div className="-ml-6 w-12 h-7 rounded" style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
             <div className="ml-2">{CURVEINFO[idx].name}</div>
