@@ -30,9 +30,15 @@ const LinePath = styled('path', {
 
 function CheckboxRow({ line, idx }: { line: LineData, idx: number }) {
     return (
-        <label className="flex items-center space-x-2 cursor-pointer" key={idx}>
-            <input className="w-4 h-4 mb-0.5" type="checkbox" />
-            <div className="w-12 h-4" style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
+        <label className="flex items-center  cursor-pointer" key={idx}>
+            <input className="h-4 w-4 appearance-none rounded
+                    text-green-600 border border-[#006f94]
+                    bg-[#ffffff70] 
+                    checked:bg-blue-600 checked:border-transparent 
+                    checked:bg-ui-check
+                    focus:outline-none
+                    z-10" type="checkbox" />
+            <div className="-ml-4 w-12 h-4" style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
             <div className="">{CURVEINFO[idx].name}</div>
         </label>
     );
