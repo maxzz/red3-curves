@@ -49,11 +49,14 @@ const gColor = [
     '#329262',
     '#5574a6',
     '#3b3eac'
-  ];
+];
 
 //const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
-const categoryScale = d3.scaleOrdinal<number, string>(gColor);
-function colorScale(d: number) { return categoryScale(d); }
+
+// const categoryScale = d3.scaleOrdinal<number, string>(gColor);
+// function colorScale(d: number) { return categoryScale(d); }
+
+function colorScale(n: number) { return gColor[n % gColor.length]; }
 
 function LinePlayground() {
     const [points] = useAtom(pointsAtom);
