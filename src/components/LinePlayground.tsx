@@ -47,6 +47,7 @@ function LinePoint(props: { idx: number, cx: number, cy: number; }) {
 const LinePath = styled('path', {
     strokeWidth: '7',
     fill: 'none',
+    pointerEvents: 'none',
     variants: {
         lineStyle: {
             1: {
