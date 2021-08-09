@@ -31,8 +31,8 @@ const LinePath = styled('path', {
 function CheckboxRow({ line, idx }: { line: LineData, idx: number }) {
     return (
         <label className="flex items-center space-x-2 cursor-pointer" key={idx}>
-            <div className="w-16 h-4" style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
-            <input className="mt-0.5" type="checkbox" />
+            <input className="w-4 h-4 mb-0.5" type="checkbox" />
+            <div className="w-12 h-4" style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
             <div className="">{CURVEINFO[idx].name}</div>
         </label>
     );
@@ -40,9 +40,8 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number }) {
 
 function LinePlayground() {
     const [points] = useAtom(pointsAtom);
-
-    const [lines] = useAtom(linesAtom);
     const [linePathes] = useAtom(linePathesAtom);
+    const [lines] = useAtom(linesAtom);
 
     const svgW = 600;
     const svgH = 600;
