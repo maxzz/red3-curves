@@ -65,13 +65,7 @@ const LinePath = styled('path', {
     }
 });
 
-function ADiv<T>(props: T) {
-    return (
-        <a.div className="" {...props} />
-    )
-}
-
-const CheckboxBar = styled(ADiv, {
+const CheckboxBar = styled('div', {
     position: 'relative',
     '&::after': {
         content: "",
@@ -93,7 +87,15 @@ const CheckboxBar = styled(ADiv, {
 
 function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
+    const checked = value(idx);
     const curve = CURVEINFO[line.idx];
+    const pro = useSpring({ width: checked ? 1 : 0 });
+    // const { width } = useSpring({ width: checked ? 1 : 0 });
+
+    if (idx === 0) {
+        console.log('width', checked, pro, pro.width.to(x => x.toFixed(0)));
+    }
+
     return (
         <label className="flex items-center cursor-pointer" key={idx}>
             <input
@@ -109,9 +111,11 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
             />
             <CheckboxBar
                 className="-ml-6 w-16 h-7 rounded"
-                style={{ backgroundColor: colorScale(curve.grpIdx), }}
+                style={{ backgroundColor: colorScale(curve.grpIdx),
+                width: `${pro.width}px` }}
                 lineStyle={value(idx) ? curve.lineStyle : -1}
             />
+            <a.div>{pro.width}</a.div>
             <div className="ml-2">{CURVEINFO[idx].name}</div>
         </label>
     );
