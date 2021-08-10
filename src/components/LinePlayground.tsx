@@ -7,7 +7,7 @@ import { CURVEINFO } from '../store/datum';
 import { useDrag } from 'react-use-gesture';
 import { pointer } from '../hooks/pointer';
 
-const lineDotStyles = css({
+const dotStyles = css({
     fill: '#00d7ff5a',
     stroke: '#0018aa',
     strokeWidth: '2',
@@ -15,14 +15,7 @@ const lineDotStyles = css({
     r: 14,
 });
 
-const lineDotTextStyles = css({
-    fill: '#00d7ff5a',
-    stroke: '#0018aa',
-    strokeWidth: '.6',
-    fontSize: '1.4rem',
-});
-
-function LinePoint(props: { idx: number, cx: number, cy: number; }) {
+function Dot(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
     const [_, setPoint] = useAtom(setPointAtom);
     const ref = React.useRef(null);
@@ -35,12 +28,23 @@ function LinePoint(props: { idx: number, cx: number, cy: number; }) {
     });
 
     return (
-        <>
-            <circle ref={ref} {...bind()} className={lineDotStyles()} cx={cx} cy={cy} />
-            <text>
-                <tspan className={lineDotTextStyles()} x={cx - 24} y={cy - 16}>{idx}</tspan>
-            </text>
-        </>
+        <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} />
+    );
+}
+
+const dotTextStyles = css({
+    fill: '#0018aa',
+    stroke: '#00d7ff5a',
+    strokeWidth: '1',
+    fontSize: '1.4rem',
+});
+
+function DotText(props: { idx: number, cx: number, cy: number; }) {
+    const { idx, cx, cy } = props;
+    return (
+        <text>
+            <tspan className={dotTextStyles()} x={cx - 24} y={cy - 16}>{idx}</tspan>
+        </text>
     );
 }
 
@@ -96,9 +100,7 @@ function LinePlayground() {
             {/* Viewer */}
             <svg viewBox={`0 0 ${svgW} ${svgH}`} className="bg-yellow-50">
                 <g>
-                    {points.map((pt, idx) => <LinePoint idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
-                </g>
-                <g>
+                    {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
                     {lines.map((line) => (line.active &&
                         <LinePath
                             key={line.idx}
@@ -107,6 +109,7 @@ function LinePlayground() {
                             stroke={colorScale(CURVEINFO[line.idx].grpIdx)}
                         />
                     ))}
+                    {points.map((pt, idx) => <DotText idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
                 </g>
             </svg>
 
