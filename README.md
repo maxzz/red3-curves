@@ -11,6 +11,9 @@ D3 curves playground.
         [x] Add point numbers
         [ ] Add information about the current curve
         [ ] Store / retrieve state in localStorage
+        [ ] Select / deselect all checkeboxes at once
+        [ ] TODO: Why SVG is not smooth on control points?
+        [ ] TODO: Find how to set fill on embedded SVG.
 
 #### Links, references, credits
 
