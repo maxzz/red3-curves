@@ -7,7 +7,7 @@ import { CURVEINFO } from '../store/datum';
 import { useDrag } from 'react-use-gesture';
 import { pointer } from '../hooks/pointer';
 import lineTypeUrl0 from '../assets/dashed-line0.svg';
-import lineTypeUrl1 from '../assets/dashed-line1.svg';
+import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
 
 const dotStyles = css({
@@ -64,7 +64,7 @@ const LinePath = styled('path', {
     }
 });
 
-const CheckboxBarStyles = css({
+const CheckboxBar = styled('div', {
     position: 'relative',
     '&::after': {
         content: "",
@@ -74,7 +74,14 @@ const CheckboxBarStyles = css({
         backgroundSize: '32% 120%',
         backgroundPosition: '85% -65%',
         mixBlendMode: 'multiply',
-    }
+    },
+    variants: {
+        lineStyle: {
+            0: { '&::after': { backgroundImage: `url("${lineTypeUrl0}")` } },
+            1: { '&::after': { backgroundImage: `url("${lineTypeUrl1}")` } },
+            2: { '&::after': { backgroundImage: `url("${lineTypeUrl2}")` } },
+        }
+    },
 });
 
 function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
@@ -93,13 +100,11 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                 checked={value(idx)}
                 onChange={(e) => setValue({ idx, value: e.target.checked })}
             />
-            <div
-                className={`-ml-6 w-16 h-7 rounded ${CheckboxBarStyles()}`}
-                style={{
-                    backgroundColor: colorScale(curve.grpIdx),
-                    backgroundImage: `url("${curve.lineStyle === 2 ? lineTypeUrl2 : curve.lineStyle === 1 ? lineTypeUrl1 : lineTypeUrl0}")`,
-                }}
-            ></div>
+            <CheckboxBar
+                className={`-ml-6 w-16 h-7 rounded`}
+                style={{ backgroundColor: colorScale(curve.grpIdx), }}
+                lineStyle={value(idx) ? curve.lineStyle : -1}
+            />
             <div className="ml-2">{CURVEINFO[idx].name}</div>
         </label>
     );
