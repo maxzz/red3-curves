@@ -74,18 +74,12 @@ const CheckboxBarStyles = css({
         backgroundSize: '32% 120%',
         backgroundPosition: '85% -65%',
         mixBlendMode: 'multiply',
-        variants: {
-            lineStyle: {
-                0: { backgroundImage: `url("${lineTypeUrl0}")` },
-                1: { backgroundImage: `url("${lineTypeUrl1}")` },
-                2: { backgroundImage: `url("${lineTypeUrl2}")` },
-            }
-        },
     }
 });
 
 function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
+    const curve = CURVEINFO[line.idx];
     return (
         <label className="flex items-center cursor-pointer" key={idx}>
             <input
@@ -101,8 +95,10 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
             />
             <div
                 className={`-ml-6 w-16 h-7 rounded ${CheckboxBarStyles()}`}
-                style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}
-                lineStyle={2}
+                style={{
+                    backgroundColor: colorScale(curve.grpIdx),
+                    backgroundImage: `url("${curve.lineStyle === 2 ? lineTypeUrl2 : curve.lineStyle === 1 ? lineTypeUrl1 : lineTypeUrl0}")`,
+                }}
             ></div>
             <div className="ml-2">{CURVEINFO[idx].name}</div>
         </label>
