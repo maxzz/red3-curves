@@ -58,12 +58,8 @@ const LinePath = styled('path', {
     pointerEvents: 'none',
     variants: {
         lineStyle: {
-            1: {
-                strokeDasharray: '2,2',
-            },
-            2: {
-                strokeDasharray: '8,8',
-            },
+            1: { strokeDasharray: '2,2', },
+            2: { strokeDasharray: '8,8', },
         }
     }
 });
@@ -74,14 +70,17 @@ const CheckboxBarStyles = css({
         content: "",
         position: 'absolute',
         inset: 0,
-
-        backgroundImage: `url("${lineTypeUrl0}")`,
         backgroundRepeat: 'no-repeat',
-
         backgroundSize: '32% 120%',
         backgroundPosition: '85% -65%',
-
         mixBlendMode: 'multiply',
+        variants: {
+            lineStyle: {
+                0: { backgroundImage: `url("${lineTypeUrl0}")` },
+                1: { backgroundImage: `url("${lineTypeUrl1}")` },
+                2: { backgroundImage: `url("${lineTypeUrl2}")` },
+            }
+        },
     }
 });
 
@@ -89,7 +88,6 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
     return (
         <label className="flex items-center cursor-pointer" key={idx}>
-            {/* space-x-2 */}
             <input
                 className="ml-2 h-4 w-4 appearance-none rounded
                     text-green-600 border border-[#006f94]
@@ -101,7 +99,11 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                 checked={value(idx)}
                 onChange={(e) => setValue({ idx, value: e.target.checked })}
             />
-            <div className={`-ml-6 w-16 h-7 rounded ${CheckboxBarStyles()}`} style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
+            <div
+                className={`-ml-6 w-16 h-7 rounded ${CheckboxBarStyles()}`}
+                style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}
+                lineStyle={2}
+            ></div>
             <div className="ml-2">{CURVEINFO[idx].name}</div>
         </label>
     );
