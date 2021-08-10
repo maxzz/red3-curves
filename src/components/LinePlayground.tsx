@@ -7,7 +7,7 @@ import { CURVEINFO } from '../store/datum';
 import { useDrag } from 'react-use-gesture';
 import { pointer } from '../hooks/pointer';
 
-const LinePointRow = css({
+const lineDotStyles = css({
     fill: '#00d7ff5a',
     stroke: '#0018aa',
     strokeWidth: '2',
@@ -15,8 +15,15 @@ const LinePointRow = css({
     r: 14,
 });
 
+const lineDotTextStyles = css({
+    fill: '#00d7ff5a',
+    stroke: '#0018aa',
+    strokeWidth: '.6',
+    fontSize: '1.4rem',
+});
+
 function LinePoint(props: { idx: number, cx: number, cy: number; }) {
-    const { idx, ...rest } = props;
+    const { idx, cx, cy } = props;
     const [_, setPoint] = useAtom(setPointAtom);
     const ref = React.useRef(null);
 
@@ -28,12 +35,18 @@ function LinePoint(props: { idx: number, cx: number, cy: number; }) {
     });
 
     return (
-        <circle ref={ref} {...bind()} className={LinePointRow()} {...rest} />
+        <>
+            <circle ref={ref} {...bind()} className={lineDotStyles()} cx={cx} cy={cy} />
+            <text>
+                <tspan className={lineDotTextStyles()} x={cx - 24} y={cy - 16}>{idx}</tspan>
+            </text>
+        </>
     );
 }
 
 const LinePath = styled('path', {
     strokeWidth: '7',
+    strokeLinejoin: 'round',
     fill: 'none',
     pointerEvents: 'none',
     variants: {
@@ -80,11 +93,10 @@ function LinePlayground() {
 
     return (
         <div className="bg-purple-100">
+            {/* Viewer */}
             <svg viewBox={`0 0 ${svgW} ${svgH}`} className="bg-yellow-50">
                 <g>
-                    {points.map((pt, idx) => (
-                        <LinePoint idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />
-                    ))}
+                    {points.map((pt, idx) => <LinePoint idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
                 </g>
                 <g>
                     {lines.map((line) => (line.active &&
@@ -98,6 +110,7 @@ function LinePlayground() {
                 </g>
             </svg>
 
+            {/* Controls */}
             <div className="">
                 <div className="">
                     Info
@@ -105,7 +118,6 @@ function LinePlayground() {
                 <div className="p-2 space-y-1 flex flex-col text-sm select-none">
                     {lines.map((line, idx) => <CheckboxRow line={line} idx={idx} key={idx} />)}
                 </div>
-
             </div>
         </div>
     );

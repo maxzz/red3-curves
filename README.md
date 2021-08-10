@@ -8,7 +8,7 @@ D3 curves playground.
         [x] Allow drag points
         [ ] Add / delete points
         [ ] Deduce drag events
-        [ ] Add point numbers
+        [x] Add point numbers
         [ ] Add information about the current curve
         [ ] Store / retrieve state in localStorage
 
