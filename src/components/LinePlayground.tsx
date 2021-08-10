@@ -75,6 +75,7 @@ const CheckboxBar = styled('div', {
         backgroundSize: '32% 120%',
         backgroundPosition: '85% -65%',
         mixBlendMode: 'multiply',
+        transform: 'scaleX(calc(calc(100 - var(--size)) * 1%))',
     },
     variants: {
         lineStyle: {
@@ -84,6 +85,7 @@ const CheckboxBar = styled('div', {
         }
     },
 });
+
 
 function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
@@ -109,13 +111,14 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                 checked={value(idx)}
                 onChange={(e) => setValue({ idx, value: e.target.checked })}
             />
-            <CheckboxBar
-                className="-ml-6 w-16 h-7 rounded"
-                style={{ backgroundColor: colorScale(curve.grpIdx),
-                width: `${pro.width}px` }}
-                lineStyle={value(idx) ? curve.lineStyle : -1}
-            />
-            <a.div>{pro.width}</a.div>
+            <a.div style={{ '--size': pro.width } as any}>
+                <CheckboxBar
+                    className="-ml-6 w-16 h-7 rounded"
+                    style={{ backgroundColor: colorScale(curve.grpIdx),
+                        '--size': pro.width } as any}
+                    lineStyle={value(idx) ? curve.lineStyle : -1}
+                />
+            </a.div>
             <div className="ml-2">{CURVEINFO[idx].name}</div>
         </label>
     );
