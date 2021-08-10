@@ -34,16 +34,16 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
 
 const dotTextStyles = css({
     fill: '#0018aa',
-    stroke: '#00d7ff5a',
+    stroke: '#ffffff40',
     strokeWidth: '1',
-    fontSize: '1.4rem',
+    fontSize: '1.5rem',
 });
 
 function DotText(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
     return (
         <text>
-            <tspan className={dotTextStyles()} x={cx - 24} y={cy - 16}>{idx}</tspan>
+            <tspan className={dotTextStyles()} x={cx - 29} y={cy - 10}>{idx}</tspan>
         </text>
     );
 }
