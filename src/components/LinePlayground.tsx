@@ -6,6 +6,9 @@ import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { useDrag } from 'react-use-gesture';
 import { pointer } from '../hooks/pointer';
+import lineTypeUrl0 from '../assets/dashed-line0.svg';
+import lineTypeUrl1 from '../assets/dashed-line1.svg';
+import lineTypeUrl2 from '../assets/dashed-line2.svg';
 
 const dotStyles = css({
     fill: '#00d7ff5a',
@@ -65,6 +68,23 @@ const LinePath = styled('path', {
     }
 });
 
+const CheckboxBarStyles = css({
+    position: 'relative',
+    '&::after': {
+        content: "",
+        position: 'absolute',
+        inset: 0,
+
+        backgroundImage: `url("${lineTypeUrl0}")`,
+        backgroundRepeat: 'no-repeat',
+
+        backgroundSize: '32% 120%',
+        backgroundPosition: '85% -65%',
+
+        mixBlendMode: 'multiply',
+    }
+});
+
 function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
     return (
@@ -81,7 +101,7 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                 checked={value(idx)}
                 onChange={(e) => setValue({ idx, value: e.target.checked })}
             />
-            <div className="-ml-6 w-12 h-7 rounded" style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
+            <div className={`-ml-6 w-16 h-7 rounded ${CheckboxBarStyles()}`} style={{ backgroundColor: colorScale(CURVEINFO[line.idx].grpIdx) }}></div>
             <div className="ml-2">{CURVEINFO[idx].name}</div>
         </label>
     );
