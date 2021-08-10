@@ -16,7 +16,6 @@ const dotStyles = css({
     stroke: '#0018aa',
     strokeWidth: '2',
     cursor: 'move',
-    r: 14,
 });
 
 function Dot(props: { idx: number, cx: number, cy: number; }) {
@@ -32,7 +31,7 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
     });
 
     return (
-        <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} />
+        <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={14} />
     );
 }
 
