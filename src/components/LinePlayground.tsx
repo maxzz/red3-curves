@@ -22,14 +22,7 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
     const [_, setPoint] = useAtom(setPointAtom);
     const ref = React.useRef(null);
-
-    const bind = useDrag(({ event, xy }) => {
-        //console.log('event', xy);
-
-        const newxy = pointer(event, ref.current);
-        setPoint({ idx, value: newxy });
-    });
-
+    const bind = useDrag(({ event }) => setPoint({ idx, value: pointer(event, ref.current) }));
     return (
         <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={14} />
     );
@@ -99,17 +92,11 @@ const CheckboxBar = styled('div', {
     },
 });
 
-
 function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
     const curve = CURVEINFO[line.idx];
     const pro = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
-    // const { width } = useSpring({ width: checked ? 1 : 0 });
-
-    if (idx === 0) {
-        console.log('width', checked, pro, pro.width.to(x => x.toFixed(0)));
-    }
 
     return (
         <label className="flex items-center cursor-pointer" key={idx}>
@@ -128,7 +115,6 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                 <CheckboxBar
                     className="-ml-6 w-16 h-7 rounded"
                     style={{ '--color': colorScale(curve.grpIdx) } as any}
-                    // style={{ backgroundColor: colorScale(curve.grpIdx), '--color': colorScale(curve.grpIdx) } as any}
                     lineStyle={value(idx) ? curve.lineStyle : -1}
                 />
             </a.div>
@@ -179,9 +165,9 @@ function LinePlayground() {
                         checked={all}
                         onChange={(e) => setAll(e.target.checked)}
                     />
-                </div>
-                <div className="">
-                    Info
+                    <div className="">
+                        Info
+                    </div>
                 </div>
                 <div className="p-2 space-y-1 flex flex-col text-sm select-none">
                     {lines.map((line, idx) => <CheckboxRow line={line} idx={idx} key={idx} />)}
