@@ -68,6 +68,8 @@ const LinePath = styled('path', {
 const CheckboxBar = styled('div', {
     position: 'relative',
     overflow: 'hidden',
+    outline: '1px solid #79797942',
+    backgroundColor: '#80808020',
 
     '&::before': {
         content: "",
@@ -103,7 +105,7 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
     const curve = CURVEINFO[line.idx];
-    const pro = useSpring({to: { width: checked ? 0 : 48 }});
+    const pro = useSpring({to: { width: checked ? 0 : 48 }, config: {tension: 500}});
     // const { width } = useSpring({ width: checked ? 1 : 0 });
 
     if (idx === 0) {
