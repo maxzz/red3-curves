@@ -67,6 +67,18 @@ const LinePath = styled('path', {
 
 const CheckboxBar = styled('div', {
     position: 'relative',
+    overflow: 'hidden',
+
+    '&::before': {
+        content: "",
+        position: "absolute",
+        inset: "0",
+        backgroundColor: "var(--color)",
+        borderRadius: '4px',
+        transform: "scaleX(calc(calc(100 - var(--size)) * 1%))",
+        transformOrigin: "left"
+    },
+    
     '&::after': {
         content: "",
         position: 'absolute',
@@ -75,7 +87,7 @@ const CheckboxBar = styled('div', {
         backgroundSize: '32% 120%',
         backgroundPosition: '85% -65%',
         mixBlendMode: 'multiply',
-        transform: 'scaleX(calc(calc(100 - var(--size)) * 1%))',
+        //transform: 'scaleX(calc(calc(100 - var(--size)) * 1%))',
     },
     variants: {
         lineStyle: {
@@ -91,7 +103,7 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
     const curve = CURVEINFO[line.idx];
-    const pro = useSpring({ width: checked ? 1 : 0 });
+    const pro = useSpring({to: { width: checked ? 0 : 48 }});
     // const { width } = useSpring({ width: checked ? 1 : 0 });
 
     if (idx === 0) {
@@ -114,8 +126,8 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
             <a.div style={{ '--size': pro.width } as any}>
                 <CheckboxBar
                     className="-ml-6 w-16 h-7 rounded"
-                    style={{ backgroundColor: colorScale(curve.grpIdx),
-                        '--size': pro.width } as any}
+                    style={{ '--color': colorScale(curve.grpIdx) } as any}
+                    // style={{ backgroundColor: colorScale(curve.grpIdx), '--color': colorScale(curve.grpIdx) } as any}
                     lineStyle={value(idx) ? curve.lineStyle : -1}
                 />
             </a.div>
