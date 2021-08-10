@@ -80,7 +80,7 @@ const CheckboxBar = styled('div', {
         transform: "scaleX(calc(calc(100 - var(--size)) * 1%))",
         transformOrigin: "left"
     },
-    
+
     '&::after': {
         content: "",
         position: 'absolute',
@@ -105,7 +105,7 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
     const curve = CURVEINFO[line.idx];
-    const pro = useSpring({to: { width: checked ? 0 : 48 }, config: {tension: 500}});
+    const pro = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
     // const { width } = useSpring({ width: checked ? 1 : 0 });
 
     if (idx === 0) {
@@ -115,7 +115,7 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     return (
         <label className="flex items-center cursor-pointer" key={idx}>
             <input
-                className="ml-2 h-4 w-4 appearance-none rounded
+                className="ml-2 h-4 w-4 flex-none appearance-none rounded
                     text-green-600 border border-[#006f94]
                     bg-[#ffffff70] 
                     checked:bg-[#ffffff70] checked:border-transparent 
@@ -146,6 +146,8 @@ function LinePlayground() {
     const svgW = 600;
     const svgH = 600;
 
+    const [all, setAll] = React.useState(false);
+
     return (
         <div className="bg-purple-100">
             {/* Viewer */}
@@ -166,6 +168,19 @@ function LinePlayground() {
 
             {/* Controls */}
             <div className="">
+                <div className="">
+                    <input
+                        className="ml-2 h-4 w-4 flex-none appearance-none rounded
+                        text-green-100 border border-[#006f94]
+                        bg-[#ffffff70]
+                        checked:bg-[#ffffff70]
+                        checked:bg-ui-check
+                        focus:outline-none
+                        z-10" type="checkbox"
+                        checked={all}
+                        onChange={(e) => setAll(e.target.checked)}
+                    />
+                </div>
                 <div className="">
                     Info
                 </div>
