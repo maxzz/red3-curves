@@ -1,5 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
+import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
 import { colorScale, lineCheckAtom, LineData, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
 import { css, styled } from '@stitches/react';
@@ -46,7 +47,7 @@ function DotText(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
     return (
         <text>
-            <tspan className={dotTextStyles()} x={cx - 29} y={cy - 10}>{idx}</tspan>
+            <tspan className={dotTextStyles()} x={cx - 32} y={cy - 8}>{idx}</tspan>
         </text>
     );
 }
@@ -64,7 +65,13 @@ const LinePath = styled('path', {
     }
 });
 
-const CheckboxBar = styled('div', {
+function ADiv<T>(props: T) {
+    return (
+        <a.div className="" {...props} />
+    )
+}
+
+const CheckboxBar = styled(ADiv, {
     position: 'relative',
     '&::after': {
         content: "",
@@ -101,7 +108,7 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                 onChange={(e) => setValue({ idx, value: e.target.checked })}
             />
             <CheckboxBar
-                className={`-ml-6 w-16 h-7 rounded`}
+                className="-ml-6 w-16 h-7 rounded"
                 style={{ backgroundColor: colorScale(curve.grpIdx), }}
                 lineStyle={value(idx) ? curve.lineStyle : -1}
             />
