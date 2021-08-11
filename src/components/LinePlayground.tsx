@@ -178,6 +178,10 @@ const CheckboxBar = styled('div', {
 
 const tooltipStyles = css({
     maxWidth: '20rem',
+    backgroundColor: '#28284e !important',
+    '&::after': {
+        borderLeftColor: '#28284e !important',
+    }
 });
 
 function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
@@ -245,7 +249,7 @@ function LinePlayground() {
                 <MenuHeader />
                 <Menu />
             </div>
-            <Tooltip delayHide={2000} delayShow={2000}>{hint === -1 ? '' : CURVEINFO[hint].info}</Tooltip>
+            <Tooltip delayShow={200} effect="solid">{hint === -1 ? '' : CURVEINFO[hint].info}</Tooltip>
         </div>
     );
 }
