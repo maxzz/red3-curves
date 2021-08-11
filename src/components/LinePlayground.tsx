@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 import { allLinesSetAtom, colorScale, lineCheckAtom, LineData, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
 import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
-import { useDrag } from 'react-use-gesture';
+import { useDrag, useHover } from 'react-use-gesture';
 import { pointer } from '../hooks/pointer';
 import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
@@ -63,6 +63,32 @@ const LinePath = styled('path', {
     }
 });
 
+function Viewer() {
+    const [points] = useAtom(pointsAtom);
+    const [linePathes] = useAtom(linePathesAtom);
+    const [lines] = useAtom(linesAtom);
+
+    const svgW = 600;
+    const svgH = 600;
+
+    return (
+        <svg viewBox={`0 0 ${svgW} ${svgH}`} className="bg-yellow-50">
+            <g>
+                {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
+                {lines.map((line) => (line.active &&
+                    <LinePath
+                        key={line.idx}
+                        d={linePathes[line.idx]}
+                        lineStyle={CURVEINFO[line.idx].lineStyle}
+                        stroke={colorScale(CURVEINFO[line.idx].grpIdx)}
+                    />
+                ))}
+                {points.map((pt, idx) => <DotText idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
+            </g>
+        </svg>
+    );
+}
+
 const CheckboxBar = styled('div', {
     position: 'relative',
     overflow: 'hidden',
@@ -98,14 +124,17 @@ const CheckboxBar = styled('div', {
     },
 });
 
-function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
+function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
     const curve = CURVEINFO[line.idx];
-    const pro = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
+    const { width } = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
+    const hoverRef = useHover(({hovering: e}) => {
+        console.log(`aa ${idx}`, e);
+    });
 
     return (
-        <label className="flex items-center cursor-pointer" key={idx}>
+        <label className="flex items-center cursor-pointer" key={idx} {...hoverRef()}>
             <input
                 className="ml-2 h-4 w-4 flex-none appearance-none rounded
                     text-green-600 border border-[#006f94]
@@ -117,7 +146,7 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                 checked={value(idx)}
                 onChange={(e) => setValue({ idx, value: e.target.checked })}
             />
-            <a.div style={{ '--size': pro.width } as any}>
+            <a.div style={{ '--size': width } as any}>
                 <CheckboxBar
                     className="-ml-6 w-16 h-7 rounded"
                     style={{ '--color': colorScale(curve.grpIdx) } as any}
@@ -129,37 +158,11 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     );
 }
 
-function Viewer() {
-    const [points] = useAtom(pointsAtom);
-    const [linePathes] = useAtom(linePathesAtom);
-    const [lines] = useAtom(linesAtom);
-
-    const svgW = 600;
-    const svgH = 600;
-
-    return (
-        <svg viewBox={`0 0 ${svgW} ${svgH}`} className="bg-yellow-50">
-            <g>
-                {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
-                {lines.map((line) => (line.active &&
-                    <LinePath
-                        key={line.idx}
-                        d={linePathes[line.idx]}
-                        lineStyle={CURVEINFO[line.idx].lineStyle}
-                        stroke={colorScale(CURVEINFO[line.idx].grpIdx)}
-                    />
-                ))}
-                {points.map((pt, idx) => <DotText idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
-            </g>
-        </svg>
-    );
-}
-
 function Menu() {
     const [lines] = useAtom(linesAtom);
     return (
         <div className="p-2 space-y-1 flex flex-col text-sm select-none">
-            {lines.map((line, idx) => <CheckboxRow line={line} idx={idx} key={idx} />)}
+            {lines.map((line, idx) => <MenuCheckboxRow line={line} idx={idx} key={idx} />)}
         </div>
     );
 }
