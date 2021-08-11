@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
-import { colorScale, lineCheckAtom, LineData, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
+import { allLinesSetAtom, colorScale, lineCheckAtom, LineData, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
 import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { useDrag } from 'react-use-gesture';
@@ -123,6 +123,16 @@ function CheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     );
 }
 
+function Menu() {
+    const [lines] = useAtom(linesAtom);
+    return (
+        <div className="p-2 space-y-1 flex flex-col text-sm select-none">
+            {lines.map((line, idx) => <CheckboxRow line={line} idx={idx} key={idx} />)}
+        </div>
+    );
+
+}
+
 function LinePlayground() {
     const [points] = useAtom(pointsAtom);
     const [linePathes] = useAtom(linePathesAtom);
@@ -131,7 +141,7 @@ function LinePlayground() {
     const svgW = 600;
     const svgH = 600;
 
-    const [all, setAll] = React.useState(false);
+    const [all, setAll] = useAtom(allLinesSetAtom);
 
     return (
         <div className="bg-purple-100">
@@ -169,7 +179,7 @@ function LinePlayground() {
                     <div className="flex items-center space-x-1">
                         <span>D3 curve types to interpolate a set of points:</span>
                         <a className="" href="https://github.com/d3/d3-shape#curves" target="_blank">
-                        
+
                             <svg className="h-4 w-4 pt-0.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
                                 <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
@@ -186,13 +196,15 @@ function LinePlayground() {
                             z-10" type="checkbox"
                         checked={all}
                         onChange={(e) => setAll(e.target.checked)}
+                        title="Toggle all"
                     />
                 </div>
 
                 {/* Menu */}
-                <div className="p-2 space-y-1 flex flex-col text-sm select-none">
+                <Menu />
+                {/* <div className="p-2 space-y-1 flex flex-col text-sm select-none">
                     {lines.map((line, idx) => <CheckboxRow line={line} idx={idx} key={idx} />)}
-                </div>
+                </div> */}
             </div>
         </div>
     );

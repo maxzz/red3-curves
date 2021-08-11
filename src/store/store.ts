@@ -12,7 +12,7 @@ export const pointsAtom = atom<LinePointData[]>(initialPoints);
 
 export const setPointAtom = atom(
     null,
-    (get, set, {idx, value}: {idx: number; value: [number, number]}) => {
+    (get, set, { idx, value }: { idx: number; value: [number, number]; }) => {
         let pts = get(pointsAtom);
         pts[idx] = value;
         set(pointsAtom, [...pts]);
@@ -28,7 +28,7 @@ export const inputDataAtom = atom<InputData>(
     })
 );
 
-// Line pathes
+// Line pathes generation
 
 function generatePathes(points: LinePointData[], numActivePoints: number): string[] {
     const lineGenerator = d3.line();
@@ -44,7 +44,7 @@ export const linePathesAtom = atomWithDefault<string[]>((get) => {
     return generatePathes(get(pointsAtom), get(nActiveAtom));
 });
 
-// Lines
+// Checkboxes. Lines activation
 
 export type LineData = {
     idx: number;        // index in global CURVEINFO.
@@ -59,6 +59,19 @@ export const lineCheckAtom = atom(
     (get, set, { idx, value }: { idx: number, value: boolean; }) => {
         let arr = get(linesAtom);
         arr[idx].active = value;
+        set(linesAtom, [...arr]);
+    }
+);
+
+//export const allLinesAtom = atom(false);
+export const allLinesSetAtom = atom(
+    (get) => {
+        let arr = get(linesAtom);
+        return !arr.some(line => !line.active);
+    },
+    (get, set, value: boolean) => {
+        let arr = get(linesAtom);
+        arr.forEach(line => line.active = value);
         set(linesAtom, [...arr]);
     }
 );
