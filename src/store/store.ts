@@ -76,6 +76,10 @@ export const allLinesSetAtom = atom(
     }
 );
 
+// Line hint
+
+export const LineHintIdxAtom = atom(-1);
+
 // Colors
 
 const gColor = [
