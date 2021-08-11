@@ -195,7 +195,13 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     });
 
     return (
-        <label className="flex items-center justify-between cursor-pointer" key={idx} {...hoverRef()}>
+        <label className="flex items-center cursor-pointer" key={idx} {...hoverRef()}>
+            {/* Info icon */}
+            <div className="mr-1 text-gray-600" data-tip="" data-class={`${tooltipStyles()}`}>
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
             <div className="flex items-center">
                 {/* Checkbox */}
                 <input
@@ -219,12 +225,6 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                 </a.div>
                 {/* Text */}
                 <div className="ml-2">{CURVEINFO[idx].name}</div>
-            </div>
-            {/* Info icon */}
-            <div className="text-gray-600" data-tip="" data-class={`${tooltipStyles()}`}>
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
             </div>
         </label>
     );
