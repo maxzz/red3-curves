@@ -24,7 +24,10 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
     const ref = React.useRef(null);
     const bind = useDrag(({ event }) => setPoint({ idx, value: pointer(event, ref.current) }));
     return (
-        <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={14} />
+        <>
+            <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={14} />
+            <path d="M.5 5.5a7.6 7.6 0 014.8-5" transform={`translate(${cx-10.5}, ${cy-10.5})`} fill="none" stroke="white" stroke-miterlimit="10"/>
+        </>
     );
 }
 
