@@ -72,7 +72,7 @@ function Viewer() {
     const svgH = 600;
 
     return (
-        <svg viewBox={`0 0 ${svgW} ${svgH}`} className="bg-yellow-50">
+        <svg viewBox={`0 0 ${svgW} ${svgH}`} className="select-none bg-yellow-50">
             <g>
                 {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
                 {lines.map((line) => (line.active &&
@@ -113,7 +113,7 @@ function InfoPanel() {
 function MenuHeader() {
     const [all, setAll] = useAtom(allLinesSetAtom);
     return (
-        <div className="mt-2 px-2 flex justify-between items-center">
+        <div className="mt-2 pl-2 pr-3 flex justify-between items-center">
             <div className="flex items-center space-x-1">
                 <span>D3 curve types to interpolate a set of points:</span>
                 <a className="" href="https://github.com/d3/d3-shape#curves" target="_blank">
@@ -182,31 +182,42 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const curve = CURVEINFO[line.idx];
     const { width } = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
     const hoverRef = useHover(({ hovering: e }) => {
-        //console.log(`aa ${idx}`, e);
         setHint(e ? idx : -1);
-    }, { delay: 3000 });
+    });
 
     return (
-        <label className="flex items-center cursor-pointer" key={idx} {...hoverRef()}>
-            <input
-                className="ml-2 h-4 w-4 flex-none appearance-none rounded
-                    text-green-600 border border-[#006f94]
-                    bg-[#ffffff70] 
-                    checked:bg-[#ffffff70] checked:border-transparent 
-                    checked:bg-ui-check
-                    focus:outline-none
-                    z-10" type="checkbox"
-                checked={value(idx)}
-                onChange={(e) => setValue({ idx, value: e.target.checked })}
-            />
-            <a.div style={{ '--size': width } as any}>
-                <CheckboxBar
-                    className="-ml-6 w-16 h-7 rounded"
-                    style={{ '--color': colorScale(curve.grpIdx) } as any}
-                    lineStyle={value(idx) ? curve.lineStyle : -1}
+        <label className="flex items-center justify-between cursor-pointer" key={idx} {...hoverRef()}>
+            <div className="flex items-center">
+                {/* Checkbox */}
+                <input
+                    className="ml-2 h-4 w-4 flex-none appearance-none rounded
+                        text-green-600 border border-[#006f94]
+                        bg-[#ffffff70]
+                        checked:bg-[#ffffff70] checked:border-transparent
+                        checked:bg-ui-check
+                        focus:outline-none
+                        z-10" type="checkbox"
+                    checked={value(idx)}
+                    onChange={(e) => setValue({ idx, value: e.target.checked })}
                 />
-            </a.div>
-            <div className="ml-2">{CURVEINFO[idx].name}</div>
+                {/* Bar */}
+                <a.div style={{ '--size': width } as any}>
+                    <CheckboxBar
+                        className="-ml-6 w-16 h-7 rounded"
+                        style={{ '--color': colorScale(curve.grpIdx) } as any}
+                        lineStyle={value(idx) ? curve.lineStyle : -1}
+                    />
+                </a.div>
+                {/* Text */}
+                <div className="ml-2">{CURVEINFO[idx].name}</div>
+            </div>
+            {/* Info icon */}
+            <div className="text-gray-600">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+
+            </div>
         </label>
     );
 }
