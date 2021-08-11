@@ -13,7 +13,7 @@ import lineTypeUrl2 from '../assets/dashed-line2.svg';
 
 const dotStyles = css({
     fill: '#00d7ff5a',
-    stroke: '#0018aa',
+    stroke: '#0018aa20',
     strokeWidth: '2',
     cursor: 'move',
 });
