@@ -45,7 +45,7 @@ function DotText(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
     return (
         <text>
-            <tspan className={dotTextStyles()} x={cx - 32} y={cy - 8}>{idx}</tspan>
+            <tspan className={dotTextStyles()} x={cx - 32} y={cy - 8}>{idx + 1}</tspan>
         </text>
     );
 }
@@ -129,7 +129,7 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const checked = value(idx);
     const curve = CURVEINFO[line.idx];
     const { width } = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
-    const hoverRef = useHover(({hovering: e}) => {
+    const hoverRef = useHover(({ hovering: e }) => {
         console.log(`aa ${idx}`, e);
     });
 
@@ -167,54 +167,56 @@ function Menu() {
     );
 }
 
-function LinePlayground() {
-    const [all, setAll] = useAtom(allLinesSetAtom);
+function InfoPanel() {
+    return (
+        <div className="info h-20 p-2 text-xs rounded bg-blue-100 flex flex-col justify-between">
+            <span className="default">
+                <p>Toggle each of the curve types to activate / deactivate the curve.</p>
+                <p>You can also add/remove/drag the points to change the shape of the curve.</p>
+            </span>
+            <span className="text"></span>
+            <span className="points"></span>
+        </div>
+    );
+}
 
+function MenuHeader() {
+    const [all, setAll] = useAtom(allLinesSetAtom);
+    return (
+        <div className="mt-2 px-2 flex justify-between items-center">
+            <div className="flex items-center space-x-1">
+                <span>D3 curve types to interpolate a set of points:</span>
+                <a className="" href="https://github.com/d3/d3-shape#curves" target="_blank">
+
+                    <svg className="h-4 w-4 pt-0.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                    </svg>
+                </a>
+            </div>
+            <input
+                className="ml-2 h-4 w-4 flex-none appearance-none rounded
+                text-green-100 border border-[#006f94]
+                bg-[#ffffff70]
+                checked:bg-[#ffffff70]
+                checked:bg-ui-check
+                focus:outline-none
+                z-10" type="checkbox"
+                checked={all}
+                onChange={(e) => setAll(e.target.checked)}
+                title="Toggle all"
+            />
+        </div>
+    );
+}
+
+function LinePlayground() {
     return (
         <div className="bg-purple-100">
-            {/* Viewer */}
             <Viewer />
-
-            {/* Controls */}
             <div className="">
-                {/* Info panel */}
-                <div className="info h-20 p-2 text-xs rounded bg-blue-100 flex flex-col justify-between">
-                    <span className="default">
-                        <p>Toggle each of the curve types to activate / deactivate the curve.</p>
-                        <p>You can also add/remove/drag the points to change the shape of the curve.</p>
-                    </span>
-                    <span className="text"></span>
-                    <span className="points"></span>
-                </div>
-
-
-                {/* Menu header */}
-                <div className="mt-2 px-2 flex justify-between items-center">
-                    <div className="flex items-center space-x-1">
-                        <span>D3 curve types to interpolate a set of points:</span>
-                        <a className="" href="https://github.com/d3/d3-shape#curves" target="_blank">
-
-                            <svg className="h-4 w-4 pt-0.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-                            </svg>
-                        </a>
-                    </div>
-                    <input
-                        className="ml-2 h-4 w-4 flex-none appearance-none rounded
-                            text-green-100 border border-[#006f94]
-                            bg-[#ffffff70]
-                            checked:bg-[#ffffff70]
-                            checked:bg-ui-check
-                            focus:outline-none
-                            z-10" type="checkbox"
-                        checked={all}
-                        onChange={(e) => setAll(e.target.checked)}
-                        title="Toggle all"
-                    />
-                </div>
-
-                {/* Menu */}
+                <InfoPanel />
+                <MenuHeader />
                 <Menu />
             </div>
         </div>
