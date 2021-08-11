@@ -51,7 +51,7 @@ function DotText(props: { idx: number, cx: number, cy: number; }) {
 }
 
 const LinePath = styled('path', {
-    strokeWidth: '7',
+    strokeWidth: '5',
     strokeLinejoin: 'round',
     fill: 'none',
     pointerEvents: 'none',
@@ -182,9 +182,9 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const curve = CURVEINFO[line.idx];
     const { width } = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
     const hoverRef = useHover(({ hovering: e }) => {
-        console.log(`aa ${idx}`, e);
+        //console.log(`aa ${idx}`, e);
         setHint(e ? idx : -1);
-    });
+    }, { delay: 3000 });
 
     return (
         <label className="flex items-center cursor-pointer" key={idx} {...hoverRef()}>
