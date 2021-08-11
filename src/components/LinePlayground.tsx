@@ -26,7 +26,7 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
     return (
         <>
             <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={14} />
-            <path d="M.5 5.5a7.6 7.6 0 014.8-5" transform={`translate(${cx-10.5}, ${cy-10.5})`} fill="none" stroke="white" stroke-miterlimit="10"/>
+            <path d="M1.7 3A6.5 6.5 0 015.3.4M1.2 3.9a8 8 0 00-.8 2" transform={`translate(${cx-10.5}, ${cy-10.5})`} fill="none" stroke="white" stroke-miterlimit="10"/>
         </>
     );
 }
