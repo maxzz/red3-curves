@@ -80,7 +80,7 @@ function Viewer() {
                         key={line.idx}
                         d={linePathes[line.idx]}
                         lineStyle={CURVEINFO[line.idx].lineStyle}
-                        stroke={colorScale(CURVEINFO[line.idx].grpIdx)}
+                        stroke={`${colorScale(CURVEINFO[line.idx].grpIdx)}cf`}
                     />
                 ))}
                 {points.map((pt, idx) => <DotText idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
