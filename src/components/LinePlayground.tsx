@@ -245,7 +245,7 @@ function LinePlayground() {
                 <MenuHeader />
                 <Menu />
             </div>
-            <Tooltip>{hint === -1 ? '' : CURVEINFO[hint].info}</Tooltip>
+            <Tooltip delayHide={2000} delayShow={2000}>{hint === -1 ? '' : CURVEINFO[hint].info}</Tooltip>
         </div>
     );
 }
