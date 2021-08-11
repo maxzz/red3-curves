@@ -10,6 +10,7 @@ import { pointer } from '../hooks/pointer';
 import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
+import Tooltip from 'react-tooltip';
 
 const dotStyles = css({
     fill: '#00d7ff5a',
@@ -216,7 +217,6 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-
             </div>
         </label>
     );
@@ -240,6 +240,7 @@ function LinePlayground() {
                 <MenuHeader />
                 <Menu />
             </div>
+            <Tooltip>Where?</Tooltip>
         </div>
     );
 }
