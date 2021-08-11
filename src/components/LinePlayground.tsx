@@ -159,33 +159,12 @@ function Menu() {
 }
 
 function LinePlayground() {
-    // const [points] = useAtom(pointsAtom);
-    // const [linePathes] = useAtom(linePathesAtom);
-    // const [lines] = useAtom(linesAtom);
-
-    // const svgW = 600;
-    // const svgH = 600;
-
     const [all, setAll] = useAtom(allLinesSetAtom);
 
     return (
         <div className="bg-purple-100">
             {/* Viewer */}
             <Viewer />
-            {/* <svg viewBox={`0 0 ${svgW} ${svgH}`} className="bg-yellow-50">
-                <g>
-                    {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
-                    {lines.map((line) => (line.active &&
-                        <LinePath
-                            key={line.idx}
-                            d={linePathes[line.idx]}
-                            lineStyle={CURVEINFO[line.idx].lineStyle}
-                            stroke={colorScale(CURVEINFO[line.idx].grpIdx)}
-                        />
-                    ))}
-                    {points.map((pt, idx) => <DotText idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
-                </g>
-            </svg> */}
 
             {/* Controls */}
             <div className="">
@@ -228,9 +207,6 @@ function LinePlayground() {
 
                 {/* Menu */}
                 <Menu />
-                {/* <div className="p-2 space-y-1 flex flex-col text-sm select-none">
-                    {lines.map((line, idx) => <CheckboxRow line={line} idx={idx} key={idx} />)}
-                </div> */}
             </div>
         </div>
     );
