@@ -40,7 +40,7 @@ namespace Storage {
             nActive: get(nActiveAtom),
         };
         localStorage.setItem(KEY, JSON.stringify(newStore));
-    }, 2000);
+    }, 1000);
 }
 
 export type LinePointData = [number, number];
