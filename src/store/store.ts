@@ -1,14 +1,51 @@
 import * as d3 from 'd3';
-import { atom } from 'jotai';
+import { atom, Getter } from 'jotai';
 import { atomWithDefault } from 'jotai/utils';
 import { InputData } from '../components/OldLinePlayground';
+import { atomWithCallback } from '../hooks/atomsX';
+import debounce from '../utils/debounce';
 import { CURVEINFO } from './datum';
+
+namespace Storage {
+    const KEY = 'red3-curves';
+
+    type Store = {
+        points: [number, number][]; // control points coordinates as [x, y][]
+        active: LineData[];
+        nActive: number; // Number of active points
+    };
+
+    export let initialData: Store = {
+        points: [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]],
+        active: CURVEINFO.map((curve, idx) => ({ idx, active: curve.active })),
+        nActive: 7,
+    };
+
+    function load() {
+        const s = localStorage.getItem(KEY);
+        if (s) {
+            try {
+                let obj = JSON.parse(s) as Store;
+                initialData = obj;
+            } catch (error) {
+            }
+        }
+    }
+    load();
+
+    export const save = debounce(function _save(get: Getter) {
+        let newStore: Store = {
+            points: get(pointsAtom),
+            active: get(linesAtom),
+            nActive: get(nActiveAtom),
+        };
+        localStorage.setItem(KEY, JSON.stringify(newStore));
+    }, 2000);
+}
 
 export type LinePointData = [number, number];
 
-const initialPoints: [number, number][] = [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]]; // control points coordinates as [x, y][]
-
-export const pointsAtom = atom<LinePointData[]>(initialPoints);
+export const pointsAtom = atomWithCallback<LinePointData[]>(Storage.initialData.points, (_, get) => Storage.save(get));
 
 export const setPointAtom = atom(
     null,
@@ -19,7 +56,7 @@ export const setPointAtom = atom(
     }
 );
 
-export const nActiveAtom = atom(7); // Number of active points
+export const nActiveAtom = atomWithCallback(Storage.initialData.nActive, (_, get) => Storage.save(get));
 
 export const inputDataAtom = atom<InputData>(
     get => ({
@@ -51,8 +88,7 @@ export type LineData = {
     active: boolean;    // true if line activated.
 };
 
-export const linesAtom = atom<LineData[]>(CURVEINFO.map((curve, idx) => ({ idx, active: curve.active })));
-// export const linesAtom = atom<LineData[]>(CURVEINFO.map((curve, idx) => ({ idx, active: true })));
+export const linesAtom = atomWithCallback<LineData[]>(Storage.initialData.active, (_, get) => Storage.save(get));
 
 export const lineCheckAtom = atom(
     (get) => (idx: number) => get(linesAtom)[idx].active,
