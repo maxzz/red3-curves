@@ -185,13 +185,14 @@ const tooltipStyles = css({
 });
 
 function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
-    const [_, setHint] = useAtom(LineHintIdxAtom);
+    const [hint, setHint] = useAtom(LineHintIdxAtom);
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
     const curve = CURVEINFO[line.idx];
     const { width } = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
     const hoverRef = useHover(({ hovering: e }) => {
-        setHint(e ? idx : -1);
+        let newValue = e ? idx : -1;
+        hint !== newValue && setHint(newValue);
     });
 
     return (
@@ -239,8 +240,14 @@ function Menu() {
     );
 }
 
-function LinePlayground() {
+function HintTooltip() {
     const [hint] = useAtom(LineHintIdxAtom);
+    return (
+        <Tooltip delayShow={200} effect="solid">{hint === -1 ? '' : CURVEINFO[hint].info}</Tooltip>
+    )
+}
+
+function LinePlayground() {
     return (
         <div className="bg-purple-100">
             <Viewer />
@@ -249,7 +256,7 @@ function LinePlayground() {
                 <MenuHeader />
                 <Menu />
             </div>
-            <Tooltip delayShow={200} effect="solid">{hint === -1 ? '' : CURVEINFO[hint].info}</Tooltip>
+            <HintTooltip />
         </div>
     );
 }
