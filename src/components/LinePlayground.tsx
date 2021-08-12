@@ -102,39 +102,6 @@ function Viewer({ svgWidth, svgHeight }: { svgWidth: number, svgHeight: number; 
     );
 }
 
-function InfoPanelHint() {
-    const [hint] = useAtom(LineHintIdxAtom);
-    return (
-        <span className="default">
-            {
-                hint === -1 ?
-                    (<>
-                        <p>Toggle each of the curve types to activate / deactivate the curve.</p>
-                        <p>You can also add/remove/drag the points to change the shape of the curve.</p>
-                    </>)
-                    :
-                    <p>{CURVEINFO[hint].info}</p>
-            }
-        </span>
-    );
-}
-
-function InfoPanel() {
-    const [points] = useAtom(pointsAtom);
-    const [dragginPoint] = useAtom(DraggingPointAtom);
-    return (
-        <span className="points">
-            [
-            {points.map((pt, idx) => {
-                const sep = idx === points.length - 1 ? '' : ',';
-                const s = JSON.stringify(pt);
-                return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
-            })}
-            ]
-        </span>
-    );
-}
-
 function MenuHeader() {
     const [all, setAll] = useAtom(allLinesSetAtom);
     return (
@@ -200,14 +167,6 @@ const CheckboxBar = styled('div', {
     },
 });
 
-const tooltipStyles = css({
-    maxWidth: '20rem',
-    backgroundColor: '#28284e !important',
-    '&::after': {
-        borderLeftColor: '#28284e !important',
-    }
-});
-
 function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
@@ -262,6 +221,52 @@ function Menu() {
     );
 }
 
+function InfoPanelHint() {
+    //const [hint] = useAtom(LineHintIdxAtom);
+    return (
+        // <span className="default">
+        //     {
+        //         hint === -1 ?
+        //             (<>
+        //                 <p>Toggle each of the curve types to activate / deactivate the curve.</p>
+        //                 <p>You can also add/remove/drag the points to change the shape of the curve.</p>
+        //             </>)
+        //             :
+        //             <p>{CURVEINFO[hint].info}</p>
+        //     }
+        // </span>
+        <span className="default">
+            <p>Toggle each of the curve types to activate / deactivate the curve.</p>
+            <p>You can also add/remove/drag the points to change the shape of the curve.</p>
+        </span>
+    );
+}
+
+function InfoPanel() {
+    const [points] = useAtom(pointsAtom);
+    const [dragginPoint] = useAtom(DraggingPointAtom);
+    return (
+        <span className="points">
+            [
+            {points.map((pt, idx) => {
+                const sep = idx === points.length - 1 ? '' : ',';
+                const s = JSON.stringify(pt);
+                return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
+            })}
+            ]
+        </span>
+    );
+}
+
+const tooltipStyles = css({
+    maxWidth: '20rem',
+    backgroundColor: '#28284e !important',
+    // 'place-right &::after': {
+    //     borderLeftColor: 'red !important',
+    //     // borderLeftColor: '#28284e !important',
+    // }
+});
+
 function HintTooltip() {
     const [hint] = useAtom(LineHintIdxAtom);
     return (
@@ -274,21 +279,23 @@ function LinePlayground() {
     const svgHeight = 600;
 
     return (
-        <div className="bg-purple-100">
-            <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
-            <div className="">
-
-                <div className="info h-20 p-2 text-xs rounded bg-blue-100 flex flex-col justify-between">
-                    <InfoPanelHint />
-                    <span className="text"></span>
-                    <InfoPanel />
+        <>
+            <div className="bg-purple-100  ">
+                <InfoPanelHint />
+                <div className="max-w-4xl min-w-[10rem] flex-1">
+                    <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
                 </div>
-
-                <MenuHeader />
-                <Menu />
+                <div className="min-w-[23rem] w-[30rem]">
+                    <MenuHeader />
+                    <Menu />
+                    <div className="info h-20 p-2 text-xs rounded bg-blue-100 flex justify-between">
+                        <InfoPanel />
+                        <span className="text">copy</span>
+                    </div>
+                </div>
+                <HintTooltip />
             </div>
-            <HintTooltip />
-        </div>
+        </>
     );
 }
 
