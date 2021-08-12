@@ -2,7 +2,7 @@ import React from 'react';
 import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
 import { useUpdateAtom } from 'jotai/utils';
-import { allLinesSetAtom, colorScale, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
+import { allLinesSetAtom, colorScale, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
 import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { useDrag, useHover } from 'react-use-gesture';
@@ -26,8 +26,12 @@ const dotStyles = css({
 function Dot(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
     const setPoint = useUpdateAtom(setPointAtom);
+    const setDraggingPoint = useUpdateAtom(DraggingPointAtom);
     const ref = React.useRef(null);
-    const bind = useDrag(({ event }) => setPoint({ idx, value: pointer(event, ref.current).map(coord => +withDigits(coord, 0)) as [number, number] }));
+    const bind = useDrag(({ event, dragging }) => {
+        setPoint({ idx, value: pointer(event, ref.current).map(coord => +withDigits(coord, 0)) as [number, number] });
+        setDraggingPoint(dragging ? idx : -1);
+    });
     return (
         <>
             <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={14} />
@@ -97,18 +101,7 @@ function Viewer({ svgWidth, svgHeight }: { svgWidth: number, svgHeight: number; 
         </svg>
     );
 }
-/*
-function updatePointsInfo(current?: DatumPoint) {
-    function joinPoints(d: DatumPoint) {
-        let pt = JSON.stringify([d[0], d[1]]);
-        return d === current ? `<b>${pt}</b>` : pt;
-    }
-    const a = points.slice(0, numActivePoints).map(joinPoints);
-    const b = numActivePoints < points.length ? `<span class=${styles.inactivePath}>${points.slice(numActivePoints).map(joinPoints).join(',')}</span>` : '';
-    const c = b ? `[${[...a, b].join(',')}]` : `[${a.join(',')}]`;
-    d3.select('.info .points').html(c);
-}
-*/
+
 function InfoPanelHint() {
     const [hint] = useAtom(LineHintIdxAtom);
     return (
@@ -128,14 +121,14 @@ function InfoPanelHint() {
 
 function InfoPanel() {
     const [points] = useAtom(pointsAtom);
-    const [hint] = useAtom(LineHintIdxAtom);
+    const [dragginPoint] = useAtom(DraggingPointAtom);
     return (
         <span className="points">
             [
             {points.map((pt, idx) => {
                 const sep = idx === points.length - 1 ? '' : ',';
                 const s = JSON.stringify(pt);
-                return idx === hint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
+                return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
             })}
             ]
         </span>

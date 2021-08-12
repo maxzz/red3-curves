@@ -112,9 +112,13 @@ export const allLinesSetAtom = atom(
     }
 );
 
-// Line hint
+// Line hint index
 
 export const LineHintIdxAtom = atom(-1);
+
+// Dragging point index
+
+export const DraggingPointAtom = atom(-1);
 
 // Colors
 
