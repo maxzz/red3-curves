@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
-import { allLinesSetAtom, colorScale, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, pointsAtom, setHintIdxAtom, setPointAtom } from '../store/store';
+import { allLinesSetAtom, colorScale, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
 import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { useDrag, useHover } from 'react-use-gesture';
@@ -11,6 +11,7 @@ import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
 import Tooltip from 'react-tooltip';
+import { useUpdateAtom } from 'jotai/utils';
 
 const dotStyles = css({
     fill: '#00d7ff5a',
@@ -185,7 +186,7 @@ const tooltipStyles = css({
 });
 
 function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
-    const [_, setHint] = useAtom(setHintIdxAtom);
+    const setHint = useUpdateAtom(LineHintIdxAtom);
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
     const curve = CURVEINFO[line.idx];
