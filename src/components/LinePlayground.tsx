@@ -133,11 +133,7 @@ function InfoPanel() {
         <span className="points">
             {points.map((pt, idx) => {
                 const s = JSON.stringify(pt);
-                if (idx === hint) {
-                    return <b>{s}</b>;
-                } else {
-                    return <span>{s}</span>;
-                }
+                return idx === hint ? <b key={idx}>{s}</b> : <span key={idx}>{s}</span>;
             })}
         </span>
     );
