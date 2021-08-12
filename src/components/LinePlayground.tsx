@@ -186,19 +186,18 @@ const tooltipStyles = css({
 });
 
 function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
-    const setHint = useUpdateAtom(LineHintIdxAtom);
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
     const curve = CURVEINFO[line.idx];
     const { width } = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
-    const hoverRef = useHover(({ hovering: e }) => {
-        setHint(e ? idx : -1);
-    });
+
+    const setHint = useUpdateAtom(LineHintIdxAtom);
+    const hoverRef = useHover(({ hovering: e }) => setHint(e ? idx : -1));
 
     return (
-        <label className="flex items-center cursor-pointer" key={idx} {...hoverRef()}>
+        <label className="flex items-center cursor-pointer" key={idx}>
             {/* Info icon */}
-            <div className="mr-1 text-gray-600" data-tip="" data-class={`${tooltipStyles()}`}>
+            <div className="mr-1 text-gray-600" data-tip="" data-class={`${tooltipStyles()}`} {...hoverRef()}>
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>

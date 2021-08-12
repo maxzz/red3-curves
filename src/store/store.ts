@@ -80,13 +80,6 @@ export const allLinesSetAtom = atom(
 
 export const LineHintIdxAtom = atom(-1);
 
-// export const setHintIdxAtom = atom(
-//     null,
-//     (get, set, value: number) => {
-//         set(LineHintIdxAtom, value);
-//     }
-// )
-
 // Colors
 
 const gColor = [
