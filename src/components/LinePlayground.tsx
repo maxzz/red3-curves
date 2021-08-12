@@ -130,21 +130,16 @@ function InfoPanel() {
     const [points] = useAtom(pointsAtom);
     const [hint] = useAtom(LineHintIdxAtom);
     return (
-        <div className="info h-20 p-2 text-xs rounded bg-blue-100 flex flex-col justify-between">
-            <span className="text"></span>
-
-            <span className="points">
-                {points.map((pt, idx) => {
-                    const s = JSON.stringify(pt);
-                    if (idx === hint) {
-                        return <b>{s}</b>
-                    } else {
-                        return <span>{s}</span>;
-                    }
-                })}
-            </span>
-
-        </div>
+        <span className="points">
+            {points.map((pt, idx) => {
+                const s = JSON.stringify(pt);
+                if (idx === hint) {
+                    return <b>{s}</b>;
+                } else {
+                    return <span>{s}</span>;
+                }
+            })}
+        </span>
     );
 }
 
@@ -290,7 +285,13 @@ function LinePlayground() {
         <div className="bg-purple-100">
             <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
             <div className="">
-                <InfoPanel />
+
+                <div className="info h-20 p-2 text-xs rounded bg-blue-100 flex flex-col justify-between">
+                    <InfoPanelHint />
+                    <span className="text"></span>
+                    <InfoPanel />
+                </div>
+
                 <MenuHeader />
                 <Menu />
             </div>
