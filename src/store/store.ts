@@ -119,14 +119,8 @@ export const LineHintIdxAtom = atom(-1);
 // Colors
 
 const gColor = [
-    '#3366cc',
-    '#ff9900',
-    '#109618',
-    '#990099',
-    '#dc3912',
-    '#0099c6',
-    '#dd4477',
-    '#66aa00',
+    '#3366cc', '#ff9900', '#109618', '#990099', '#dc3912', '#0099c6', '#dd4477', '#66aa00',
+
     '#b82e2e',
     '#316395',
     '#994499',
@@ -139,7 +133,17 @@ const gColor = [
     '#329262',
     '#5574a6',
     '#3b3eac'
-]; ``;
+];
+
+//google colors
+const g = [
+    '#3366cc', '#ff9900', '#109618', '#990099', '#dc3912', '#0099c6', '#dd4477', '#66aa00', '#b82e2e', '#316395', '#994499', '#22aa99', '#aaaa11', '#6633cc', '#e67300', '#8b0707', '#651067', '#329262', '#5574a6', '#3b3eac'
+];
+
+//d3.schemeCategory10 colors
+const d = [
+    '#2077b4', '#ff7f0d', '#2da02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbf00', '#00bed0',
+];
 
 // const categoryScale = d3.scaleOrdinal<number, string>(d3.schemeCategory10);
 // const categoryScale = d3.scaleOrdinal<number, string>(gColor);
