@@ -13,6 +13,10 @@ import lineTypeUrl2 from '../assets/dashed-line2.svg';
 import Tooltip from 'react-tooltip';
 import { useUpdateAtom } from 'jotai/utils';
 
+function withDigits(value: number, digits: number = 2): string {
+    return value.toFixed(Math.max(Math.min(digits, 20), 0));
+}
+
 const dotStyles = css({
     fill: '#00d7ff5a',
     stroke: '#0018aa20',
@@ -24,7 +28,7 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
     const setPoint = useUpdateAtom(setPointAtom);
     const ref = React.useRef(null);
-    const bind = useDrag(({ event }) => setPoint({ idx, value: pointer(event, ref.current) }));
+    const bind = useDrag(({ event }) => setPoint({ idx, value: pointer(event, ref.current).map(coord => +withDigits(coord, 2)) as [number, number] }));
     return (
         <>
             <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={14} />
@@ -82,7 +86,7 @@ function LinePathes() {
     );
 }
 
-function Viewer({svgWidth, svgHeight}: {svgWidth: number, svgHeight: number}) {
+function Viewer({ svgWidth, svgHeight }: { svgWidth: number, svgHeight: number; }) {
     const [points] = useAtom(pointsAtom);
     return (
         <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="select-none bg-yellow-50">
