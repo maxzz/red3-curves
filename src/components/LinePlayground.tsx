@@ -82,14 +82,10 @@ function LinePathes() {
     );
 }
 
-function Viewer() {
+function Viewer({svgWidth, svgHeight}: {svgWidth: number, svgHeight: number}) {
     const [points] = useAtom(pointsAtom);
-
-    const svgW = 600;
-    const svgH = 600;
-
     return (
-        <svg viewBox={`0 0 ${svgW} ${svgH}`} className="select-none bg-yellow-50">
+        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="select-none bg-yellow-50">
             <g>
                 {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
                 <LinePathes />
@@ -255,9 +251,12 @@ function HintTooltip() {
 }
 
 function LinePlayground() {
+    const svgWidth = 600;
+    const svgHeight = 600;
+
     return (
         <div className="bg-purple-100">
-            <Viewer />
+            <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
             <div className="">
                 <InfoPanel />
                 <MenuHeader />
