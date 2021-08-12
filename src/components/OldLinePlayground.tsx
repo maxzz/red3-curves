@@ -228,8 +228,8 @@ function LineEditor() {
 
     const [allChecked, setAllChecked] = React.useState(false);
 
-    const [points, setPoints] = useAtom(pointsAtom);
-    const [nActive, setNActive] = useAtom(nActiveAtom);
+    // const [points, setPoints] = useAtom(pointsAtom);
+    // const [nActive, setNActive] = useAtom(nActiveAtom);
     const [inputData] = useAtom(inputDataAtom);
 
     function onSelectionChange(allOn: boolean) {
@@ -238,7 +238,7 @@ function LineEditor() {
 
     React.useEffect(() => {
         apiRef.current = svgRef.current && initial(svgRef.current, inputData, onSelectionChange);
-    }, []);
+    }, [inputData]);
 
     return (
         <div className=""> {/* scale-75 */}
