@@ -27,7 +27,7 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
     const setPoint = useUpdateAtom(setPointAtom);
     const ref = React.useRef(null);
-    const bind = useDrag(({ event }) => setPoint({ idx, value: pointer(event, ref.current).map(coord => +withDigits(coord, 2)) as [number, number] }));
+    const bind = useDrag(({ event }) => setPoint({ idx, value: pointer(event, ref.current).map(coord => +withDigits(coord, 0)) as [number, number] }));
     return (
         <>
             <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={14} />
@@ -131,10 +131,13 @@ function InfoPanel() {
     const [hint] = useAtom(LineHintIdxAtom);
     return (
         <span className="points">
+            [
             {points.map((pt, idx) => {
+                const sep = idx === points.length - 1 ? '' : ',';
                 const s = JSON.stringify(pt);
-                return idx === hint ? <b key={idx}>{s}</b> : <span key={idx}>{s}</span>;
+                return idx === hint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
             })}
+            ]
         </span>
     );
 }
