@@ -45,7 +45,7 @@ namespace Storage {
 
 export type LinePointData = [number, number];
 
-export const pointsAtom = atomWithCallback<LinePointData[]>(Storage.initialData.points, (_, get) => Storage.save(get));
+export const pointsAtom = atomWithCallback<LinePointData[]>(Storage.initialData.points, (get, _) => Storage.save(get));
 
 export const setPointAtom = atom(
     null,
@@ -56,7 +56,7 @@ export const setPointAtom = atom(
     }
 );
 
-export const nActiveAtom = atomWithCallback(Storage.initialData.nActive, (_, get) => Storage.save(get));
+export const nActiveAtom = atomWithCallback(Storage.initialData.nActive, (get, _) => Storage.save(get));
 
 export const inputDataAtom = atom<InputData>(
     get => ({
@@ -88,7 +88,7 @@ export type LineData = {
     active: boolean;    // true if line activated.
 };
 
-export const linesAtom = atomWithCallback<LineData[]>(Storage.initialData.active, (_, get) => Storage.save(get));
+export const linesAtom = atomWithCallback<LineData[]>(Storage.initialData.active, (get, _) => Storage.save(get));
 
 export const lineCheckAtom = atom(
     (get) => (idx: number) => get(linesAtom)[idx].active,
