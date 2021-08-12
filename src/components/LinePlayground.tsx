@@ -22,7 +22,7 @@ const dotStyles = css({
 
 function Dot(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
-    const [_, setPoint] = useAtom(setPointAtom);
+    const setPoint = useUpdateAtom(setPointAtom);
     const ref = React.useRef(null);
     const bind = useDrag(({ event }) => setPoint({ idx, value: pointer(event, ref.current) }));
     return (
