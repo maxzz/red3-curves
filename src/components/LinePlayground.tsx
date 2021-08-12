@@ -1,17 +1,16 @@
 import React from 'react';
-import * as d3 from 'd3';
 import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
+import { useUpdateAtom } from 'jotai/utils';
 import { allLinesSetAtom, colorScale, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
 import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { useDrag, useHover } from 'react-use-gesture';
 import { pointer } from '../hooks/pointer';
+import Tooltip from 'react-tooltip';
 import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
-import Tooltip from 'react-tooltip';
-import { useUpdateAtom } from 'jotai/utils';
 
 function withDigits(value: number, digits: number = 2): string {
     return value.toFixed(Math.max(Math.min(digits, 20), 0));
@@ -98,24 +97,53 @@ function Viewer({ svgWidth, svgHeight }: { svgWidth: number, svgHeight: number; 
         </svg>
     );
 }
+/*
+function updatePointsInfo(current?: DatumPoint) {
+    function joinPoints(d: DatumPoint) {
+        let pt = JSON.stringify([d[0], d[1]]);
+        return d === current ? `<b>${pt}</b>` : pt;
+    }
+    const a = points.slice(0, numActivePoints).map(joinPoints);
+    const b = numActivePoints < points.length ? `<span class=${styles.inactivePath}>${points.slice(numActivePoints).map(joinPoints).join(',')}</span>` : '';
+    const c = b ? `[${[...a, b].join(',')}]` : `[${a.join(',')}]`;
+    d3.select('.info .points').html(c);
+}
+*/
+function InfoPanelHint() {
+    const [hint] = useAtom(LineHintIdxAtom);
+    return (
+        <span className="default">
+            {
+                hint === -1 ?
+                    (<>
+                        <p>Toggle each of the curve types to activate / deactivate the curve.</p>
+                        <p>You can also add/remove/drag the points to change the shape of the curve.</p>
+                    </>)
+                    :
+                    <p>{CURVEINFO[hint].info}</p>
+            }
+        </span>
+    );
+}
 
 function InfoPanel() {
+    const [points] = useAtom(pointsAtom);
     const [hint] = useAtom(LineHintIdxAtom);
     return (
         <div className="info h-20 p-2 text-xs rounded bg-blue-100 flex flex-col justify-between">
-            <span className="default">
-                {
-                    hint === -1 ?
-                        (<>
-                            <p>Toggle each of the curve types to activate / deactivate the curve.</p>
-                            <p>You can also add/remove/drag the points to change the shape of the curve.</p>
-                        </>)
-                        :
-                        <p>{CURVEINFO[hint].info}</p>
-                }
-            </span>
             <span className="text"></span>
-            <span className="points"></span>
+
+            <span className="points">
+                {points.map((pt, idx) => {
+                    const s = JSON.stringify(pt);
+                    if (idx === hint) {
+                        return <b>{s}</b>
+                    } else {
+                        return <span>{s}</span>;
+                    }
+                })}
+            </span>
+
         </div>
     );
 }
