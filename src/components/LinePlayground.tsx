@@ -65,10 +65,25 @@ const LinePath = styled('path', {
     }
 });
 
-function Viewer() {
-    const [points] = useAtom(pointsAtom);
+function LinePathes() {
     const [linePathes] = useAtom(linePathesAtom);
     const [lines] = useAtom(linesAtom);
+    return (
+        <>
+            {lines.map((line) => (line.active &&
+                <LinePath
+                    key={line.idx}
+                    d={linePathes[line.idx]}
+                    lineStyle={CURVEINFO[line.idx].lineStyle}
+                    stroke={`${colorScale(CURVEINFO[line.idx].grpIdx)}cf`}
+                />
+            ))}
+        </>
+    );
+}
+
+function Viewer() {
+    const [points] = useAtom(pointsAtom);
 
     const svgW = 600;
     const svgH = 600;
@@ -77,14 +92,7 @@ function Viewer() {
         <svg viewBox={`0 0 ${svgW} ${svgH}`} className="select-none bg-yellow-50">
             <g>
                 {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
-                {lines.map((line) => (line.active &&
-                    <LinePath
-                        key={line.idx}
-                        d={linePathes[line.idx]}
-                        lineStyle={CURVEINFO[line.idx].lineStyle}
-                        stroke={`${colorScale(CURVEINFO[line.idx].grpIdx)}cf`}
-                    />
-                ))}
+                <LinePathes />
                 {points.map((pt, idx) => <DotText idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
             </g>
         </svg>
@@ -243,7 +251,7 @@ function HintTooltip() {
     const [hint] = useAtom(LineHintIdxAtom);
     return (
         <Tooltip delayShow={200} effect="solid">{hint === -1 ? '' : CURVEINFO[hint].info}</Tooltip>
-    )
+    );
 }
 
 function LinePlayground() {
