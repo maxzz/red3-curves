@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
-import { allLinesSetAtom, colorScale, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
+import { allLinesSetAtom, colorScale, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, pointsAtom, setHintIdxAtom, setPointAtom } from '../store/store';
 import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { useDrag, useHover } from 'react-use-gesture';
@@ -185,14 +185,13 @@ const tooltipStyles = css({
 });
 
 function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
-    const [hint, setHint] = useAtom(LineHintIdxAtom);
+    const [_, setHint] = useAtom(setHintIdxAtom);
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
     const curve = CURVEINFO[line.idx];
     const { width } = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
     const hoverRef = useHover(({ hovering: e }) => {
-        let newValue = e ? idx : -1;
-        hint !== newValue && setHint(newValue);
+        setHint(e ? idx : -1);
     });
 
     return (
