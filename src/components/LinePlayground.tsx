@@ -253,48 +253,57 @@ function InfoPanelStatic() {
     );
 }
 
-function InfoPanel() {
+function CombinedPathPoints() {
     const [points] = useAtom(pointsAtom);
     const [dragginPoint] = useAtom(DraggingPointAtom);
-    // TODO: position over SVG
-    // TODO: add buttons +/- for points
-    // TODO: define stroke shadow colors
+    return (
+        <span>
+            [{points.map((pt, idx) => {
+                const sep = idx === points.length - 1 ? '' : ',';
+                const s = JSON.stringify(pt);
+                return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
+            })}]
+        </span>
+    );
+}
+
+function PathInfo({ expanded }: { expanded: boolean; }) {
+    return (
+        <div className="ml-1 text-xs flex items-center justify-between">
+            <CombinedPathPoints />
+            <span className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none">
+                <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                </svg>
+            </span>
+        </div>
+    );
+}
+
+function InfoPanel() {
     return (
         <div className="flex">
             {/* Buttons */}
             <div className="flex items-center space-x-1">
                 <div
-                    className="remove-point
-                        w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
+                    className="w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center"
                     title="Remove point (min is 2)"
-                >-</div> {/* TODO: maybe: background-color: #60a5fa; (blue-400) color: white; border: 1px solid white */}
+                >-</div>
                 <div
-                    className="add-point
-                        w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
+                    className="w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center"
                     title="Add point (maximum 7)"
                 >+</div>
-                <div className="w-4 h-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none">
+                <div className="w-4 h-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
+                    title="Show/Hide coordinates of points"
+                >
                     <InfoIcon />
                 </div>
             </div>
 
             {/* Generated text */}
-            <div className="ml-1 text-xs flex items-center justify-between">
-                <span>
-                    [{points.map((pt, idx) => {
-                        const sep = idx === points.length - 1 ? '' : ',';
-                        const s = JSON.stringify(pt);
-                        return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
-                    })}]
-                </span>
-                <span className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none">
-                    <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-                    </svg>
-                </span>
-            </div>
+            <PathInfo expanded={true} />
         </div>
     );
 }
