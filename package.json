@@ -5,8 +5,11 @@
     "description": "d3 line types playground",
     "scripts": {
         "dev": "vite",
-        "build": "tsc && vite build",
-        "serve": "vite preview"
+        "build": "vite build",
+        "build_exclude_stitches": "tsc && vite build",
+        "serve": "vite preview",
+        "predeply": "yarn build",
+        "deploy": "gh-pages -d dist"
     },
     "dependencies": {
         "@react-spring/web": "^9.2.4",
