@@ -229,10 +229,10 @@ function Menu() {
 
 function InfoPanelStatic() {
     return (
-        <span className="default">
+        <>
             <p>Toggle each of the curve types to activate / deactivate the curve.</p>
             <p>You can also add/remove/drag the points to change the shape of the curve.</p>
-        </span>
+        </>
     );
 }
 
@@ -266,21 +266,26 @@ function HintTooltip() {
 
 function LinePlayground() {
     return (
-        <div className="bg-purple-100 grid grid-cols-2 auto-cols-auto">
-            <div className="col-span-2">
+        <div className="bg-purple-100">
+            <div className="flex flex-col items-center">
                 <InfoPanelStatic />
             </div>
 
-            <div className="mx-auto min-w-[10rem] max-w-4xl p-4 border-8 bg-yellow-50 sm:bg-purple-500 select-none">
-                <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
-            </div>
-
-            <div className="">
-                <MenuHeader />
-                <Menu />
-                <div className="info text-xs bg-blue-100 flex justify-between">
-                    <InfoPanel />
-                    <span className="text">copy</span>
+            <div className="flex sm:justify-center flex-wrap sm:flex-nowrap">
+                <div
+                    className="flex-none sm:flex-1 w-full min-h-[605px] max-w-4xl
+                        flex items-center justify-center
+                        p-4 border-8 bg-yellow-50 sm:bg-purple-500 select-none"
+                >
+                    <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
+                </div>
+                <div className="">
+                    <MenuHeader />
+                    <Menu />
+                    <div className="info text-xs bg-blue-100 flex justify-between">
+                        <InfoPanel />
+                        <span className="text">copy</span>
+                    </div>
                 </div>
             </div>
 
