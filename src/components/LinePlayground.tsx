@@ -260,19 +260,37 @@ function InfoPanel() {
     // TODO: add buttons +/- for points
     // TODO: define stroke shadow colors
     return (
-        <div className="">
-            <div className="w-6 h-6">
-                <InfoIcon />
+        <div className="flex">
+            {/* Buttons */}
+            <div className="flex items-center space-x-1">
+                <div
+                    className="remove-point
+                        w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
+                        flex items-center justify-center"
+                    title="Remove point (min is 2)"
+                >-</div> {/* TODO: maybe: background-color: #60a5fa; (blue-400) color: white; border: 1px solid white */}
+                <div
+                    className="add-point
+                        w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
+                        flex items-center justify-center"
+                    title="Add point (maximum 7)"
+                >+</div>
+                <div className="w-4 h-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none">
+                    <InfoIcon />
+                </div>
             </div>
-            <span className="points">
-                [
-                {points.map((pt, idx) => {
-                    const sep = idx === points.length - 1 ? '' : ',';
-                    const s = JSON.stringify(pt);
-                    return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
-                })}
-                ]
-            </span>
+
+            {/* Generated text */}
+            <div className="ml-1 text-xs bg-blue-100 flex items-center justify-between">
+                <span>
+                    [{points.map((pt, idx) => {
+                        const sep = idx === points.length - 1 ? '' : ',';
+                        const s = JSON.stringify(pt);
+                        return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
+                    })}]
+                </span>
+                <span className="">copy</span>
+            </div>
         </div>
     );
 }
@@ -300,17 +318,18 @@ function LinePlayground() {
                 <div
                     className="flex-none sm:flex-1 w-full min-h-[605px] max-w-4xl
                         flex items-center justify-center
-                        p-4 border-8 bg-yellow-50 sm:bg-purple-500 select-none"
+                        p-4 border-8 bg-yellow-50 sm:bg-purple-500 relative select-none"
                 >
                     <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
+
+                    <div className="absolute left-2 bottom-2">
+                        <InfoPanel />
+                    </div>
                 </div>
+
                 <div className="">
                     <MenuHeader />
                     <Menu />
-                    <div className="info text-xs bg-blue-100 flex justify-between">
-                        <InfoPanel />
-                        <span className="text">copy</span>
-                    </div>
                 </div>
             </div>
 
