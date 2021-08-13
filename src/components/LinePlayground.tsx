@@ -268,11 +268,13 @@ function CombinedPathPoints() {
 }
 
 function PathInfo({ expanded }: { expanded: boolean; }) {
-    const { width } = useSpring({
-        width: expanded ? '100%' : '0%', config: { tension: 700 }
+    const { width, opacity } = useSpring({
+        width: expanded ? '100%' : '0%',
+        opacity: expanded ? 1 : 0,
+        config: { tension: 700 },
     });
     return (
-        <a.div style={{ width }} className="ml-1 text-xs flex items-center justify-between overflow-hidden">
+        <a.div style={{ width, opacity }} className="ml-1 text-xs flex items-center justify-between overflow-hidden">
             <CombinedPathPoints />
             <span className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none">
                 <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
