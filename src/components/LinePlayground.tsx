@@ -227,20 +227,8 @@ function Menu() {
     );
 }
 
-function InfoPanelHint() {
-    //const [hint] = useAtom(LineHintIdxAtom);
+function InfoPanelStatic() {
     return (
-        // <span className="default">
-        //     {
-        //         hint === -1 ?
-        //             (<>
-        //                 <p>Toggle each of the curve types to activate / deactivate the curve.</p>
-        //                 <p>You can also add/remove/drag the points to change the shape of the curve.</p>
-        //             </>)
-        //             :
-        //             <p>{CURVEINFO[hint].info}</p>
-        //     }
-        // </span>
         <span className="default">
             <p>Toggle each of the curve types to activate / deactivate the curve.</p>
             <p>You can also add/remove/drag the points to change the shape of the curve.</p>
@@ -267,10 +255,6 @@ function InfoPanel() {
 const tooltipStyles = css({
     maxWidth: '20rem',
     backgroundColor: '#28284e !important',
-    // 'place-right &::after': {
-    //     borderLeftColor: 'red !important',
-    //     // borderLeftColor: '#28284e !important',
-    // }
 });
 
 function HintTooltip() {
@@ -283,7 +267,7 @@ function HintTooltip() {
 function LinePlayground() {
     return (
         <div className="bg-purple-100  ">
-            <InfoPanelHint />
+            <InfoPanelStatic />
             <div className="max-w-4xl mx-auto min-w-[10rem] flex-1 p-4 border-8 select-none bg-yellow-50 sm:bg-purple-500">
                 <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
             </div>
