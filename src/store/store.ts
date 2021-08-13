@@ -16,7 +16,8 @@ namespace Storage {
     };
 
     export let initialData: Store = {
-        points: [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]],
+        points: [[16, 255], [161, 178], [586, 304], [352, 71], [61, 442], [304, 342], [586, 586]],
+        // points: [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]],
         active: CURVEINFO.map((curve, idx) => ({ idx, active: curve.active })),
         nActive: 7,
     };
