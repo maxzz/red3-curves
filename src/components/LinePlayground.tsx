@@ -266,17 +266,19 @@ function HintTooltip() {
 
 function LinePlayground() {
     return (
-        <div className="bg-purple-100">
-            <InfoPanelStatic />
+        <div className="bg-purple-100 grid grid-cols-2 auto-cols-auto">
+            <div className="col-span-2">
+                <InfoPanelStatic />
+            </div>
 
-            <div className="flex-1 mx-auto min-w-[10rem] max-w-4xl p-4 border-8 bg-yellow-50 sm:bg-purple-500 select-none">
+            <div className="mx-auto min-w-[10rem] max-w-4xl p-4 border-8 bg-yellow-50 sm:bg-purple-500 select-none">
                 <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
             </div>
 
             <div className="">
                 <MenuHeader />
                 <Menu />
-                <div className="info h-20 p-2 text-xs rounded bg-blue-100 flex justify-between">
+                <div className="info text-xs bg-blue-100 flex justify-between">
                     <InfoPanel />
                     <span className="text">copy</span>
                 </div>
