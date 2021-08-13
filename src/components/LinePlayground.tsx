@@ -184,6 +184,14 @@ const CheckboxBar = styled('div', {
     },
 });
 
+function InfoIcon() {
+    return (
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+    );
+}
+
 function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     const [value, setValue] = useAtom(lineCheckAtom);
     const checked = value(idx);
@@ -196,10 +204,8 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
     return (
         <label className="flex items-center cursor-pointer" key={idx}>
             {/* Info icon */}
-            <div className="mr-1 text-gray-600" data-tip="" data-class={`${tooltipStyles()}`} {...hoverRef()}>
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+            <div className="mr-1 h-6 w-6 text-gray-600" data-tip="" data-class={`${tooltipStyles()}`} {...hoverRef()}>
+                <InfoIcon />
             </div>
             <div className="flex items-center">
                 {/* Checkbox */}
@@ -250,16 +256,24 @@ function InfoPanelStatic() {
 function InfoPanel() {
     const [points] = useAtom(pointsAtom);
     const [dragginPoint] = useAtom(DraggingPointAtom);
+    // TODO: position over SVG
+    // TODO: add buttons +/- for points
+    // TODO: define stroke shadow colors
     return (
-        <span className="points">
-            [
-            {points.map((pt, idx) => {
-                const sep = idx === points.length - 1 ? '' : ',';
-                const s = JSON.stringify(pt);
-                return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
-            })}
-            ]
-        </span>
+        <div className="">
+            <div className="w-6 h-6">
+                <InfoIcon />
+            </div>
+            <span className="points">
+                [
+                {points.map((pt, idx) => {
+                    const sep = idx === points.length - 1 ? '' : ',';
+                    const s = JSON.stringify(pt);
+                    return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
+                })}
+                ]
+            </span>
+        </div>
     );
 }
 
