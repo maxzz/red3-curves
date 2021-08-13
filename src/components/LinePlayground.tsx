@@ -257,7 +257,7 @@ function CombinedPathPoints() {
     const [points] = useAtom(pointsAtom);
     const [dragginPoint] = useAtom(DraggingPointAtom);
     return (
-        <span>
+        <span className="flex-none">
             [{points.map((pt, idx) => {
                 const sep = idx === points.length - 1 ? '' : ',';
                 const s = JSON.stringify(pt);
@@ -268,19 +268,23 @@ function CombinedPathPoints() {
 }
 
 function PathInfo({ expanded }: { expanded: boolean; }) {
+    const { width } = useSpring({
+        width: expanded ? '100%' : '0%', config: { tension: 700 }
+    });
     return (
-        <div className="ml-1 text-xs flex items-center justify-between">
+        <a.div style={{ width }} className="ml-1 text-xs flex items-center justify-between overflow-hidden">
             <CombinedPathPoints />
             <span className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none">
                 <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                 </svg>
             </span>
-        </div>
+        </a.div>
     );
 }
 
 function InfoPanel() {
+    const [expanded, setExpanded] = React.useState(false);
     return (
         <div className="flex">
             {/* Buttons */}
@@ -297,13 +301,14 @@ function InfoPanel() {
                 >+</div>
                 <div className="w-4 h-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
                     title="Show/Hide coordinates of points"
+                    onClick={() => setExpanded((prev) => !prev)}
                 >
                     <InfoIcon />
                 </div>
             </div>
 
             {/* Generated text */}
-            <PathInfo expanded={true} />
+            <PathInfo expanded={expanded} />
         </div>
     );
 }
