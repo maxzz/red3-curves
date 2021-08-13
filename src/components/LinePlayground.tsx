@@ -15,6 +15,7 @@ import lineTypeUrl2 from '../assets/dashed-line2.svg';
 
 const svgWidth = 600;
 const svgHeight = 600;
+const dotRadius = 14;
 
 const dotStyles = css({
     fill: '#00d7ff5a',
@@ -30,14 +31,14 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
     const ref = React.useRef(null);
     const bind = useDrag(({ event, dragging }) => {
         let pt = pointer(event, ref.current).map(coord => +withDigits(coord, 0)) as [number, number];
-        pt[0] = clamp(pt[0], 14 + 32, svgWidth - 14); // radius + text offset
-        pt[1] = clamp(pt[1], 14 + 8 + 24, svgHeight - 14); // radius + text offset + font-size (1.5rem = 24px)
+        pt[0] = clamp(pt[0], dotRadius, svgWidth - dotRadius);
+        pt[1] = clamp(pt[1], dotRadius, svgHeight - dotRadius);
         setPoint({ idx, value: pt });
         setDraggingPoint(dragging ? idx : -1);
     });
     return (
         <>
-            <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={14} />
+            <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={dotRadius} />
             <path
                 transform={`translate(${cx - 10.5}, ${cy - 10.5}) scale(1.2)`} fill="white" stroke="none"
                 d="M.6 3.7A7.2 7.2 0 014 .5 5 5 0 015.6 0l.3 2a7 7 0 00-2 1A6.3 6.3 0 002 4.4zm-.3.9A6.7 6.7 0 000 5.9a9.6 9.6 0 000 1.4h.6a6.3 6.3 0 011-2.1z"
@@ -55,6 +56,7 @@ const dotTextStyles = css({
 
 function DotText(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
+    
     return (
         <text>
             <tspan className={dotTextStyles()} x={cx - 32} y={cy - 8}>{idx + 1}</tspan>
