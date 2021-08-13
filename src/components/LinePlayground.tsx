@@ -15,7 +15,7 @@ import lineTypeUrl2 from '../assets/dashed-line2.svg';
 
 const svgWidth = 600;
 const svgHeight = 600;
-const dotRadius = 14;
+const dotRadius = 16; // radius 14 plus 2 for stroke
 
 const dotStyles = css({
     fill: '#00d7ff5a',
@@ -38,7 +38,7 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
     });
     return (
         <>
-            <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={dotRadius} />
+            <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={dotRadius - 2} />
             <path
                 transform={`translate(${cx - 10.5}, ${cy - 10.5}) scale(1.2)`} fill="white" stroke="none"
                 d="M.6 3.7A7.2 7.2 0 014 .5 5 5 0 015.6 0l.3 2a7 7 0 00-2 1A6.3 6.3 0 002 4.4zm-.3.9A6.7 6.7 0 000 5.9a9.6 9.6 0 000 1.4h.6a6.3 6.3 0 011-2.1z"
