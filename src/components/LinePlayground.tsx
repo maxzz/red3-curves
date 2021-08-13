@@ -55,11 +55,12 @@ const dotTextStyles = css({
 });
 
 function DotText(props: { idx: number, cx: number, cy: number; }) {
-    const { idx, cx, cy } = props;
-    
+    let { idx, cx, cy } = props;
+    cx = cx - 32 < 0 ? cx + 16 : cx - 32;
+    cy = cy - dotRadius - 8 < 0 ? cy + 24 : cy - 8;
     return (
         <text>
-            <tspan className={dotTextStyles()} x={cx - 32} y={cy - 8}>{idx + 1}</tspan>
+            <tspan className={dotTextStyles()} x={cx} y={cy}>{idx + 1}</tspan>
         </text>
     );
 }
