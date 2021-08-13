@@ -18,6 +18,11 @@ D3 curves playground.
         [ ] TODO: Find how to set fill on embedded SVG.
         [ ] BUG: In Chrome DevTools with dimentions responsive pointer events move points to negative coordinates.
         [ ] TODO: When loading points, make sure the coordinates are inside SVG boundary.
+        [ ] Controls poins
+            [ ] position over SVG extra menu
+            [ ] Add buttons +/- to modify number of points
+            [ ] Define stroke and shadow colors
+
 
 #### Links, references, credits
 

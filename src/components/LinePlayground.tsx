@@ -276,7 +276,10 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
     return (
         <a.div style={{ width, opacity }} className="ml-1 text-xs flex items-center justify-between overflow-hidden">
             <CombinedPathPoints />
-            <span className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none">
+            <span 
+                className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
+                title="Copy the coordinates of points on the clipboard"
+            >
                 <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                 </svg>
@@ -294,21 +297,20 @@ function InfoPanel() {
                 <div
                     className="w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center"
-                    title="Remove point (min is 2)"
+                    title="Remove point (minimnum is 2 points)"
                 >-</div>
                 <div
                     className="w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center"
-                    title="Add point (maximum 7)"
+                    title="Add point (maximum is 7 points)"
                 >+</div>
                 <div className="w-4 h-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
-                    title="Show/Hide coordinates of points"
+                    title="Show/Hide the coordinates of points"
                     onClick={() => setExpanded((prev) => !prev)}
                 >
                     <InfoIcon />
                 </div>
             </div>
-
             {/* Generated text */}
             <PathInfo expanded={expanded} />
         </div>
