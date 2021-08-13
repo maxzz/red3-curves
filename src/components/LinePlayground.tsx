@@ -281,7 +281,7 @@ function InfoPanel() {
             </div>
 
             {/* Generated text */}
-            <div className="ml-1 text-xs bg-blue-100 flex items-center justify-between">
+            <div className="ml-1 text-xs flex items-center justify-between">
                 <span>
                     [{points.map((pt, idx) => {
                         const sep = idx === points.length - 1 ? '' : ',';
@@ -289,7 +289,11 @@ function InfoPanel() {
                         return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
                     })}]
                 </span>
-                <span className="">copy</span>
+                <span className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none">
+                    <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                    </svg>
+                </span>
             </div>
         </div>
     );
