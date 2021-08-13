@@ -253,11 +253,11 @@ function InfoPanelStatic() {
     );
 }
 
-function CombinedPathPoints() {
+function CombinedPathPoints(props: any, ref: React.Ref<HTMLSpanElement>) {
     const [points] = useAtom(pointsAtom);
     const [dragginPoint] = useAtom(DraggingPointAtom);
     return (
-        <span className="flex-none">
+        <span ref={ref} className="flex-none">
             [{points.map((pt, idx) => {
                 const sep = idx === points.length - 1 ? '' : ',';
                 const s = JSON.stringify(pt);
@@ -267,16 +267,21 @@ function CombinedPathPoints() {
     );
 }
 
+const CombinedPathPointsRef = React.forwardRef(CombinedPathPoints);
+
 function PathInfo({ expanded }: { expanded: boolean; }) {
     const { width, opacity } = useSpring({
         width: expanded ? '100%' : '0%',
         opacity: expanded ? 1 : 0,
         config: { tension: 700 },
     });
+    const textRef = React.useRef(null);
+    console.log('ref', textRef);
+
     return (
         <a.div style={{ width, opacity }} className="ml-1 text-xs flex items-center justify-between overflow-hidden">
-            <CombinedPathPoints />
-            <span 
+            <CombinedPathPointsRef ref={textRef} />
+            <span
                 className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
                 title="Copy the coordinates of points on the clipboard"
             >
