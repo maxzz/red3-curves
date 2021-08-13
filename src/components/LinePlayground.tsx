@@ -66,7 +66,6 @@ function DotText(props: { idx: number, cx: number, cy: number; }) {
 }
 
 const LinePath = styled('path', {
-    strokeWidth: '5',
     strokeLinejoin: 'round',
     fill: 'none',
     pointerEvents: 'none',
@@ -78,18 +77,30 @@ const LinePath = styled('path', {
     }
 });
 
+//stroke: #7cdb77; stroke-width: 7;
+
 function LinePathes() {
     const [linePathes] = useAtom(linePathesAtom);
     const [lines] = useAtom(linesAtom);
     return (
         <>
             {lines.map((line) => (line.active &&
-                <LinePath
-                    key={line.idx}
-                    d={linePathes[line.idx]}
-                    lineStyle={CURVEINFO[line.idx].lineStyle}
-                    stroke={`${colorScale(CURVEINFO[line.idx].grpIdx)}cf`}
-                />
+                <React.Fragment key={line.idx}>
+                    <LinePath
+                        //key={`shadow${line.idx}`}
+                        d={linePathes[line.idx]}
+                        lineStyle={CURVEINFO[line.idx].lineStyle}
+                        stroke={`red`}
+                        strokeWidth={7}
+                    />
+                    <LinePath
+                        //key={line.idx}
+                        d={linePathes[line.idx]}
+                        lineStyle={CURVEINFO[line.idx].lineStyle}
+                        stroke={`${colorScale(CURVEINFO[line.idx].grpIdx)}cf`}
+                        strokeWidth={5}
+                    />
+                </React.Fragment>
             ))}
         </>
     );
