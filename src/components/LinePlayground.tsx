@@ -7,14 +7,14 @@ import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { useDrag, useHover } from 'react-use-gesture';
 import { pointer } from '../hooks/pointer';
+import { clamp, withDigits } from '../utils/numbers';
 import Tooltip from 'react-tooltip';
 import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
 
-function withDigits(value: number, digits: number = 2): string {
-    return value.toFixed(Math.max(Math.min(digits, 20), 0));
-}
+const svgWidth = 600;
+const svgHeight = 600;
 
 const dotStyles = css({
     fill: '#00d7ff5a',
@@ -29,7 +29,10 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
     const setDraggingPoint = useUpdateAtom(DraggingPointAtom);
     const ref = React.useRef(null);
     const bind = useDrag(({ event, dragging }) => {
-        setPoint({ idx, value: pointer(event, ref.current).map(coord => +withDigits(coord, 0)) as [number, number] });
+        let pt = pointer(event, ref.current).map(coord => +withDigits(coord, 0)) as [number, number];
+        pt[0] = clamp(pt[0], 14 + 32, svgWidth - 14); // radius + text offset
+        pt[1] = clamp(pt[1], 14 + 8 + 24, svgHeight - 14); // radius + text offset + font-size (1.5rem = 24px)
+        setPoint({ idx, value: pt });
         setDraggingPoint(dragging ? idx : -1);
     });
     return (
@@ -44,8 +47,8 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
 }
 
 const dotTextStyles = css({
-    fill: '#0018aa',
-    stroke: '#ffffff40',
+    fill: '#6f88f8',
+    stroke: '#00000040',
     strokeWidth: '1',
     fontSize: '1.5rem',
 });
@@ -92,7 +95,7 @@ function LinePathes() {
 function Viewer({ svgWidth, svgHeight }: { svgWidth: number, svgHeight: number; }) {
     const [points] = useAtom(pointsAtom);
     return (
-        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="select-none bg-yellow-50">
+        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="">
             <g>
                 {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
                 <LinePathes />
@@ -275,27 +278,22 @@ function HintTooltip() {
 }
 
 function LinePlayground() {
-    const svgWidth = 600;
-    const svgHeight = 600;
-
     return (
-        <>
-            <div className="bg-purple-100  ">
-                <InfoPanelHint />
-                <div className="max-w-4xl min-w-[10rem] flex-1">
-                    <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
-                </div>
-                <div className="min-w-[23rem] w-[30rem]">
-                    <MenuHeader />
-                    <Menu />
-                    <div className="info h-20 p-2 text-xs rounded bg-blue-100 flex justify-between">
-                        <InfoPanel />
-                        <span className="text">copy</span>
-                    </div>
-                </div>
-                <HintTooltip />
+        <div className="bg-purple-100  ">
+            <InfoPanelHint />
+            <div className="max-w-4xl mx-auto min-w-[10rem] flex-1 p-4 border-8 select-none bg-yellow-50 sm:bg-purple-500">
+                <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
             </div>
-        </>
+            <div className="">
+                <MenuHeader />
+                <Menu />
+                <div className="info h-20 p-2 text-xs rounded bg-blue-100 flex justify-between">
+                    <InfoPanel />
+                    <span className="text">copy</span>
+                </div>
+            </div>
+            <HintTooltip />
+        </div>
     );
 }
 
