@@ -278,7 +278,7 @@ function HintTooltip() {
 function LinePlayground() {
     return (
         <div className="bg-purple-100">
-            <div className="flex flex-col items-center">
+            <div className="flex-col items-center hidden sm:flex">
                 <InfoPanelStatic />
             </div>
 
