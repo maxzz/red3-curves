@@ -12,6 +12,7 @@ import Tooltip from 'react-tooltip';
 import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
+import { useCopyToClipboard } from 'react-use';
 
 const svgWidth = 600;
 const svgHeight = 600;
@@ -275,8 +276,17 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
         opacity: expanded ? 1 : 0,
         config: { tension: 700 },
     });
-    const textRef = React.useRef(null);
-    console.log('ref', textRef);
+    const textRef = React.useRef<HTMLSpanElement>(null);
+    const [copyState, copyToClipboard] = useCopyToClipboard();
+    const [showResult, setShowResult] = React.useState(false);
+
+    
+
+    React.useEffect(() => {
+        console.log('copyState', copyState);
+     }, [copyState]);
+
+     console.log('OUT copyState', copyState);
 
     return (
         <a.div style={{ width, opacity }} className="ml-1 text-xs flex items-center justify-between overflow-hidden">
@@ -284,11 +294,18 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
             <span
                 className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
                 title="Copy the coordinates of points on the clipboard"
+                onClick={() => textRef.current && copyToClipboard(textRef.current.innerText)}
             >
                 <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                 </svg>
             </span>
+
+            <div className="">
+                {copyState.error
+                    ? <p>Unable to copy value: {copyState.error.message}</p>
+                    : <p>Copied</p>}
+            </div>
         </a.div>
     );
 }
