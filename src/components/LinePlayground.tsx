@@ -273,7 +273,7 @@ const CombinedPathPointsRef = React.forwardRef(CombinedPathPoints);
 function PathInfo({ expanded }: { expanded: boolean; }) {
     const { width, opacity } = useSpring({ width: expanded ? '100%' : '0%', opacity: expanded ? 1 : 0, config: { tension: 700 }, });
     const textRef = React.useRef<HTMLSpanElement>(null);
-    const [copyResult, copy] = useClipcoardCopy();
+    const [copyResult, copy] = useClipcoardCopy({ msOk: 200 });
     return (
         <div className="">
             <a.div style={{ width, opacity }} className="relative ml-1 text-xs flex items-center justify-between">
@@ -288,7 +288,7 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
                     </svg>
                 </span>
                 {copyResult.message && <div className="absolute right-5 -top-1/2">
-                    <div className={`p-2 rounded shadow-md ${copyResult.error ? 'bg-[red] text-white': 'bg-[green] text-white'}`}>{copyResult.error ? 'Copy failed (check console)' : 'Copied'}</div>
+                    <div className={`p-2 rounded shadow-md ${copyResult.error ? 'bg-[red] text-white' : 'bg-[green] text-white'}`}>{copyResult.error ? 'Copy failed (check console)' : 'Copied'}</div>
                 </div>}
             </a.div>
         </div>
