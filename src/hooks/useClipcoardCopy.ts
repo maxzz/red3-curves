@@ -10,9 +10,10 @@ export default function useClipcoardCopy(): readonly [{ error: boolean; message:
                 await clipboardCopy(text);
                 setCopyResult({ error: false, message: 'Copied' });
             } catch (error) {
+                console.error(error);
                 setCopyResult({ error: true, message: error });
             }
-            setTimeout(() => { setCopyResult({ error: false, message: '' }); }, 1000); // re-entrancy is OK here
+            setTimeout(() => { setCopyResult({ error: false, message: '' }); }, 1000); // reset. re-entrancy is OK here.
         }
     }
 

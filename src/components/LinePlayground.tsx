@@ -271,32 +271,27 @@ function CombinedPathPoints(props: any, ref: React.Ref<HTMLSpanElement>) {
 const CombinedPathPointsRef = React.forwardRef(CombinedPathPoints);
 
 function PathInfo({ expanded }: { expanded: boolean; }) {
-    const { width, opacity } = useSpring({
-        width: expanded ? '100%' : '0%',
-        opacity: expanded ? 1 : 0,
-        config: { tension: 700 },
-    });
+    const { width, opacity } = useSpring({ width: expanded ? '100%' : '0%', opacity: expanded ? 1 : 0, config: { tension: 700 }, });
     const textRef = React.useRef<HTMLSpanElement>(null);
     const [copyResult, copy] = useClipcoardCopy();
     return (
-        <a.div style={{ width, opacity }} className="ml-1 text-xs flex items-center justify-between overflow-hidden">
-            <CombinedPathPointsRef ref={textRef} />
-            <span
-                className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
-                title="Copy the coordinates of points on the clipboard"
-                onClick={async () => {
-                    copy(textRef.current?.innerText);
-                }}
-            >
-                <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-                </svg>
-            </span>
-
-            {copyResult.message && <div className="">
-                <div className={`${copyResult.error}`}>{copyResult.error ? 'Copy failed. check console' : 'Copied'}</div>
-            </div>}
-        </a.div>
+        <div className="">
+            <a.div style={{ width, opacity }} className="relative ml-1 text-xs flex items-center justify-between">
+                <CombinedPathPointsRef ref={textRef} />
+                <span
+                    className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
+                    title="Copy the coordinates of points to clipboard"
+                    onClick={async () => copy(textRef.current?.innerText)}
+                >
+                    <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                    </svg>
+                </span>
+                {copyResult.message && <div className="absolute right-5 -top-1/2">
+                    <div className={`p-2 rounded shadow-md ${copyResult.error ? 'bg-[red] text-white': 'bg-[green] text-white'}`}>{copyResult.error ? 'Copy failed (check console)' : 'Copied'}</div>
+                </div>}
+            </a.div>
+        </div>
     );
 }
 
