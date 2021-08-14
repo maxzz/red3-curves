@@ -9,7 +9,13 @@ function App() {
         <div className="App">
             <div className="flex">
                 <img src={logoImage} alt="logo" />
-                <div className="flex-1 self-center text-[4rem] font-extrabold">D3 cusrves</div>
+                <div className="flex-1 self-center text-4xl font-extrabold">D3 cusrves</div>
+                <svg viewBox="0 0 300 300">
+                    <text>
+                        <tspan className="text-[2.5rem]" fill="black" x={0} y={'50%'}>D3 curves</tspan>
+                        <tspan className="text-4xl" fill="black" x={0} y={'70%'}>D3 curves</tspan>
+                    </text>
+                </svg>
             </div>
             <LinePlayground />
             {/* <OldLinePlayground /> */}
