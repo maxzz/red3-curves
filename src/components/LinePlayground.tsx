@@ -12,7 +12,7 @@ import Tooltip from 'react-tooltip';
 import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
-import clipboardCopy from 'clipboard-copy';
+import useClipcoardCopy from '../hooks/useClipcoardCopy';
 
 const svgWidth = 600;
 const svgHeight = 600;
@@ -270,26 +270,6 @@ function CombinedPathPoints(props: any, ref: React.Ref<HTMLSpanElement>) {
 
 const CombinedPathPointsRef = React.forwardRef(CombinedPathPoints);
 
-function useClipcoardCopy(): readonly [{ error: boolean; message: string; }, (text?: string) => Promise<void>] {
-    const [copyResult, setCopyResult] = React.useState({ error: false, message: '' });
-
-    async function copy(text?: string) {
-        if (text) {
-            try {
-                console.log('copy');
-                
-                await clipboardCopy(text);
-                setCopyResult({ error: false, message: 'Copied' });
-            } catch (error) {
-                setCopyResult({ error: true, message: error });
-            }
-            setTimeout(() => { console.log('clear'); setCopyResult({ error: false, message: '' }); }, 1000);
-        }
-    }
-
-    return [copyResult, copy] as const;
-}
-
 function PathInfo({ expanded }: { expanded: boolean; }) {
     const { width, opacity } = useSpring({
         width: expanded ? '100%' : '0%',
@@ -297,10 +277,7 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
         config: { tension: 700 },
     });
     const textRef = React.useRef<HTMLSpanElement>(null);
-    //const [copyResult, setCopyResult] = React.useState({ error: false, message: '' });
-
     const [copyResult, copy] = useClipcoardCopy();
-
     return (
         <a.div style={{ width, opacity }} className="ml-1 text-xs flex items-center justify-between overflow-hidden">
             <CombinedPathPointsRef ref={textRef} />
