@@ -1,19 +1,17 @@
 import React from 'react';
 import clipboardCopy from 'clipboard-copy';
 
-export default function useClipcoardCopy(options: { msOk?: number, msError?: number; } = { msOk: 1000, msError: 1000 }): readonly [{ error: boolean; message: string; }, (text?: string) => Promise<void>] {
+export default function useClipcoardCopy(options: { msOk?: number, msError?: number; } = {}): readonly [{ error: boolean; message: string; }, (text?: string) => Promise<void>] {
     const [copyResult, setCopyResult] = React.useState({ error: false, message: '' });
-
-    console.log('oo', options);
 
     async function copy(text?: string) {
         if (text) {
-            let showtime = options.msOk;
+            let showtime = options.msOk || 400;
             try {
                 await clipboardCopy(text);
                 setCopyResult({ error: false, message: 'Copied' });
             } catch (error) {
-                showtime = options.msError;
+                showtime = options.msError || 1000;
                 console.error(error);
                 setCopyResult({ error: true, message: error });
             }

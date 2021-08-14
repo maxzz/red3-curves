@@ -273,7 +273,7 @@ const CombinedPathPointsRef = React.forwardRef(CombinedPathPoints);
 function PathInfo({ expanded }: { expanded: boolean; }) {
     const { width, opacity } = useSpring({ width: expanded ? '100%' : '0%', opacity: expanded ? 1 : 0, config: { tension: 700 }, });
     const textRef = React.useRef<HTMLSpanElement>(null);
-    const [copyResult, copy] = useClipcoardCopy({ msOk: 200 });
+    const [copyResult, copy] = useClipcoardCopy();
     return (
         <div className="">
             <a.div style={{ width, opacity }} className="relative ml-1 text-xs flex items-center justify-between">
