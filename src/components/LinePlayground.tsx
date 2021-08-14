@@ -12,6 +12,7 @@ import Tooltip from 'react-tooltip';
 import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
+import clipboardCopy from 'clipboard-copy';
 
 const svgWidth = 600;
 const svgHeight = 600;
@@ -276,6 +277,7 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
         config: { tension: 700 },
     });
     const textRef = React.useRef<HTMLSpanElement>(null);
+    const [copyResult, setCopyResult] = React.useState({ error: false, message: '' });
 
     return (
         <a.div style={{ width, opacity }} className="ml-1 text-xs flex items-center justify-between overflow-hidden">
@@ -283,8 +285,19 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
             <span
                 className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
                 title="Copy the coordinates of points on the clipboard"
-                onClick={() => {
-                    //textRef.current && copyToClipboard(textRef.current.innerText);
+                onClick={async () => {
+                    let s = textRef.current?.innerText || '';
+                    if (s) {
+                        console.log('copy', s);
+                        
+                        try {
+                            await clipboardCopy(s);
+                            setCopyResult({ error: false, message: 'Copied' });
+                        } catch (error) {
+                            setCopyResult({ error: true, message: error });
+                        }
+                        setTimeout(() => { setCopyResult({ error: false, message: '' }); }, 1000);
+                    }
                 }}
             >
                 <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -292,11 +305,9 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
                 </svg>
             </span>
 
-            {/* <div className="">
-                {copyState.error
-                    ? <p>Unable to copy value: {copyState.error.message}</p>
-                    : <p>Copied</p>}
-            </div> */}
+            {copyResult.message && <div className="">
+                <div className={`${copyResult.error}`}>{copyResult.error ? 'Copy failed. check console' : 'Copied'}</div>
+            </div>}
         </a.div>
     );
 }
