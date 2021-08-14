@@ -48,6 +48,12 @@ export type LinePointData = [number, number];
 
 export const pointsAtom = atomWithCallback<LinePointData[]>(Storage.initialData.points, (get, _) => Storage.save(get));
 
+export const activePointsAtom = atom<LinePointData[]>(
+    (get) => {
+        return get(pointsAtom).slice(0, get(nActiveAtom));
+    }
+);
+
 export const setPointAtom = atom(
     null,
     (get, set, { idx, value }: { idx: number; value: [number, number]; }) => {

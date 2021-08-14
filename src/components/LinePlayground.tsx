@@ -2,7 +2,7 @@ import React from 'react';
 import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
 import { useUpdateAtom } from 'jotai/utils';
-import { allLinesSetAtom, colorScale, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
+import { activePointsAtom, allLinesSetAtom, colorScale, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, nActiveAtom, pointsAtom, setPointAtom } from '../store/store';
 import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { clamp, withDigits } from '../utils/numbers';
@@ -108,7 +108,7 @@ function LinePathes() {
 }
 
 function Viewer({ svgWidth, svgHeight }: { svgWidth: number, svgHeight: number; }) {
-    const [points] = useAtom(pointsAtom);
+    const [points] = useAtom(activePointsAtom);
     return (
         <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="">
             <g>
@@ -255,7 +255,7 @@ function InfoPanelStatic() {
 }
 
 function CombinedPathPoints(props: any, ref: React.Ref<HTMLSpanElement>) {
-    const [points] = useAtom(pointsAtom);
+    const [points] = useAtom(pointsAtom); // TODO: use nActive to show italic
     const [dragginPoint] = useAtom(DraggingPointAtom);
     return (
         <span ref={ref} className="flex-none">
@@ -297,6 +297,8 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
 
 function InfoPanel() {
     const [expanded, setExpanded] = React.useState(false);
+    const [nActive, setNActive] = useAtom(nActiveAtom);
+    // const setNActive = useUpdateAtom(nActiveAtom);
     return (
         <div className="flex">
             {/* Buttons */}
@@ -305,11 +307,15 @@ function InfoPanel() {
                     className="w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center"
                     title="Remove point (minimnum is 2 points)"
+                    onClick={() => {
+                        setNActive(clamp(nActive - 1, 2, 7)); // setNActive((prev) => prev--); what???
+                    }}
                 >-</div>
                 <div
                     className="w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center"
                     title="Add point (maximum is 7 points)"
+                    onClick={() => setNActive(clamp(nActive + 1, 2, 7))}
                 >+</div>
                 <div className="w-4 h-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
                     title="Show/Hide the coordinates of points"
