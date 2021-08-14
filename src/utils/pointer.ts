@@ -1,4 +1,4 @@
-export function pointer(event: React.PointerEvent<Element> | PointerEvent, node?: HTMLElement | SVGElement | null): [number, number] {
+export default function pointer(event: React.PointerEvent<Element> | PointerEvent, node?: HTMLElement | SVGElement | null): [number, number] {
     if (node === undefined) node = event.currentTarget as any;
     if (node) {
         var svg = ((node as any).ownerSVGElement || node) as SVGSVGElement;

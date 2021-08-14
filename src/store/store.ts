@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import { atom, Getter } from 'jotai';
 import { atomWithDefault } from 'jotai/utils';
 import { InputData } from '../components/OldLinePlayground';
-import { atomWithCallback } from '../hooks/atomsX';
+import atomWithCallback from '../hooks/atomsX';
 import debounce from '../utils/debounce';
 import { CURVEINFO } from './datum';
 

@@ -5,14 +5,14 @@ import { useUpdateAtom } from 'jotai/utils';
 import { allLinesSetAtom, colorScale, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, pointsAtom, setPointAtom } from '../store/store';
 import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
-import { useDrag, useHover } from 'react-use-gesture';
-import { pointer } from '../hooks/pointer';
 import { clamp, withDigits } from '../utils/numbers';
+import { useDrag, useHover } from 'react-use-gesture';
+import pointer from '../utils/pointer';
 import Tooltip from 'react-tooltip';
+import useClipcoardCopy from '../hooks/useClipcoardCopy';
 import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
-import useClipcoardCopy from '../hooks/useClipcoardCopy';
 
 const svgWidth = 600;
 const svgHeight = 600;

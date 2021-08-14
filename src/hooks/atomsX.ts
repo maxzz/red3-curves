@@ -1,6 +1,6 @@
 import { atom, Getter, WritableAtom } from 'jotai';
 
-export function atomWithCallback<Value>(initialValue: Value, onValueChange: (get: Getter, nextValue: Value) => void): WritableAtom<Value, Value> {
+export default function atomWithCallback<Value>(initialValue: Value, onValueChange: (get: Getter, nextValue: Value) => void): WritableAtom<Value, Value> {
     const baseAtom = atom(initialValue);
     const derivedAtom = atom<Value, Value>(
         (get) => get(baseAtom),
