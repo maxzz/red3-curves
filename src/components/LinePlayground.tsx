@@ -304,16 +304,20 @@ function InfoPanel() {
             {/* Buttons */}
             <div className="flex items-center space-x-1">
                 <div
-                    className="w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
-                        flex items-center justify-center"
+                    className={`w-4 h-4 pb-1 text-green-900 border border-green-600 rounded shadow cursor-pointer select-none 
+                        flex items-center justify-center
+                        ${nActive > 2 ? 'bg-green-200' : 'bg-red-200'}
+                        `}
                     title="Remove point (minimnum is 2 points)"
                     onClick={() => {
                         setNActive(clamp(nActive - 1, 2, maxNPoints)); // setNActive((prev) => prev--); what???
                     }}
                 >-</div>
                 <div
-                    className="w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
-                        flex items-center justify-center"
+                    className={`w-4 h-4 pb-1 text-green-900 border border-green-600 rounded shadow cursor-pointer select-none 
+                        flex items-center justify-center
+                        ${nActive < maxNPoints ? 'bg-green-200' : 'bg-red-200'}
+                        `}
                     title="Add point (maximum is 7 points)"
                     onClick={() => setNActive(clamp(nActive + 1, 2, maxNPoints))}
                 >+</div>
