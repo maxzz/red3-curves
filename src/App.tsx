@@ -7,8 +7,9 @@ import logoImage from './assets/app-logo.svg';
 function App() {
     return (
         <div className="App">
-            <div className="">
+            <div className="flex">
                 <img src={logoImage} alt="logo" />
+                <div className="flex-1 self-center text-[4rem] font-extrabold">D3 cusrves</div>
             </div>
             <LinePlayground />
             {/* <OldLinePlayground /> */}
