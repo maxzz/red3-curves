@@ -270,6 +270,26 @@ function CombinedPathPoints(props: any, ref: React.Ref<HTMLSpanElement>) {
 
 const CombinedPathPointsRef = React.forwardRef(CombinedPathPoints);
 
+function useClipcoardCopy(): readonly [{ error: boolean; message: string; }, (text?: string) => Promise<void>] {
+    const [copyResult, setCopyResult] = React.useState({ error: false, message: '' });
+
+    async function copy(text?: string) {
+        if (text) {
+            try {
+                console.log('copy');
+                
+                await clipboardCopy(text);
+                setCopyResult({ error: false, message: 'Copied' });
+            } catch (error) {
+                setCopyResult({ error: true, message: error });
+            }
+            setTimeout(() => { console.log('clear'); setCopyResult({ error: false, message: '' }); }, 1000);
+        }
+    }
+
+    return [copyResult, copy] as const;
+}
+
 function PathInfo({ expanded }: { expanded: boolean; }) {
     const { width, opacity } = useSpring({
         width: expanded ? '100%' : '0%',
@@ -277,7 +297,9 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
         config: { tension: 700 },
     });
     const textRef = React.useRef<HTMLSpanElement>(null);
-    const [copyResult, setCopyResult] = React.useState({ error: false, message: '' });
+    //const [copyResult, setCopyResult] = React.useState({ error: false, message: '' });
+
+    const [copyResult, copy] = useClipcoardCopy();
 
     return (
         <a.div style={{ width, opacity }} className="ml-1 text-xs flex items-center justify-between overflow-hidden">
@@ -286,18 +308,7 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
                 className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
                 title="Copy the coordinates of points on the clipboard"
                 onClick={async () => {
-                    let s = textRef.current?.innerText || '';
-                    if (s) {
-                        console.log('copy', s);
-                        
-                        try {
-                            await clipboardCopy(s);
-                            setCopyResult({ error: false, message: 'Copied' });
-                        } catch (error) {
-                            setCopyResult({ error: true, message: error });
-                        }
-                        setTimeout(() => { setCopyResult({ error: false, message: '' }); }, 1000);
-                    }
+                    copy(textRef.current?.innerText);
                 }}
             >
                 <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
