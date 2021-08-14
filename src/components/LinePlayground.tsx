@@ -2,7 +2,7 @@ import React from 'react';
 import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
 import { useUpdateAtom } from 'jotai/utils';
-import { activePointsAtom, allLinesSetAtom, colorScale, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, nActiveAtom, pointsAtom, setPointAtom } from '../store/store';
+import { activePointsAtom, allLinesSetAtom, colorScale, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, maxNPointsAtom, nActiveAtom, pointsAtom, setPointAtom } from '../store/store';
 import { css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { clamp, withDigits } from '../utils/numbers';
@@ -297,8 +297,8 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
 
 function InfoPanel() {
     const [expanded, setExpanded] = React.useState(false);
-    const [nActive, setNActive] = useAtom(nActiveAtom);
-    // const setNActive = useUpdateAtom(nActiveAtom);
+    const [nActive, setNActive] = useAtom(nActiveAtom); // const setNActive = useUpdateAtom(nActiveAtom);
+    const [maxNPoints] = useAtom(maxNPointsAtom);
     return (
         <div className="flex">
             {/* Buttons */}
@@ -308,14 +308,14 @@ function InfoPanel() {
                         flex items-center justify-center"
                     title="Remove point (minimnum is 2 points)"
                     onClick={() => {
-                        setNActive(clamp(nActive - 1, 2, 7)); // setNActive((prev) => prev--); what???
+                        setNActive(clamp(nActive - 1, 2, maxNPoints)); // setNActive((prev) => prev--); what???
                     }}
                 >-</div>
                 <div
                     className="w-4 h-4 pb-1 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center"
                     title="Add point (maximum is 7 points)"
-                    onClick={() => setNActive(clamp(nActive + 1, 2, 7))}
+                    onClick={() => setNActive(clamp(nActive + 1, 2, maxNPoints))}
                 >+</div>
                 <div className="w-4 h-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
                     title="Show/Hide the coordinates of points"
