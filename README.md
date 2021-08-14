@@ -20,11 +20,11 @@ D3 curves playground.
         [ ] TODO: When loading points, make sure the coordinates are inside SVG boundary.
         [ ] Controls poins
             [x] Add buttons +/- to modify number of points
-            [ ] Add disabled state for +/- buttons
+            [x] Add disabled state for +/- buttons
             [x] Position buttons menu over SVG extra menu
             [ ] Add italic font for inactive buttons
             [ ] Define stroke and shadow colors
-            [ ] TODO: Why jotai does not provide prev value access in update atom function?
+        [ ] TODO: Why jotai does not provide prev value access in update atom function?
 
 #### Links, references, credits
 
