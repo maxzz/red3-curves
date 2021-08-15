@@ -12,10 +12,13 @@ function App() {
                 {/* <div className="flex-1 self-center text-4xl font-extrabold">D3 cusrves</div> */}
                 <div className="w-full h-full flex place-items-end bg-yellow-700">
                     {/* preserveAspectRatio="none" */}
-                    <svg className="h-[96px] bg-red-300" viewBox="0 0 500 96" preserveAspectRatio="none">
-                        <g style={{transform: 'scale(.3) translate(0px, 50px)'}}>
+                    <svg className="bg-red-300" viewBox="0 0 1800 100" preserveAspectRatio="xMinYMid">
+                        <g>
+                        {/* <g style={{transform: 'translate(0px, 50%)'}}> */}
+                        {/* <g style={{transform: 'scale(1) translate(0px, 50px)'}}> */}
                             <text>
-                                <tspan className="text-[96px] uppercase" fill="none" stroke="red" x={0} y={'30%'}>Data-Driven Documents Curves</tspan>
+                                <tspan className="text-[96px] font-black uppercase" fill="none" stroke="red" x={0} y={84}>Data-Driven Documents: Curves</tspan>
+                                {/* <tspan className="text-[96px] font-black uppercase" fill="none" stroke="red" x={0} y={'48'}>Data-Driven Documents: Curves</tspan> */}
                             </text>
                         </g>
                     </svg>
