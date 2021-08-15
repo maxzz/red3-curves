@@ -111,6 +111,7 @@ function Viewer({ svgWidth, svgHeight }: { svgWidth: number, svgHeight: number; 
     const [points] = useAtom(activePointsAtom);
     return (
         <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="">
+            {/* <rect x={0} y={0} width={'100%'} height={'100%'} fill='red' /> */} {/* corners */}
             <g>
                 {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
                 <LinePathes />
@@ -344,8 +345,9 @@ function LinePlayground() {
                 <div
                     className="flex-none w-full min-h-[605px] max-w-4xl
                         flex items-center justify-center
-                        p-4 border-8 bg-yellow-50 relative select-none
-                        lg:flex-1 lg:bg-purple-500"
+                        p-4 border-8 bg-yellow-100 relative select-none
+                        lg:flex-1 lg:bg-purple-500
+                        resize overflow-hidden"
                 >
                     <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
 
