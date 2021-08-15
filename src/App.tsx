@@ -35,9 +35,11 @@ function Header() {
 
 function App() {
     return (
-        <div className="App bg-yellow-50">
+        <div className="App h-screen flex flex-col bg-yellow-200">
             <Header />
-            <LinePlayground />
+            <div className="flex-1">
+                <LinePlayground />
+            </div>
             {/* <OldLinePlayground /> */}
         </div >
     );
