@@ -107,10 +107,10 @@ function LinePathes() {
     );
 }
 
-function Viewer({ svgWidth, svgHeight }: { svgWidth: number, svgHeight: number; }) {
+function Viewer({ svgWidth, svgHeight, ...rest }: { svgWidth: number, svgHeight: number; } & React.HTMLAttributes<SVGSVGElement>) {
     const [points] = useAtom(activePointsAtom);
     return (
-        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="">
+        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} {...rest} >
             {/* <rect x={0} y={0} width={'100%'} height={'100%'} fill='red' /> */} {/* corners */}
             <g>
                 {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
@@ -343,13 +343,16 @@ function LinePlayground() {
         <div className="">
             <div className="flex flex-wrap lg:flex-nowrap lg:justify-center">
                 <div
-                    className="flex-none w-full min-h-[605px] max-w-4xl
+                    // min-h-[605px] max-w-4xl
+                    className="flex-none w-full h-full
                         flex items-center justify-center
                         p-4 border-8 bg-yellow-100 relative select-none
+                        
                         lg:flex-1 lg:bg-purple-500
+
                         resize overflow-hidden"
                 >
-                    <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
+                    <Viewer svgWidth={svgWidth} svgHeight={svgHeight} className="w-full h-full" />
 
                     <div className="absolute left-2 bottom-2">
                         <InfoPanel />
