@@ -5,18 +5,16 @@ import OldLinePlayground from './components/OldLinePlayground';
 import logoImage from './assets/app-logo.svg';
 import { css } from '@stitches/react';
 
-const borderColor = '#8e34eb7a';
-const shadow = `-2px -2px 0 ${borderColor}, 2px -2px 0 ${borderColor}, -2px 2px 0 ${borderColor}, 2px 2px 0 ${borderColor}`;
-
 const HeroTitleStyles = css({
-    color: 'white', //#9494e4
-    textShadow: shadow,
+    $$borderColor: '#8e34eb7a', // '#8c01ff7a'
+    $$shadow: `-2px -2px 0 $$borderColor, 2px -2px 0 $$borderColor, -2px 2px 0 $$borderColor, 2px 2px 0 $$borderColor`,
+    color: '#9494e4',
+    textShadow: '$$shadow',
     'WebkitTextStroke': '1px #8c01ff',
     'WebkitTextFillColor': '#9494e4'
 });
 
 function Header() {
-    // const borderColor = '#8c01ff7a';
     return (
         <div className="w-full h-64 hidden md:flex items-center ">
             <img className="" src={logoImage} alt="logo" />
