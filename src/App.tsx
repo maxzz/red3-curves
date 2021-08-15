@@ -11,20 +11,22 @@ function Header() {
     return (
         <div className="w-full h-64 flex items-center ">
             <img className="" src={logoImage} alt="logo" />
-            <div className="text-[5rem] tracking-tighter font-black "
-                style={{
-                    color: 'white', //#9494e4
-                    textShadow: shadow,
-                    'WebkitTextStroke': '1px #8c01ff',
-                    'WebkitTextFillColor': '#9494e4'
-                }}
-            >
-                D3 Curves
-            </div>
-            <div className="">
-                <p>Toggle each of the curve types to activate / deactivate the curve.</p>
-                <p>You can also add/remove/drag the points to change the shape of the curve.</p>
 
+            <div className="">
+                <div className="text-[5rem] tracking-tighter font-black "
+                    style={{
+                        color: 'white', //#9494e4
+                        textShadow: shadow,
+                        'WebkitTextStroke': '1px #8c01ff',
+                        'WebkitTextFillColor': '#9494e4'
+                    }}
+                >
+                    D3 Curves
+                </div>
+                <div className="">
+                    <p>Toggle each of the curve types to activate / deactivate the curve.</p>
+                    <p>You can also add/remove/drag the points to change the shape of the curve.</p>
+                </div>
             </div>
         </div>
     );
