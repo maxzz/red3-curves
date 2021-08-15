@@ -23,9 +23,9 @@ function Header() {
             2px 2px 0 ${borderColor}
             `,
 
-                    '-webkit-text-stroke': '1px #8c01ff',
-                    '-webkit-text-fill-color': '#9494e4'
-                } as React.CSSProperties}
+                    'WebkitTextStroke': '1px #8c01ff',
+                    'WebkitTextFillColor': '#9494e4'
+                }}
             >
                 D3 Curves
             </div>
@@ -33,17 +33,25 @@ function Header() {
     );
 }
 
+function Background() {
+    return (
+        <div className="fixed w-full h-full bg-yellow-200 pointer-events-none z-[-1]"></div>
+    );
+}
+
 function App() {
     return (
-        <div className="App h-screen flex flex-col bg-yellow-200">
-            <Header />
-            <div className="flex-1">
-                <LinePlayground />
-            </div>
-            {/* <OldLinePlayground /> */}
-        </div >
+        <>
+            <Background />
+            <div className="App h-screen flex flex-col">
+                <Header />
+                <div className="flex-1">
+                    <LinePlayground />
+                </div>
+                {/* <OldLinePlayground /> */}
+            </div >
+        </>
     );
 }
 
 export default App;
-
