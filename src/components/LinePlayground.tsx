@@ -245,15 +245,6 @@ function Menu() {
     );
 }
 
-function InfoPanelStatic() {
-    return (
-        <>
-            <p>Toggle each of the curve types to activate / deactivate the curve.</p>
-            <p>You can also add/remove/drag the points to change the shape of the curve.</p>
-        </>
-    );
-}
-
 function CombinedPathPoints(props: any, ref: React.Ref<HTMLSpanElement>) {
     const [points] = useAtom(pointsAtom); // TODO: use nActive to show italic
     const [dragginPoint] = useAtom(DraggingPointAtom);
@@ -349,15 +340,12 @@ function HintTooltip() {
 function LinePlayground() {
     return (
         <div className="">
-            {/* <div className="flex-col items-center hidden sm:flex">
-                <InfoPanelStatic />
-            </div> */}
-
-            <div className="flex sm:justify-center flex-wrap sm:flex-nowrap">
+            <div className="flex flex-wrap lg:flex-nowrap lg:justify-center">
                 <div
-                    className="flex-none sm:flex-1 w-full min-h-[605px] max-w-4xl
+                    className="flex-none w-full min-h-[605px] max-w-4xl
                         flex items-center justify-center
-                        p-4 border-8 bg-yellow-50 sm:bg-purple-500 relative select-none"
+                        p-4 border-8 bg-yellow-50 relative select-none
+                        lg:flex-1 lg:bg-purple-500"
                 >
                     <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
 

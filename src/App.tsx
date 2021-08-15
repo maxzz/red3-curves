@@ -17,15 +17,17 @@ const HeroTitleStyles = css({
 function Header() {
     return (
         <div className="w-full h-64 hidden md:flex items-center ">
-            <img className="" src={logoImage} alt="logo" />
+            <div className="flex-shrink">
+                <img className="" src={logoImage} alt="logo" />
+            </div>
 
             <div className="ml-16 ">
                 <div className={`text-[5rem] tracking-tighter font-black ${HeroTitleStyles()}`}>
                     D3 Curves
                 </div>
-                <div className="">
-                    <p>Toggle each of the curve types to activate / deactivate the curve. <br className="hidden md:inline"/>
-                    You can also add/remove/drag the points to change the shape of the curve.</p>
+                <div className="text-base">
+                    <p>Toggle each of the curve types to activate / deactivate the curve. <br className="hidden md:inline" />
+                        You can also add/remove/drag the points to change the shape of the curve.</p>
                 </div>
             </div>
         </div>
