@@ -17,7 +17,8 @@ function App() {
                         {/* <g style={{transform: 'translate(0px, 50%)'}}> */}
                         {/* <g style={{transform: 'scale(1) translate(0px, 50px)'}}> */}
                             <text>
-                                <tspan className="text-[96px] font-black uppercase" fill="none" stroke="red" x={0} y={84}>Data-Driven Documents: Curves</tspan>
+                                <tspan className="text-[96px] font-black uppercase" fill="none" stroke="red" x={0} y={84}>D3 Curves</tspan>
+                                {/* <tspan className="text-[96px] font-black uppercase" fill="none" stroke="red" x={0} y={84}>Data-Driven Documents: Curves</tspan> */}
                                 {/* <tspan className="text-[96px] font-black uppercase" fill="none" stroke="red" x={0} y={'48'}>Data-Driven Documents: Curves</tspan> */}
                             </text>
                         </g>
