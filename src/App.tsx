@@ -7,27 +7,24 @@ import logoImage from './assets/app-logo.svg';
 function Header() {
     // const borderColor = '#8c01ff7a';
     const borderColor = '#8e34eb7a';
+    const shadow = `-2px -2px 0 ${borderColor}, 2px -2px 0 ${borderColor}, -2px 2px 0 ${borderColor}, 2px 2px 0 ${borderColor}`;
     return (
         <div className="w-full h-64 flex items-center ">
             <img className="" src={logoImage} alt="logo" />
             <div className="text-[5rem] tracking-tighter font-black "
-                style={{//bg-yellow-700 //bg-yellow-800
-
+                style={{
                     color: 'white', //#9494e4
-
-                    textShadow:
-                        `
-            -2px -2px 0 ${borderColor},
-            2px -2px 0 ${borderColor},
-            -2px 2px 0 ${borderColor},
-            2px 2px 0 ${borderColor}
-            `,
-
+                    textShadow: shadow,
                     'WebkitTextStroke': '1px #8c01ff',
                     'WebkitTextFillColor': '#9494e4'
                 }}
             >
                 D3 Curves
+            </div>
+            <div className="">
+                <p>Toggle each of the curve types to activate / deactivate the curve.</p>
+                <p>You can also add/remove/drag the points to change the shape of the curve.</p>
+
             </div>
         </div>
     );
