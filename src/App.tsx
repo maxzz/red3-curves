@@ -9,10 +9,10 @@ function Header() {
     const borderColor = '#8e34eb7a';
     const shadow = `-2px -2px 0 ${borderColor}, 2px -2px 0 ${borderColor}, -2px 2px 0 ${borderColor}, 2px 2px 0 ${borderColor}`;
     return (
-        <div className="w-full h-64 flex items-center ">
+        <div className="w-full h-64 hidden md:flex items-center ">
             <img className="" src={logoImage} alt="logo" />
 
-            <div className="">
+            <div className="ml-16 ">
                 <div className="text-[5rem] tracking-tighter font-black "
                     style={{
                         color: 'white', //#9494e4
@@ -24,8 +24,8 @@ function Header() {
                     D3 Curves
                 </div>
                 <div className="">
-                    <p>Toggle each of the curve types to activate / deactivate the curve.</p>
-                    <p>You can also add/remove/drag the points to change the shape of the curve.</p>
+                    <p>Toggle each of the curve types to activate / deactivate the curve. <br className="hidden md:inline"/>
+                    You can also add/remove/drag the points to change the shape of the curve.</p>
                 </div>
             </div>
         </div>
