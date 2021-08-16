@@ -348,9 +348,9 @@ function LinePlayground() {
                         flex items-center justify-center
                         p-4 border-8 bg-yellow-100 relative select-none
                         
-                        lg:flex-1 lg:bg-purple-500
-
-                        resize overflow-hidden"
+                        lg:flex-1 lg:bg-purple-500 max-w-[630px]
+                        "
+                        //resize overflow-hidden
                 >
                     <Viewer svgWidth={svgWidth} svgHeight={svgHeight} className="w-full h-full" />
 
