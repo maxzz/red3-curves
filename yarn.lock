@@ -227,6 +227,13 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@jalba/react-css-doodle@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@jalba/react-css-doodle/-/react-css-doodle-1.3.0.tgz#f786ba9a1c7583b092df9011b34e3b5a8ac831b2"
+  integrity sha512-vKSC5fIidJPNj0n4bBwjfx3vyWxlwgXs9Ai9SqGXFLdkZZNPqrEZipUAgPN1+wwY7IV5HprUkSJNOgPyq7XRgw==
+  dependencies:
+    css-doodle "^0.14.2"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -809,10 +816,10 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
-css-doodle@^0.19.2:
-  version "0.19.2"
-  resolved "https://registry.yarnpkg.com/css-doodle/-/css-doodle-0.19.2.tgz#0964e7376674f4c7d12f2408340ee1d978b2eb81"
-  integrity sha512-7FqC1GGep/jswoPkv0n4LpfqRXs1qNjZVgiLHv0OPbQDMovfb/SGnazcjLfZNd5j6Vk2iF+uH/lj5ARVsSNKIw==
+css-doodle@^0.14.2:
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/css-doodle/-/css-doodle-0.14.2.tgz#a9f8505e1ac9b628802e7f4cb396cc79b9aa6712"
+  integrity sha512-cLKmJrIyIcKEZ44pC6+/FnARFdnivEead0oNPkT/DgTv07eGQqqjDrBFcCHxxYQDKLxVqtYhj81U6nZasWpM3A==
 
 css-in-js-utils@^2.0.0:
   version "2.0.1"

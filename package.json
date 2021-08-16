@@ -12,6 +12,7 @@
         "deploy": "gh-pages -d dist"
     },
     "dependencies": {
+        "@jalba/react-css-doodle": "^1.3.0",
         "@react-spring/web": "^9.2.4",
         "@stitches/react": "^0.2.4",
         "clipboard-copy": "^4.0.1",
