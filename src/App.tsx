@@ -5,6 +5,7 @@ import OldLinePlayground from './components/OldLinePlayground';
 import logoImage from './assets/app-logo.svg';
 import { css } from '@stitches/react';
 import HeroAttraction from './components/HeroAttraction';
+import AppBackground from './assets/bkg/app-bkg.png';
 
 const HeroTitleStyles = css({
     $$borderColor: '#8e34eb7a', // '#8c01ff7a'
@@ -38,7 +39,10 @@ function Header() {
 
 function Background() {
     return (
-        <div className="fixed w-full h-full bg-yellow-200 pointer-events-none z-[-1]"></div>
+        <div className="fixed w-full h-full bg-yellow-200 pointer-events-none z-[-1]"
+        style={{background: `url(${AppBackground}), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0))`}}
+        >
+        </div>
     );
 }
 
