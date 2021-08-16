@@ -4,6 +4,7 @@ import LinePlayground from './components/LinePlayground';
 import OldLinePlayground from './components/OldLinePlayground';
 import logoImage from './assets/app-logo.svg';
 import { css } from '@stitches/react';
+import HeroAttraction from './components/HeroAttraction';
 
 const HeroTitleStyles = css({
     $$borderColor: '#8e34eb7a', // '#8c01ff7a'
@@ -30,6 +31,7 @@ function Header() {
                         You can also add/remove/drag the points to change the shape of the curve.</p>
                 </div>
             </div>
+            <HeroAttraction />
         </div>
     );
 }
