@@ -40,7 +40,7 @@ function Header() {
 function Background() {
     return (
         <div className="fixed w-full h-full bg-yellow-200 pointer-events-none z-[-1]"
-        style={{background: `url(${AppBackground}), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0))`}}
+        style={{background: `url(${AppBackground}), linear-gradient(to right, #6e88a0, #ffffff00)`}}
         >
         </div>
     );
