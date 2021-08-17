@@ -8,24 +8,24 @@ const background = () => "red";
 
 const FancyDoodle = doodle`
     :doodle {
-        @grid: 30x1 / 160px 200px;
-        transform: translate(50px, 135px);
+        @grid: 30x1 / 50% 100%;
+        transform: translate(50%, 30%);
     }
 
     @place-cell: center;
-    border-radius: 50%;
-    border: 2px solid #8de7eb;
-    @size: calc(100% / @size() * @i() - 10px);
+    border-radius: 20%;
+    border: 2px solid #c8c8f4;
+    @size: calc(50% / @size() * @i() - 10px);
     opacity: calc(@i() * 0.03);
 
-    border-top-color:#6174cb;
+    border-top-color:#8c8ce3;
     border-right-color:#6174cb;
 
     transform:
         rotateX(70deg)
         rotateY(6deg)
         translateY(calc(-@i() * 2 * 10px))
-        translateX(calc(@sin(@i() / 5) * @PI() * 10px));
+        translateX(calc(@sin(@i() / 5 + 2) * @PI() * 10px));
     `;
 
 // const FancyDoodle = doodle`
