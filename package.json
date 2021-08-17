@@ -16,6 +16,7 @@
         "@react-spring/web": "^9.2.4",
         "@stitches/react": "^0.2.4",
         "clipboard-copy": "^4.0.1",
+        "css-doodle": "^0.19.2",
         "d3": "^7.0.0",
         "jotai": "^1.3.0",
         "paper": "^0.12.15",

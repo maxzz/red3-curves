@@ -821,6 +821,11 @@ css-doodle@^0.14.2:
   resolved "https://registry.yarnpkg.com/css-doodle/-/css-doodle-0.14.2.tgz#a9f8505e1ac9b628802e7f4cb396cc79b9aa6712"
   integrity sha512-cLKmJrIyIcKEZ44pC6+/FnARFdnivEead0oNPkT/DgTv07eGQqqjDrBFcCHxxYQDKLxVqtYhj81U6nZasWpM3A==
 
+css-doodle@^0.19.2:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/css-doodle/-/css-doodle-0.19.2.tgz#0964e7376674f4c7d12f2408340ee1d978b2eb81"
+  integrity sha512-7FqC1GGep/jswoPkv0n4LpfqRXs1qNjZVgiLHv0OPbQDMovfb/SGnazcjLfZNd5j6Vk2iF+uH/lj5ARVsSNKIw==
+
 css-in-js-utils@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/css-in-js-utils/-/css-in-js-utils-2.0.1.tgz#3b472b398787291b47cfe3e44fecfdd9e914ba99"

@@ -6,7 +6,7 @@ import logoImage from './assets/app-logo.svg';
 import { css } from '@stitches/react';
 import HeroAttraction from './components/HeroAttraction';
 // import AppBackground from './assets/bkg/pattern.svg';
-import AppBackground from './assets/bkg/app-bkg.png';
+import AppBackground from './assets/bkg/app-bkg.png'; // graphcoders-lil-fiber.png
 
 const HeroTitleStyles = css({
     $$borderColor: '#8e34eb7a', // '#8c01ff7a'
