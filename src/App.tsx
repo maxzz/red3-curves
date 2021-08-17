@@ -24,16 +24,18 @@ function Header() {
                 <img className="" src={logoImage} alt="logo" />
             </div>
 
-            <div className="ml-16 ">
-                <div className={`text-[5rem] tracking-tighter font-black ${HeroTitleStyles()}`}>
-                    D3 Curves
+            <div className="w-full flex  items-center justify-between">
+                <div className="ml-16 ">
+                    <div className={`text-[5rem] tracking-tighter font-black ${HeroTitleStyles()}`}>
+                        D3 Curves
+                    </div>
+                    <div className="text-base">
+                        <p>Toggle each of the curve types to activate / deactivate the curve. <br className="hidden md:inline" />
+                            You can also add/remove/drag the points to change the shape of the curve.</p>
+                    </div>
                 </div>
-                <div className="text-base">
-                    <p>Toggle each of the curve types to activate / deactivate the curve. <br className="hidden md:inline" />
-                        You can also add/remove/drag the points to change the shape of the curve.</p>
-                </div>
+                <HeroAttraction />
             </div>
-            <HeroAttraction />
         </div>
     );
 }
