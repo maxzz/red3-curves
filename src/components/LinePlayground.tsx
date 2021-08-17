@@ -342,12 +342,14 @@ function LinePlayground() {
     return (
         <div className="">
             <div className="">
-                <div
-                    className=""
+                <div className="
+                    border-8 bg-yellow-100 lg:bg-purple-500
+                    relative select-none
+                    "
                 >
                     <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
 
-                    <div className="">
+                    <div className="absolute left-2 bottom-2">
                         <InfoPanel />
                     </div>
                 </div>
