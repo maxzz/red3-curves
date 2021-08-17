@@ -2,6 +2,8 @@
 
 D3 curves playground.
 
+![](src/assets/previews/2021-08-17_2-18-03.png)
+
 #### Road map
 
     [ ] Editor
