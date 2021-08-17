@@ -6,43 +6,43 @@ const gridGap = "2";
 
 const background = () => "red";
 
-const FancyDoodle = doodle`
-    @grid: 1 / 20vmin;
-    
-    clip-path: @shape(
-        split: 120;
-        frame: 15;
-        r: cos(t/10)^sin(t)^sin(2t)*.9;
-    );
-
-    background: linear-gradient(
-        @m3(hsl(calc(@t/@r(15, 20)), 60%, 60%))
-    );
-
-    transform: rotate(calc(@t * .0001turn));
-`;
-
 // const FancyDoodle = doodle`
-//     :doodle {
-//         @grid: 30x1 / 50% 100%;
-//         transform: translate(50%, 30%);
-//     }
+//     @grid: 1 / 20vmin;
+    
+//     clip-path: @shape(
+//         split: 120;
+//         frame: 15;
+//         r: cos(t/10)^sin(t)^sin(2t)*.9;
+//     );
 
-//     @place-cell: center;
-//     border-radius: 20%;
-//     border: 2px solid #c8c8f4;
-//     @size: calc(50% / @size() * @i() - 10px);
-//     opacity: calc(@i() * 0.03);
+//     background: linear-gradient(
+//         @m3(hsl(calc(@t/@r(15, 20)), 60%, 60%))
+//     );
 
-//     border-top-color:#8c8ce3;
-//     border-right-color:#6174cb;
-
-//     transform:
-//         rotateX(70deg)
-//         rotateY(6deg)
-//         translateY(calc(-@i() * 2 * 10px))
-//         translateX(calc(@sin(@i() / 5 + 2) * @PI() * 10px));
+//     transform: rotate(calc(@t * .0001turn));
 // `;
+
+const FancyDoodle = doodle`
+    :doodle {
+        @grid: 60x1 / 50% 100%;
+        transform: translate(50%, 30%);
+    }
+
+    @place-cell: center;
+    border-radius: 50%;
+    border: 2px solid #c8c8f4;
+    @size: calc(50% / @size() * @i() - 10px);
+    opacity: calc(@i() * 0.03);
+
+    border-top-color:#8c8ce3;
+    border-right-color:#6174cb;
+
+    transform:
+        rotateX(70deg)
+        rotateY(6deg)
+        translateY(calc(-@i() * 2 * 5px))
+        translateX(calc(@sin(@i() / 5 + 2) * @PI() * 10px));
+`;
 
 // const FancyDoodle = doodle`
 //     @grid: 50x1 / 100%;
