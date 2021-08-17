@@ -341,20 +341,13 @@ function HintTooltip() {
 function LinePlayground() {
     return (
         <div className="">
-            <div className="flex flex-wrap lg:flex-nowrap lg:justify-center">
+            <div className="">
                 <div
-                    // min-h-[605px] max-w-4xl
-                    className="flex-none w-full h-full
-                        flex items-center justify-center
-                        p-4 border-8 bg-yellow-100 relative select-none
-                        
-                        lg:flex-1 lg:bg-purple-500 max-w-[630px]
-                        "
-                        //resize overflow-hidden
+                    className=""
                 >
-                    <Viewer svgWidth={svgWidth} svgHeight={svgHeight} className="w-full h-full" />
+                    <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
 
-                    <div className="absolute left-2 bottom-2">
+                    <div className="">
                         <InfoPanel />
                     </div>
                 </div>
