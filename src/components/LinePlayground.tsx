@@ -340,14 +340,22 @@ function HintTooltip() {
 
 function LinePlayground() {
     return (
-        <div className="">
-            <div className="">
+        <div className="select-none">
+            <div className="
+                    grid grid-cols-1 lg:grid-cols-2
+                "
+                //style={{gridTemplateColumns: '418px 1fr'}}
+            >
                 <div className="
                     border-8 bg-yellow-100 lg:bg-purple-500
-                    relative select-none
+                    relative w-full max-w-[624px] justify-self-center
+                    before:block before:pb-[100%]
+                    after:absolute after:inset-0 after:border-2 after:border-red-900 after:pointer-events-none
                     "
                 >
-                    <Viewer svgWidth={svgWidth} svgHeight={svgHeight} />
+                    <div className="absolute left-0 top-0 w-full h-full">
+                        <Viewer svgWidth={svgWidth} svgHeight={svgHeight} className="w-full h-full" />
+                    </div>
 
                     <div className="absolute left-2 bottom-2">
                         <InfoPanel />
