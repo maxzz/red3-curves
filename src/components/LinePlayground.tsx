@@ -344,7 +344,7 @@ function LinePlayground() {
             <div className="
                     grid grid-cols-1 lg:grid-cols-2
                 "
-                //style={{gridTemplateColumns: '418px 1fr'}}
+                style={{gridTemplateColumns: '604px 1fr'}}
             >
                 <div className="
                     border-8 bg-yellow-100 lg:bg-purple-500

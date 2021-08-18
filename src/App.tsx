@@ -28,7 +28,7 @@ function Header() {
                         <div className="">
                             <img className="" src={logoImage} alt="logo" />
                         </div>
-                        <div className={`text-[5rem] place-self-end tracking-tighter font-black ${HeroTitleStyles()}`}>
+                        <div className={`text-[5rem] -ml-4 place-self-end tracking-tighter font-black ${HeroTitleStyles()}`}>
                             D3 Curves
                         </div>
                     </div>
@@ -62,7 +62,7 @@ function App() {
     return (
         <>
             <Background />
-            <div className="App h-screen flex flex-col items-center">
+            <div className="App h-screen flex flex-col items-center text-gray-900">
                 <Header />
                 <div className="flex-1">
                     <LinePlayground />
