@@ -338,13 +338,13 @@ function HintTooltip() {
     );
 }
 
-const styled2 = createCss({
-    media: {
-        bp1: '(min-width: 640px)',
-        bp2: '(min-width: 768px)',
-        bp3: '(min-width: 1024px)',
-    },
-});
+// const styled2 = createCss({
+//     media: {
+//         bp1: '(min-width: 640px)',
+//         bp2: '(min-width: 768px)',
+//         bp3: '(min-width: 1024px)',
+//     },
+// });
 
 const containerStyles = css({
     // media: {
@@ -355,9 +355,18 @@ const containerStyles = css({
     },
 });
 
-const Container = styled2('div', {
+const Container = styled('div', {
+    media: {
+        bp1: '(min-width: 640px)',
+        bp2: '(min-width: 768px)',
+        bp3: '(min-width: 1024px)',
+    },
+
     display: 'grid',
-    gridTemplateColumns: '1fr',
+    //gridTemplateColumns: '1fr',
+    '@initial': {
+        gridTemplateColumns: '1fr',
+    },
     '@bp3': {
         gridTemplateColumns: '1fr 1fr',
         // gridTemplateColumns: 'minmax(604px, 1fr) max-content',
