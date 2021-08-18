@@ -7,6 +7,11 @@ export default defineConfig({
     base: '',
     plugins: [
         reactRefresh(),
-        visualizer({ template: 'network' }),
+        visualizer({
+            filename: 'vizualization.html',
+            template: 'sunburst', // sunburst - d3 style; treemap - table (default); network - graph (slow to open).
+            gzipSize: true,
+            brotliSize: true,
+        }),
     ]
 });
