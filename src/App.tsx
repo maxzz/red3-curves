@@ -19,7 +19,7 @@ const HeroTitleStyles = css({
 
 function Header() {
     return (
-        <div className="m-8 hidden md:flex justify-center items-center ">
+        <div className="m-8 hidden lg:flex justify-center items-center ">
 
             <div className="">
                 <div className="">
@@ -64,7 +64,7 @@ function App() {
             <Background />
             <div className="App h-screen flex flex-col items-center text-gray-900">
                 <Header />
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                     <LinePlayground />
                 </div>
                 {/* <OldLinePlayground /> */}

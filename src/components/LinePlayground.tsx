@@ -354,19 +354,20 @@ const containerStyles = css({
 
 function LinePlayground() {
     return (
-        <div className="select-none">
+        <div className="select-none max-w-[600px] lg:max-w-max lg:w-auto mx-auto">
+        {/* <div className="select-none max-w-full sm:max-w-max lg:w-auto mx-auto"> */}
             {/* Viewer and Controls */}
             <div className={`grid grid-cols-1 ${containerStyles()}`}>
 
                 {/* Viewer */}
                 <div className="
                     border-8 bg-yellow-100 lg:bg-purple-500
-                    relative w-full max-w-[624px] justify-self-center
+                    relative w-full 
                     before:block before:pb-[100%]
-                    after:absolute after:inset-0 after:border-2 after:border-red-900 after:pointer-events-none
+                    after:absolute after:inset-0 after:border-4 after:border-dashed after:border-red-900 after:pointer-events-none
                     "
                 >
-                    <div className="absolute left-0 top-0 w-full h-full">
+                    <div className="absolute inset-0">
                         <Viewer svgWidth={svgWidth} svgHeight={svgHeight} className="w-full h-full" />
                     </div>
 
