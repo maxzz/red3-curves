@@ -29,7 +29,7 @@ function Header() {
                         <div className="">
                             <img className="" src={logoImage} alt="logo" />
                         </div>
-                        <div className={`text-[5rem] -ml-4 place-self-end tracking-tighter font-black ${HeroTitleStyles()}`}>
+                        <div className={`text-[5rem] -ml-4 self-end tracking-tighter font-black ${HeroTitleStyles()}`}>
                             D3 Curves
                         </div>
                     </div>
