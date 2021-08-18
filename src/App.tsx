@@ -24,6 +24,7 @@ function Header() {
             <div className="">
                 <div className="">
 
+                    {/* Logo and D3 curves */}
                     <div className="flex items-center">
                         <div className="">
                             <img className="" src={logoImage} alt="logo" />
@@ -33,18 +34,13 @@ function Header() {
                         </div>
                     </div>
 
-                    <div className="text-base">
+                    <div className="ml-16 mb-4 text-base">
                         <p>Toggle each of the curve types to activate / deactivate the curve. <br className="hidden md:inline" />
                             You can also add/remove/drag the points to change the shape of the curve.</p>
                     </div>
                 </div>
                 {/* <HeroAttraction /> */}
             </div>
-
-            {/* <div className="flex-shrink max-w-[128px]">
-                <img className="" src={logoImage} alt="logo" />
-            </div> */}
-
         </div>
     );
 }
@@ -52,9 +48,8 @@ function Header() {
 function Background() {
     return (
         <div className="fixed w-full h-full bg-yellow-200 pointer-events-none z-[-1]"
-        style={{background: `url(${AppBackground}), linear-gradient(to right, #6e88a0, #ffffff00)`}}
-        >
-        </div>
+            style={{ background: `url(${AppBackground}), linear-gradient(to right, #ff7800d4, #ffffff00)` }} //#6e88a0
+        />
     );
 }
 
