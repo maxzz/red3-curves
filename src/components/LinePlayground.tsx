@@ -3,7 +3,7 @@ import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
 import { useUpdateAtom } from 'jotai/utils';
 import { activePointsAtom, allLinesSetAtom, colorScale, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, maxNPointsAtom, nActiveAtom, pointsAtom, setPointAtom } from '../store/store';
-import { css, styled } from '@stitches/react';
+import { createCss, css, styled } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { clamp, withDigits } from '../utils/numbers';
 import { useDrag, useHover } from 'react-use-gesture';
@@ -338,24 +338,38 @@ function HintTooltip() {
     );
 }
 
-const containerStyles = css({
+createCss({
     media: {
         bp1: '(min-width: 640px)',
+        bp2: '(min-width: 768px)',
+        bp3: '(min-width: 1024px)',
     },
-    '@bp1' : {
+});
+
+const containerStyles = css({
+    // media: {
+    //     bp1: '(min-width: 640px)',
+    // },
+    '@bp1': {
         gridTemplateColumns: 'minmax(604px, 1fr) max-content'
-    }
+    },
+});
+
+const Container = styled('div', {
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    '@bp3': {
+        gridTemplateColumns: '1fr 1fr',
+        // gridTemplateColumns: 'minmax(604px, 1fr) max-content',
+    },
 });
 
 function LinePlayground() {
     return (
         <div className="select-none">
-            {/* lg:grid-cols-2 */}
-            <div className={`
-                    grid grid-cols-1 ${containerStyles()}
-                `}
-            //style={{gridTemplateColumns: 'minmax(604px, 1fr) max-content'}}
-            >
+            <Container>
+                {/* lg:grid-cols-2 */}
+                {/* <div className={`grid grid-cols-1 ${containerStyles()}`}//style={{gridTemplateColumns: 'minmax(604px, 1fr) max-content'}}            > */}
                 {/* lg:min-w-[604px] */}
                 <div className="
                     
@@ -378,7 +392,8 @@ function LinePlayground() {
                     <MenuHeader />
                     <Menu />
                 </div>
-            </div>
+                {/* </div> */}
+            </Container>
 
             <HintTooltip />
         </div>
