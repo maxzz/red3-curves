@@ -338,13 +338,23 @@ function HintTooltip() {
     );
 }
 
+const containerStyles = css({
+    media: {
+        bp1: '(min-width: 640px)',
+    },
+    '@bp1' : {
+        gridTemplateColumns: 'minmax(604px, 1fr) max-content'
+    }
+});
+
 function LinePlayground() {
     return (
         <div className="select-none">
-            <div className="
-                    grid grid-cols-1 lg:grid-cols-2
-                "
-                //style={{gridTemplateColumns: 'minmax(604px, 1fr) max-content'}}
+            {/* lg:grid-cols-2 */}
+            <div className={`
+                    grid grid-cols-1 ${containerStyles()}
+                `}
+            //style={{gridTemplateColumns: 'minmax(604px, 1fr) max-content'}}
             >
                 {/* lg:min-w-[604px] */}
                 <div className="
