@@ -3,7 +3,7 @@ import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
 import { useUpdateAtom } from 'jotai/utils';
 import { activePointsAtom, allLinesSetAtom, colorScale, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, maxNPointsAtom, nActiveAtom, pointsAtom, setPointAtom } from '../store/store';
-import { createCss, css, styled } from '@stitches/react';
+import { createCss } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { clamp, withDigits } from '../utils/numbers';
 import { useDrag, useHover } from 'react-use-gesture';
@@ -13,6 +13,14 @@ import useClipcoardCopy from '../hooks/useClipcoardCopy';
 import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
+
+const { styled, css } = createCss({ // as usual this goes to stitches.config.ts
+    media: {
+        bp1: '(min-width: 640px)',
+        bp2: '(min-width: 768px)',
+        bp3: '(min-width: 1024px)',
+    },
+});
 
 const svgWidth = 600;
 const svgHeight = 600;
@@ -338,54 +346,20 @@ function HintTooltip() {
     );
 }
 
-const { styled: styled2, css: css2 } = createCss({
-    media: {
-        bp1: '(min-width: 640px)',
-        bp2: '(min-width: 768px)',
-        bp3: '(min-width: 1024px)',
-    },
-});
-
-const containerStyles = css2({
-    // media: {
-    //     bp1: '(min-width: 640px)',
-    // },
+const containerStyles = css({
     '@bp3': {
         gridTemplateColumns: 'minmax(604px, 1fr) max-content'
-    },
-});
-
-const Container = styled2('div', {
-    // media: {
-    //     bp1: '(min-width: 640px)',
-    //     bp2: '(min-width: 768px)',
-    //     bp3: '(min-width: 1024px)',
-    // },
-
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    // '@initial': {
-    //     gridTemplateColumns: '1fr',
-    // },
-    '@bp3': {
-        gridTemplateColumns: 'minmax(604px, 1fr) max-content',
-        // gridTemplateColumns: '1fr 1fr',
-        // gridTemplateColumns: 'minmax(604px, 1fr) max-content',
     },
 });
 
 function LinePlayground() {
     return (
         <div className="select-none">
-            {/* <Container> */}
-                {/* lg:grid-cols-2 */}
-                {/* <div className={`grid grid-cols-1 ${containerStyles()}`}//style={{gridTemplateColumns: 'minmax(604px, 1fr) max-content'}}            > */}
-                <div className={`grid grid-cols-1 ${containerStyles()}`}
-                    //style={{gridTemplateColumns: 'minmax(604px, 1fr) max-content'}}            
-                >
-                {/* lg:min-w-[604px] */}
+            {/* Viewer and Controls */}
+            <div className={`grid grid-cols-1 ${containerStyles()}`}>
+
+                {/* Viewer */}
                 <div className="
-                    
                     border-8 bg-yellow-100 lg:bg-purple-500
                     relative w-full max-w-[624px] justify-self-center
                     before:block before:pb-[100%]
@@ -401,13 +375,14 @@ function LinePlayground() {
                     </div>
                 </div>
 
+                {/* Menu */}
                 <div className="">
                     <MenuHeader />
                     <Menu />
                 </div>
-                </div>
-            {/* </Container> */}
+            </div>
 
+            {/* Tooltip */}
             <HintTooltip />
         </div>
     );
