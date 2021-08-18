@@ -338,7 +338,7 @@ function HintTooltip() {
     );
 }
 
-const { styled: styled2 } = createCss({
+const { styled: styled2, css: css2 } = createCss({
     media: {
         bp1: '(min-width: 640px)',
         bp2: '(min-width: 768px)',
@@ -346,11 +346,11 @@ const { styled: styled2 } = createCss({
     },
 });
 
-const containerStyles = css({
+const containerStyles = css2({
     // media: {
     //     bp1: '(min-width: 640px)',
     // },
-    '@bp1': {
+    '@bp3': {
         gridTemplateColumns: 'minmax(604px, 1fr) max-content'
     },
 });
@@ -377,9 +377,12 @@ const Container = styled2('div', {
 function LinePlayground() {
     return (
         <div className="select-none">
-            <Container>
+            {/* <Container> */}
                 {/* lg:grid-cols-2 */}
                 {/* <div className={`grid grid-cols-1 ${containerStyles()}`}//style={{gridTemplateColumns: 'minmax(604px, 1fr) max-content'}}            > */}
+                <div className={`grid grid-cols-1 ${containerStyles()}`}
+                    //style={{gridTemplateColumns: 'minmax(604px, 1fr) max-content'}}            
+                >
                 {/* lg:min-w-[604px] */}
                 <div className="
                     
@@ -402,8 +405,8 @@ function LinePlayground() {
                     <MenuHeader />
                     <Menu />
                 </div>
-                {/* </div> */}
-            </Container>
+                </div>
+            {/* </Container> */}
 
             <HintTooltip />
         </div>
