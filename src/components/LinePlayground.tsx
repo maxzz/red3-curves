@@ -344,9 +344,11 @@ function LinePlayground() {
             <div className="
                     grid grid-cols-1 lg:grid-cols-2
                 "
-                style={{gridTemplateColumns: '604px 1fr'}}
+                //style={{gridTemplateColumns: 'minmax(604px, 1fr) max-content'}}
             >
+                {/* lg:min-w-[604px] */}
                 <div className="
+                    
                     border-8 bg-yellow-100 lg:bg-purple-500
                     relative w-full max-w-[624px] justify-self-center
                     before:block before:pb-[100%]
