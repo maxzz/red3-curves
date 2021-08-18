@@ -338,7 +338,7 @@ function HintTooltip() {
     );
 }
 
-createCss({
+const styled2 = createCss({
     media: {
         bp1: '(min-width: 640px)',
         bp2: '(min-width: 768px)',
@@ -355,7 +355,7 @@ const containerStyles = css({
     },
 });
 
-const Container = styled('div', {
+const Container = styled2('div', {
     display: 'grid',
     gridTemplateColumns: '1fr',
     '@bp3': {
