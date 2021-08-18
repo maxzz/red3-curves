@@ -2,7 +2,7 @@
 
 D3 curves playground.
 
-![](src/assets/previews/2021-08-17_2-18-03.png)
+![](src/assets/previews/2021-08-18_3-57-11.png)
 
 #### Road map
 
