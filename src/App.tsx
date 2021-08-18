@@ -19,23 +19,32 @@ const HeroTitleStyles = css({
 
 function Header() {
     return (
-        <div className="w-full h-64 hidden md:flex items-center ">
-            <div className="flex-shrink">
-                <img className="" src={logoImage} alt="logo" />
-            </div>
+        <div className="m-8 hidden md:flex justify-center items-center ">
 
-            <div className="w-full flex  items-center justify-between">
-                <div className="ml-16 ">
-                    <div className={`text-[5rem] tracking-tighter font-black ${HeroTitleStyles()}`}>
-                        D3 Curves
+            <div className="">
+                <div className="">
+
+                    <div className="flex items-center">
+                        <div className="">
+                            <img className="" src={logoImage} alt="logo" />
+                        </div>
+                        <div className={`text-[5rem] place-self-end tracking-tighter font-black ${HeroTitleStyles()}`}>
+                            D3 Curves
+                        </div>
                     </div>
+
                     <div className="text-base">
                         <p>Toggle each of the curve types to activate / deactivate the curve. <br className="hidden md:inline" />
                             You can also add/remove/drag the points to change the shape of the curve.</p>
                     </div>
                 </div>
-                <HeroAttraction />
+                {/* <HeroAttraction /> */}
             </div>
+
+            {/* <div className="flex-shrink max-w-[128px]">
+                <img className="" src={logoImage} alt="logo" />
+            </div> */}
+
         </div>
     );
 }
@@ -53,7 +62,7 @@ function App() {
     return (
         <>
             <Background />
-            <div className="App h-screen flex flex-col">
+            <div className="App h-screen flex flex-col items-center">
                 <Header />
                 <div className="flex-1">
                     <LinePlayground />
