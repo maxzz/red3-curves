@@ -272,7 +272,7 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
     const [copyResult, copy] = useClipcoardCopy();
     return (
         <div className="">
-            <a.div style={{ width, opacity }} className="relative ml-1 text-xs flex items-center justify-between">
+            <a.div style={{ width, opacity }} className="relative ml-1 text-[0.65rem] flex items-center justify-between">
                 <CombinedPathPointsRef ref={textRef} />
                 <span
                     className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
@@ -291,11 +291,6 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
     );
 }
 
-/*
-
-*/
-//return ({dark ? <div>a</div>:<div>b</div>});
-
 function DarkLightIcon({ dark }: { dark: boolean; }) {
     return (dark
         ?
@@ -313,9 +308,9 @@ function InfoPanel() {
     const [expanded, setExpanded] = React.useState(false);
     const [nActive, setNActive] = useAtom(nActiveAtom); // const setNActive = useUpdateAtom(nActiveAtom);
     const [maxNPoints] = useAtom(maxNPointsAtom);
-    const [colorMode, setColorMode] = useAtom(DarkShemaAtom);
+    const [darkMode, setDarkMode] = useAtom(DarkShemaAtom);
     return (
-        <div className="flex">
+        <div className="flex items-center">
             {/* Buttons */}
             <div className="flex items-center space-x-1">
                 {/* - */}
@@ -340,12 +335,12 @@ function InfoPanel() {
                 >+</div>
                 {/* Color mode */}
                 <div
-                    className={`w-6 h-6 pb-0.5 text-green-900 border bg-green-200 border-green-600 rounded shadow cursor-pointer select-none 
+                    className={`w-6 h-6  text-green-900 border bg-green-200 border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center
                         `}
                     title="Dark/Light mode"
-                    onClick={() => setColorMode(!colorMode)}
-                ><DarkLightIcon dark={colorMode} /></div>
+                    onClick={() => setDarkMode(!darkMode)}
+                ><DarkLightIcon dark={!darkMode} /></div>
                 {/* Info bar */}
                 <div 
                     className="w-6 h-6 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
