@@ -9,16 +9,16 @@ export default defineConfig({
     base: '',
     plugins: [
         reactRefresh(),
-        {
-            ...image(),
-            //enforce: 'pre',
-        },
+        // {
+        //     ...image(),
+        //     //enforce: 'pre',
+        // },
         {
             ...url(
-                //     {
-                //     include: ['**/*.svg'],
-                //     limit: 15000,
-                // }
+                    {
+                    include: ['**/*.svg'],
+                    limit: 15000,
+                }
             ),
             enforce: 'pre',
         },
