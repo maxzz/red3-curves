@@ -14,8 +14,6 @@ import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
 
-console.log('im', lineTypeUrl2);
-
 const { styled, css } = createCss({ // as usual this goes to stitches.config.ts
     media: {
         bp1: '(min-width: 640px)',
@@ -137,7 +135,7 @@ function MenuHeader() {
         <div className="mt-2 pl-2 pr-3 flex justify-between items-center">
             <div className="flex items-center space-x-1">
                 <span>D3 curve types to interpolate a set of points:</span>
-                <a className="" href="https://github.com/d3/d3-shape#curves" target="_blank">
+                <a className="" href="https://github.com/d3/d3-shape#curves" target="_blank" rel="noreferrer">
 
                     <svg className="h-4 w-4 pt-0.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />

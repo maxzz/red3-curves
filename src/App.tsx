@@ -19,7 +19,7 @@ const HeroTitleStyles = css({
 
 function Header() {
     return (
-        <div className="m-8 hidden lg:flex justify-center items-center ">
+        <header className="m-8 hidden lg:flex justify-center items-center ">
 
             <div className="">
                 <div className="">
@@ -29,9 +29,9 @@ function Header() {
                         <div className="">
                             <img className="" src={logoImage} alt="logo" />
                         </div>
-                        <div className={`text-[5rem] -ml-4 self-end tracking-tighter font-black ${HeroTitleStyles()}`}>
+                        <h1 className={`text-[5rem] -ml-4 self-end tracking-tighter font-black ${HeroTitleStyles()}`}>
                             D3 Curves
-                        </div>
+                        </h1>
                     </div>
 
                     <div className="ml-16 mb-4 text-base">
@@ -41,7 +41,7 @@ function Header() {
                 </div>
                 {/* <HeroAttraction /> */}
             </div>
-        </div>
+        </header>
     );
 }
 
