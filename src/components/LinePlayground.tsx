@@ -362,7 +362,7 @@ function LinePlayground() {
                 {/* Viewer bg-yellow-100 lg:bg-purple-500 */}
                 <div className="
                     relative w-full 
-                    border-8 bg-purple-500 shadow-lg
+                    border-8 bg-[#bb86003b] lg:bg-purple-500 shadow-lg
                     before:block before:pb-[100%]
                     after:absolute after:inset-0 after:border after:border-gray-300 after:pointer-events-none"
                 >

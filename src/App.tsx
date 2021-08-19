@@ -59,11 +59,11 @@ function App() {
             <Background />
             <div className="App h-screen flex flex-col items-center text-gray-900">
                 <Header />
-                <div className="flex-1 w-full">
+                <main className="flex-1 w-full">
                     <LinePlayground />
-                </div>
+                </main>
                 {/* <OldLinePlayground /> */}
-            </div >
+            </div>
         </>
     );
 }
