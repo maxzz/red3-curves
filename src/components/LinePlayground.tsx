@@ -304,6 +304,20 @@ function DarkLightIcon({ dark }: { dark: boolean; }) {
     );
 }
 
+function ViewerButton({ children, className, disabled = false, title, onClick }: { children: JSX.Element | string; className?: string; disabled?: boolean, title: string, onClick: () => void; }) {
+    return (
+        <div
+            className={`w-6 h-6 pb-1 text-green-900 border bg-green-200 border-green-600 rounded shadow 
+                flex items-center justify-center cursor-pointer select-none ${disabled ? 'opacity-50' : 'opacity-1'} ${className}`
+            }
+            title={title}
+            onClick={onClick}
+        >
+            {children}
+        </div>
+    );
+}
+
 function InfoPanel() {
     const [expanded, setExpanded] = React.useState(false);
     const [nActive, setNActive] = useAtom(nActiveAtom); // const setNActive = useUpdateAtom(nActiveAtom);
@@ -312,6 +326,14 @@ function InfoPanel() {
     return (
         <div className="flex items-center">
             {/* Buttons */}
+            <ViewerButton
+                title="Remove point (minimnum is 2 points)"
+                onClick={() => {
+                    setNActive(clamp(nActive - 1, 2, maxNPoints)); // setNActive((prev) => prev--); what???
+                }}
+            >
+                +
+            </ViewerButton>
             <div className="flex items-center space-x-1">
                 {/* - */}
                 <div
@@ -338,11 +360,11 @@ function InfoPanel() {
                     className={`w-6 h-6  text-green-900 border bg-green-200 border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center
                         `}
-                    title="Dark/Light mode"
+                    title="Set dark / light mode"
                     onClick={() => setDarkMode(!darkMode)}
                 ><DarkLightIcon dark={!darkMode} /></div>
                 {/* Info bar */}
-                <div 
+                <div
                     className="w-6 h-6 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
                     title="Show/Hide the coordinates of points"
                     onClick={() => setExpanded((prev) => !prev)}
