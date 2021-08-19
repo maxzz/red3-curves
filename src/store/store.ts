@@ -1,9 +1,9 @@
 import * as d3 from 'd3';
 import { atom, Getter } from 'jotai';
 import { atomWithDefault } from 'jotai/utils';
-import { InputData } from '../components/OldLinePlayground';
 import atomWithCallback from '../hooks/atomsX';
 import debounce from '../utils/debounce';
+import { InputData } from '../components/OldLinePlayground';
 import { CURVEINFO } from './datum';
 
 namespace Storage {
@@ -13,6 +13,7 @@ namespace Storage {
         points: [number, number][]; // control points coordinates as [x, y][]
         active: LineData[];
         nActive: number; // Number of active points
+        dark: boolean; // dark/light schema
     };
 
     export let initialData: Store = {
@@ -20,6 +21,7 @@ namespace Storage {
         // points: [[46, 179], [123, 404], [123, 56], [292, 56], [292, 274], [456, 163], [463, 473]],
         active: CURVEINFO.map((curve, idx) => ({ idx, active: curve.active })),
         nActive: 7,
+        dark: false,
     };
 
     function load() {
@@ -39,6 +41,7 @@ namespace Storage {
             points: get(pointsAtom),
             active: get(linesAtom),
             nActive: get(nActiveAtom),
+            dark: get(DarkShemaAtom),
         };
         localStorage.setItem(KEY, JSON.stringify(newStore));
     }, 1000);
@@ -69,7 +72,7 @@ export const maxNPointsAtom = atom(
     (get) => {
         return get(pointsAtom).length;
     }
-)
+);
 
 export const nActiveAtom = atomWithCallback(Storage.initialData.nActive, (get, _) => Storage.save(get));
 
@@ -138,6 +141,33 @@ export const LineHintIdxAtom = atom(-1);
 export const DraggingPointAtom = atom(-1);
 
 // Colors
+
+export const DarkShemaAtom = atomWithCallback(Storage.initialData.dark, (get, _) => Storage.save(get));
+
+export type ColorsShema = {
+    viewer: {
+        background: string;
+    };
+};
+
+const SchemaLight: ColorsShema = {
+    viewer: {
+        background: 'red',
+    }
+};
+
+const SchemaDark: ColorsShema = {
+    viewer: {
+        background: 'blue',
+    }
+};
+
+export const SchemaAtom = atom<ColorsShema>(
+    (get) => {
+        const dark = get(DarkShemaAtom);
+        return dark ? SchemaLight : SchemaDark;
+    }
+);
 
 const gColor = [
     '#3366cc', '#ff9900', '#109618', '#990099', '#dc3912', '#0099c6', '#8c564b', '#6633cc',

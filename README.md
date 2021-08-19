@@ -31,6 +31,7 @@ D3 curves playground.
             [ ] Add italic font for inactive buttons
             [ ] Define stroke and shadow colors
         [ ] TODO: Why jotai does not provide prev value access in update atom function?
+        [ ] Add colors schema.
 
 #### Links, references, credits
 
