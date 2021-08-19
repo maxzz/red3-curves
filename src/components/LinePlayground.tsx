@@ -14,6 +14,8 @@ import lineTypeUrl0 from '../assets/dashed-line0.svg';
 import lineTypeUrl1 from '../assets/dashed-line11.svg';
 import lineTypeUrl2 from '../assets/dashed-line2.svg';
 
+console.log('im', lineTypeUrl2);
+
 const { styled, css } = createCss({ // as usual this goes to stitches.config.ts
     media: {
         bp1: '(min-width: 640px)',

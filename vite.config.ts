@@ -11,14 +11,17 @@ export default defineConfig({
         reactRefresh(),
         {
             ...image(),
+            //enforce: 'pre',
+        },
+        {
+            ...url(
+                //     {
+                //     include: ['**/*.svg'],
+                //     limit: 15000,
+                // }
+            ),
             enforce: 'pre',
         },
-        url(
-        //     {
-        //     include: ['**/*.svg'],
-        //     limit: 15000,
-        // }
-        ),
         visualizer({
             filename: 'vizualization.html',
             template: 'sunburst', // sunburst - d3 style (good as default as well); treemap - table (default); network - graph (slow to open).
