@@ -190,10 +190,10 @@ const CheckboxBar = styled('div', {
     },
 });
 
-function InfoIcon() {
+function InfoIcon({stroke = 1}: {stroke?: number}) {
     return (
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={stroke} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
     );
 }
@@ -294,11 +294,11 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
 function DarkLightIcon({ dark }: { dark: boolean; }) {
     return (dark
         ?
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
         </svg>
         :
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
     );
@@ -331,33 +331,31 @@ function InfoPanel() {
                 <ViewerButton
                     title="Remove point (minimnum is 2 points)"
                     onClick={() => setNActive(clamp(nActive - 1, 2, maxNPoints))} // setNActive((prev) => prev--); what???
+                    disabled={nActive <= 2}
                     className="pb-1"
                 >-</ViewerButton>
+
                 {/* + */}
-                <div
-                    className={`w-6 h-6 pb-1 text-green-900 border bg-green-200 border-green-600 rounded shadow cursor-pointer select-none 
-                        flex items-center justify-center
-                        ${nActive < maxNPoints ? 'opacity-1' : 'opacity-50'}
-                        `}
+                <ViewerButton
                     title="Add point (maximum is 7 points)"
                     onClick={() => setNActive(clamp(nActive + 1, 2, maxNPoints))}
-                >+</div>
+                    disabled={nActive >= maxNPoints}
+                    className="pb-1"
+                >+</ViewerButton>
+
                 {/* Color mode */}
-                <div
-                    className={`w-6 h-6  text-green-900 border bg-green-200 border-green-600 rounded shadow cursor-pointer select-none 
-                        flex items-center justify-center
-                        `}
+                <ViewerButton
                     title="Set dark / light mode"
                     onClick={() => setDarkMode(!darkMode)}
-                ><DarkLightIcon dark={!darkMode} /></div>
+                    className="p-1"
+                ><DarkLightIcon dark={!darkMode} /></ViewerButton>
+
                 {/* Info bar */}
-                <div
-                    className="w-6 h-6 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
+                <ViewerButton
                     title="Show/Hide the coordinates of points"
                     onClick={() => setExpanded((prev) => !prev)}
-                >
-                    <InfoIcon />
-                </div>
+                    className="p-0.5"
+                ><InfoIcon stroke={2} /></ViewerButton>
             </div>
             {/* Generated text */}
             <PathInfo expanded={expanded} />
