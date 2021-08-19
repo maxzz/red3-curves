@@ -152,20 +152,20 @@ export type ColorsShema = {
 
 const SchemaLight: ColorsShema = {
     viewer: {
-        background: 'red',
+        background: '#bb86003b',
     }
 };
 
 const SchemaDark: ColorsShema = {
     viewer: {
-        background: 'blue',
+        background: '#8b5cf6', // purple-500
     }
 };
 
 export const SchemaAtom = atom<ColorsShema>(
     (get) => {
         const dark = get(DarkShemaAtom);
-        return dark ? SchemaLight : SchemaDark;
+        return dark ? SchemaDark : SchemaLight;
     }
 );
 

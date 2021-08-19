@@ -2,7 +2,7 @@ import React from 'react';
 import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
 import { useUpdateAtom } from 'jotai/utils';
-import { activePointsAtom, allLinesSetAtom, colorScale, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, maxNPointsAtom, nActiveAtom, pointsAtom, setPointAtom } from '../store/store';
+import { activePointsAtom, allLinesSetAtom, colorScale, DarkShemaAtom, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, maxNPointsAtom, nActiveAtom, pointsAtom, SchemaAtom, setPointAtom } from '../store/store';
 import { createCss } from '@stitches/react';
 import { CURVEINFO } from '../store/datum';
 import { clamp, withDigits } from '../utils/numbers';
@@ -136,7 +136,7 @@ function MenuHeader() {
             <a className="flex items-center" href="https://github.com/d3/d3-shape#curves" target="_blank" rel="noreferrer">
                 D3 curve types to interpolate a set of points:
                 <svg className="h-4 w-4 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
             </a>
             <input
@@ -291,14 +291,34 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
     );
 }
 
+/*
+
+*/
+//return ({dark ? <div>a</div>:<div>b</div>});
+
+function DarkLightIcon({ dark }: { dark: boolean; }) {
+    return (dark
+        ?
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+        :
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+    );
+}
+
 function InfoPanel() {
     const [expanded, setExpanded] = React.useState(false);
     const [nActive, setNActive] = useAtom(nActiveAtom); // const setNActive = useUpdateAtom(nActiveAtom);
     const [maxNPoints] = useAtom(maxNPointsAtom);
+    const [colorMode, setColorMode] = useAtom(DarkShemaAtom);
     return (
         <div className="flex">
             {/* Buttons */}
             <div className="flex items-center space-x-1">
+                {/* - */}
                 <div
                     className={`w-4 h-4 pb-1 text-green-900 border bg-green-200 border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center
@@ -309,6 +329,7 @@ function InfoPanel() {
                         setNActive(clamp(nActive - 1, 2, maxNPoints)); // setNActive((prev) => prev--); what???
                     }}
                 >-</div>
+                {/* + */}
                 <div
                     className={`w-4 h-4 pb-1 text-green-900 border bg-green-200 border-green-600 rounded shadow cursor-pointer select-none 
                         flex items-center justify-center
@@ -317,7 +338,17 @@ function InfoPanel() {
                     title="Add point (maximum is 7 points)"
                     onClick={() => setNActive(clamp(nActive + 1, 2, maxNPoints))}
                 >+</div>
-                <div className="w-4 h-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
+                {/* Color mode */}
+                <div
+                    className={`w-4 h-4 pb-1 text-green-900 border bg-green-200 border-green-600 rounded shadow cursor-pointer select-none 
+                        flex items-center justify-center
+                        `}
+                    title="Dark/Light mode"
+                    onClick={() => setColorMode(!colorMode)}
+                ><DarkLightIcon dark={colorMode} /></div>
+                {/* Info bar */}
+                <div 
+                    className="w-4 h-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
                     title="Show/Hide the coordinates of points"
                     onClick={() => setExpanded((prev) => !prev)}
                 >
@@ -349,6 +380,7 @@ const containerStyles = css({
 });
 
 function LinePlayground() {
+    const [{ viewer: { background } }] = useAtom(SchemaAtom);
     return (
         <div className="select-none max-w-[600px] lg:max-w-max lg:w-auto mx-auto">
             {/* <div className="select-none max-w-full sm:max-w-max lg:w-auto mx-auto"> */}
@@ -357,11 +389,12 @@ function LinePlayground() {
 
                 {/* Viewer bg-yellow-100 lg:bg-purple-500 */}
                 {/* Viewer bg-[#bb86003b] lg:bg-purple-500 */}
-                <div className="
+                <div className={`
                     relative w-full 
-                    border-8 shadow-lg bg-white
+                    border-8 shadow-lg
                     before:block before:pb-[100%]
-                    after:absolute after:inset-0 after:border after:border-gray-300 after:pointer-events-none"
+                    after:absolute after:inset-0 after:border after:border-gray-300 after:pointer-events-none`}
+                    style={{ backgroundColor: background }}
                 >
                     <div className="absolute inset-0">
                         <Viewer svgWidth={svgWidth} svgHeight={svgHeight} className="w-full h-full" />
