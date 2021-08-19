@@ -171,6 +171,6 @@ const d = [
 // const categoryScale = d3.scaleOrdinal<number, string>(gColor);
 // function colorScale(d: number) { return categoryScale(d); }
 */
-export function colorScale(n: number) { return gColor[n % gColor.length]; }
+export function colorScale(n: number): string { return gColor[n % gColor.length]; }
 
 //

@@ -95,13 +95,13 @@ function LinePathes() {
         <>
             {lines.map((line) => (line.active &&
                 <React.Fragment key={line.idx}>
-                    <LinePath
+                    {/* <LinePath
                         //key={`shadow${line.idx}`}
                         d={linePathes[line.idx]}
                         lineStyle={CURVEINFO[line.idx].lineStyle}
                         stroke={`red`}
                         strokeWidth={7}
-                    />
+                    /> */}
                     <LinePath
                         //key={line.idx}
                         d={linePathes[line.idx]}
@@ -133,16 +133,12 @@ function MenuHeader() {
     const [all, setAll] = useAtom(allLinesSetAtom);
     return (
         <div className="mt-2 pl-2 pr-3 flex justify-between items-center">
-            <div className="flex items-center space-x-1">
-                <span>D3 curve types to interpolate a set of points:</span>
-                <a className="" href="https://github.com/d3/d3-shape#curves" target="_blank" rel="noreferrer">
-
-                    <svg className="h-4 w-4 pt-0.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-                    </svg>
-                </a>
-            </div>
+            <a className="flex items-center" href="https://github.com/d3/d3-shape#curves" target="_blank" rel="noreferrer">
+                D3 curve types to interpolate a set of points:
+                <svg className="h-4 w-4 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+            </a>
             <input
                 className="ml-2 h-4 w-4 flex-none appearance-none rounded
                 text-green-100 border border-[#006f94]
@@ -355,14 +351,15 @@ const containerStyles = css({
 function LinePlayground() {
     return (
         <div className="select-none max-w-[600px] lg:max-w-max lg:w-auto mx-auto">
-        {/* <div className="select-none max-w-full sm:max-w-max lg:w-auto mx-auto"> */}
+            {/* <div className="select-none max-w-full sm:max-w-max lg:w-auto mx-auto"> */}
             {/* Viewer and Controls */}
             <div className={`grid grid-cols-1 ${containerStyles()}`}>
 
                 {/* Viewer bg-yellow-100 lg:bg-purple-500 */}
+                {/* Viewer bg-[#bb86003b] lg:bg-purple-500 */}
                 <div className="
                     relative w-full 
-                    border-8 bg-[#bb86003b] lg:bg-purple-500 shadow-lg
+                    border-8 shadow-lg bg-white
                     before:block before:pb-[100%]
                     after:absolute after:inset-0 after:border after:border-gray-300 after:pointer-events-none"
                 >
