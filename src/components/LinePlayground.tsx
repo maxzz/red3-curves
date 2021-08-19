@@ -304,10 +304,10 @@ function DarkLightIcon({ dark }: { dark: boolean; }) {
     );
 }
 
-function ViewerButton({ children, className, disabled = false, title, onClick }: { children: JSX.Element | string; className?: string; disabled?: boolean, title: string, onClick: () => void; }) {
+function ViewerButton({ children, className, disabled = false, title, onClick }: { children: React.ReactNode; className?: string; disabled?: boolean, title: string, onClick: () => void; }) {
     return (
         <div
-            className={`w-6 h-6 pb-1 text-green-900 border bg-green-200 border-green-600 rounded shadow 
+            className={`w-6 h-6 text-green-900 border bg-green-200 border-green-600 rounded shadow 
                 flex items-center justify-center cursor-pointer select-none ${disabled ? 'opacity-50' : 'opacity-1'} ${className}`
             }
             title={title}
@@ -326,26 +326,13 @@ function InfoPanel() {
     return (
         <div className="flex items-center">
             {/* Buttons */}
-            <ViewerButton
-                title="Remove point (minimnum is 2 points)"
-                onClick={() => {
-                    setNActive(clamp(nActive - 1, 2, maxNPoints)); // setNActive((prev) => prev--); what???
-                }}
-            >
-                +
-            </ViewerButton>
             <div className="flex items-center space-x-1">
                 {/* - */}
-                <div
-                    className={`w-6 h-6 pb-1 text-green-900 border bg-green-200 border-green-600 rounded shadow cursor-pointer select-none 
-                        flex items-center justify-center
-                        ${nActive > 2 ? 'opacity-1' : 'opacity-50'}
-                        `}
+                <ViewerButton
                     title="Remove point (minimnum is 2 points)"
-                    onClick={() => {
-                        setNActive(clamp(nActive - 1, 2, maxNPoints)); // setNActive((prev) => prev--); what???
-                    }}
-                >-</div>
+                    onClick={() => setNActive(clamp(nActive - 1, 2, maxNPoints))} // setNActive((prev) => prev--); what???
+                    className="pb-1"
+                >-</ViewerButton>
                 {/* + */}
                 <div
                     className={`w-6 h-6 pb-1 text-green-900 border bg-green-200 border-green-600 rounded shadow cursor-pointer select-none 
