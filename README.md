@@ -3,6 +3,9 @@
 D3 curves playground.
 
 ![](src/assets/previews/2021-08-18_3-57-11.png)
+
+#### Lighthouse report statistics:
+
 ![](src/assets/previews/../acc-score-2021-08-18_23-45-47.png)
 
 #### Road map
