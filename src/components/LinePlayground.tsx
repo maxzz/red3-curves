@@ -309,7 +309,7 @@ function ViewerButton({ children, className, disabled = false, title, onClick }:
         <div
             className={`w-6 h-6 text-green-900 border bg-green-200 border-green-600 rounded shadow 
                 flex items-center justify-center cursor-pointer select-none 
-                active:scale-[.97]
+                ${disabled ? 'active:scale-1' : 'active:scale-[.97]'}
                 ${disabled ? 'opacity-50' : 'opacity-1'} ${className}`
             }
             style={{boxShadow: '#00000022 1px 1px 0px 0px'}}
@@ -358,7 +358,7 @@ function InfoPanel() {
                     title="Show/Hide the coordinates of points"
                     onClick={() => setExpanded((prev) => !prev)}
                     className="p-0.5"
-                ><InfoIcon stroke={2} /></ViewerButton>
+                ><InfoIcon stroke={1.5} /></ViewerButton>
             </div>
             {/* Generated text */}
             <PathInfo expanded={expanded} />
