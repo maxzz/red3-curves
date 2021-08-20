@@ -152,7 +152,7 @@ export type ColorsShema = {
 
 const SchemaLight: ColorsShema = {
     viewer: {
-        background: '#bb86003b',
+        background: '#ffffff91',
     }
 };
 

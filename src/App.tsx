@@ -57,12 +57,13 @@ function App() {
     return (
         <>
             <Background />
-            <div className="App h-screen flex flex-col items-center text-gray-900">
+            <div className="App h-screen flex flex-col items-center text-yellow-900">
                 <Header />
                 <main className="flex-1 w-full">
                     <LinePlayground />
                 </main>
                 {/* <OldLinePlayground /> */}
+                {/* TODO: Add footer */}
             </div>
         </>
     );
