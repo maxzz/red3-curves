@@ -2,17 +2,17 @@ import React from 'react';
 import { a, useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
 import { useUpdateAtom } from 'jotai/utils';
-import { activePointsAtom, allLinesSetAtom, colorScale, DarkShemaAtom, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, maxNPointsAtom, nActiveAtom, pointsAtom, SchemaAtom, setPointAtom } from '../store/store';
+import { activePointsAtom, allLinesSetAtom, colorScale, DarkShemaAtom, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, maxNPointsAtom, nActiveAtom, pointsAtom, SchemaAtom, setPointAtom } from '../../store/store';
 import { createCss } from '@stitches/react';
-import { CURVEINFO } from '../store/datum';
-import { clamp, withDigits } from '../utils/numbers';
+import { CURVEINFO } from '@/store/datum';
+import { clamp, withDigits } from '@/utils/numbers';
 import { useDrag, useHover } from 'react-use-gesture';
-import pointer from '../utils/pointer';
+import pointer from '@/utils/pointer';
 import Tooltip from 'react-tooltip';
-import useClipcoardCopy from '../hooks/useClipcoardCopy';
-import lineTypeUrl0 from '../assets/dashed-line0.svg';
-import lineTypeUrl1 from '../assets/dashed-line11.svg';
-import lineTypeUrl2 from '../assets/dashed-line2.svg';
+import useClipcoardCopy from '@/hooks/useClipcoardCopy';
+import lineTypeUrl0 from '@/assets/dashed-line0.svg';
+import lineTypeUrl1 from '@/assets/dashed-line11.svg';
+import lineTypeUrl2 from '@/assets/dashed-line2.svg';
 
 const { styled, css } = createCss({ // as usual this goes to stitches.config.ts
     media: {

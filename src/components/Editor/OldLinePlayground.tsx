@@ -1,10 +1,10 @@
 import React from 'react';
 import * as d3 from 'd3';
 import styles from './XOrgLinePlayground.module.scss';
-import CheckboxTw from './CheckboxTw';
+import CheckboxTw from '../Controls/CheckboxTw';
 import { useAtom } from 'jotai';
-import { inputDataAtom, nActiveAtom, pointsAtom } from '../store/store';
-import { CurveInfo, CURVEINFO as globalCURVEINFO } from '../store/datum';
+import { inputDataAtom, nActiveAtom, pointsAtom } from '../../store/store';
+import { CurveInfo, CURVEINFO as globalCURVEINFO } from '../../store/datum';
 
 type API = {
     setAll: (onOff: boolean) => void;
