@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh';
+import reactRefresh from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import url from '@rollup/plugin-url';
 import image from '@rollup/plugin-image';
