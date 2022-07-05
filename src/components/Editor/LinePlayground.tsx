@@ -1,16 +1,13 @@
 import React from 'react';
-import { useAtom } from 'jotai';
-import { useUpdateAtom } from 'jotai/utils';
-import { activePointsAtom, allLinesSetAtom, colorScale, DarkShemaAtom, DraggingPointAtom, lineCheckAtom, LineData, LineHintIdxAtom, linePathesAtom, linesAtom, maxNPointsAtom, nActiveAtom, pointsAtom, SchemaAtom, setPointAtom } from '../../store/store';
-import { createCss } from '@stitches/react';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { activePointsAtom, colorScale, DraggingPointAtom, linePathesAtom, linesAtom, SchemaAtom, setPointAtom } from '@/store/store';
 import { CURVEINFO } from '@/store/datum';
 import { clamp, withDigits } from '@/utils/numbers';
-import { useDrag, useHover } from 'react-use-gesture';
+import { useDrag } from 'react-use-gesture';
 import pointer from '@/utils/pointer';
-
-import { InfoIcon, InCanvasInfoPanel } from './InCanvasInfoPanel';
 import { css, styled } from '@/stitches.config';
-import { HintTooltip, Menu, MenuHeader } from './SideMenu';
+import { InCanvasInfoPanel } from './InCanvasInfoPanel';
+import { HintTooltip, SideMenu } from './SideMenu';
 
 const svgWidth = 600;
 const svgHeight = 600;
@@ -25,8 +22,8 @@ const dotStyles = css({
 
 function Dot(props: { idx: number, cx: number, cy: number; }) {
     const { idx, cx, cy } = props;
-    const setPoint = useUpdateAtom(setPointAtom);
-    const setDraggingPoint = useUpdateAtom(DraggingPointAtom);
+    const setPoint = useSetAtom(setPointAtom);
+    const setDraggingPoint = useSetAtom(DraggingPointAtom);
     const ref = React.useRef(null);
     const bind = useDrag(({ event, dragging }) => {
         let pt = pointer(event, ref.current).map(coord => +withDigits(coord, 0)) as [number, number];
@@ -35,15 +32,13 @@ function Dot(props: { idx: number, cx: number, cy: number; }) {
         setPoint({ idx, value: pt });
         setDraggingPoint(dragging ? idx : -1);
     });
-    return (
-        <>
-            <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={dotRadius - 2} />
-            <path
-                transform={`translate(${cx - 10.5}, ${cy - 10.5}) scale(1.2)`} fill="white" stroke="none"
-                d="M.6 3.7A7.2 7.2 0 014 .5 5 5 0 015.6 0l.3 2a7 7 0 00-2 1A6.3 6.3 0 002 4.4zm-.3.9A6.7 6.7 0 000 5.9a9.6 9.6 0 000 1.4h.6a6.3 6.3 0 011-2.1z"
-            />
-        </>
-    );
+    return (<>
+        <circle ref={ref} {...bind()} className={dotStyles()} cx={cx} cy={cy} r={dotRadius - 2} />
+        <path
+            transform={`translate(${cx - 10.5}, ${cy - 10.5}) scale(1.2)`} fill="white" stroke="none"
+            d="M.6 3.7A7.2 7.2 0 014 .5 5 5 0 015.6 0l.3 2a7 7 0 00-2 1A6.3 6.3 0 002 4.4zm-.3.9A6.7 6.7 0 000 5.9a9.6 9.6 0 000 1.4h.6a6.3 6.3 0 011-2.1z"
+        />
+    </>);
 }
 
 const dotTextStyles = css({
@@ -106,14 +101,20 @@ function LinePathes() {
 }
 
 function Viewer({ svgWidth, svgHeight, ...rest }: { svgWidth: number, svgHeight: number; } & React.HTMLAttributes<SVGSVGElement>) {
-    const [points] = useAtom(activePointsAtom);
+    const points = useAtomValue(activePointsAtom);
     return (
         <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} {...rest} >
             {/* <rect x={0} y={0} width={'100%'} height={'100%'} fill='red' /> */} {/* corners */}
             <g>
-                {points.map((pt, idx) => <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
+                {points.map((pt, idx) =>
+                    <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />
+                )}
+
                 <LinePathes />
-                {points.map((pt, idx) => <DotText idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />)}
+
+                {points.map((pt, idx) =>
+                    <DotText idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />
+                )}
             </g>
         </svg>
     );
@@ -126,15 +127,16 @@ const containerStyles = css({
 });
 
 function LinePlayground() {
-    const [{ viewer: { background } }] = useAtom(SchemaAtom);
+    const { viewer: { background } } = useAtomValue(SchemaAtom);
     return (
         <div className="select-none max-w-[600px] lg:max-w-max lg:w-auto mx-auto">
             {/* <div className="select-none max-w-full sm:max-w-max lg:w-auto mx-auto"> */}
+
             {/* Viewer and Controls */}
             <div className={`grid grid-cols-1 ${containerStyles()}`}>
-
                 {/* Viewer bg-yellow-100 lg:bg-purple-500 */}
                 {/* Viewer bg-[#bb86003b] lg:bg-purple-500 */}
+
                 <div className={`
                     relative w-full 
                     border-8 shadow-lg
@@ -151,14 +153,9 @@ function LinePlayground() {
                     </div>
                 </div>
 
-                {/* Menu */}
-                <div>
-                    <MenuHeader />
-                    <Menu />
-                </div>
+                <SideMenu />
             </div>
 
-            {/* Tooltip */}
             <HintTooltip />
         </div>
     );
