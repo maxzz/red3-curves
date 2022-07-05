@@ -3,7 +3,7 @@ import { atomWithDefault } from 'jotai/utils';
 import atomWithCallback from '../hooks/atomsX';
 import debounce from '../utils/debounce';
 import * as d3 from 'd3';
-import { InputData } from '../components/Editor/OldLinePlayground';
+import { InputData } from '../components/Editor/OnPureD3/OldLinePlayground';
 import { CURVEINFO } from './datum';
 
 namespace Storage {
