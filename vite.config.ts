@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -15,7 +16,7 @@ export default defineConfig({
         // },
         {
             ...url(
-                    {
+                {
                     include: ['**/*.svg'],
                     limit: 15000,
                 }
@@ -28,5 +29,10 @@ export default defineConfig({
             gzipSize: true,
             brotliSize: true,
         }),
-    ]
+    ],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src'),
+        },
+    },
 });
