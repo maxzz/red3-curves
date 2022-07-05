@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.css';
-import LinePlayground from './components/LinePlayground';
-import OldLinePlayground from './components/OldLinePlayground';
 import logoImage from './assets/app-logo.svg';
 import { css } from '@stitches/react';
 import HeroAttraction from './components/HeroAttraction';
 // import AppBackground from './assets/bkg/pattern.svg';
 import AppBackground from './assets/bkg/app-bkg.png'; // graphcoders-lil-fiber.png
+import { Section2_Main } from './components/Section2_Main';
 
 const HeroTitleStyles = css({
     $$borderColor: '#8e34eb7a', // '#8c01ff7a'
@@ -57,12 +56,11 @@ function App() {
     return (
         <>
             <Background />
+            
             <div className="App h-screen flex flex-col items-center text-yellow-900">
                 <Header />
-                <main className="flex-1 w-full">
-                    <LinePlayground />
-                </main>
-                {/* <OldLinePlayground /> */}
+
+                <Section2_Main />
 
                 <div className="m-4 mb-12 hidden lg:flex flex-col items-center text-sm">
                     <span>Created by Max Zakharzhevskiy</span>
