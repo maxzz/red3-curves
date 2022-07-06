@@ -84,7 +84,7 @@ function PathInfo({ expanded }: { expanded: boolean; }) {
     );
 }
 
-export function InCanvasInfoPanel() {
+export function EditorCanvasInfoPanel() {
     const [expanded, setExpanded] = React.useState(false);
     const [nActive, setNActive] = useAtom(nActiveAtom); // const setNActive = useUpdateAtom(nActiveAtom);
     const [maxNPoints] = useAtom(maxNPointsAtom);

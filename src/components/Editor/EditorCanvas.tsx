@@ -1,13 +1,12 @@
 import React from 'react';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { activePointsAtom, colorScale, DraggingPointAtom, linePathesAtom, linesAtom, SchemaAtom, setPointAtom } from '@/store/store';
 import { CURVEINFO } from '@/store/datum';
 import { clamp, withDigits } from '@/utils/numbers';
 import { useDrag } from 'react-use-gesture';
-import pointer from '@/utils/pointer';
+import { pointer } from '@/utils/pointer';
 import { css, styled } from '@/stitches.config';
-import { InCanvasInfoPanel } from './InCanvasInfoPanel';
-import { HintTooltip, SideMenu } from './SideMenu';
+import { EditorCanvasInfoPanel } from './EditorCanvasInfoPanel';
 
 const svgWidth = 600;
 const svgHeight = 600;
@@ -20,8 +19,7 @@ const dotStyles = css({
     cursor: 'move',
 });
 
-function Dot(props: { idx: number, cx: number, cy: number; }) {
-    const { idx, cx, cy } = props;
+function Dot({ idx, cx, cy }: { idx: number, cx: number, cy: number; }) {
     const setPoint = useSetAtom(setPointAtom);
     const setDraggingPoint = useSetAtom(DraggingPointAtom);
     const ref = React.useRef(null);
@@ -71,40 +69,29 @@ const LinePath = styled('path', {
     }
 });
 
-//stroke: #7cdb77; stroke-width: 7;
-
 function LinePathes() {
-    const [linePathes] = useAtom(linePathesAtom);
-    const [lines] = useAtom(linesAtom);
-    return (
-        <>
-            {lines.map((line) => (line.active &&
-                <React.Fragment key={line.idx}>
-                    {/* <LinePath
-                        //key={`shadow${line.idx}`}
-                        d={linePathes[line.idx]}
-                        lineStyle={CURVEINFO[line.idx].lineStyle}
-                        stroke={`red`}
-                        strokeWidth={7}
-                    /> */}
-                    <LinePath
-                        //key={line.idx}
-                        d={linePathes[line.idx]}
-                        lineStyle={CURVEINFO[line.idx].lineStyle}
-                        stroke={`${colorScale(CURVEINFO[line.idx].grpIdx)}cf`}
-                        strokeWidth={5}
-                    />
-                </React.Fragment>
-            ))}
-        </>
-    );
+    const linePathes = useAtomValue(linePathesAtom);
+    const lines = useAtomValue(linesAtom);
+    return (<>
+        {lines.map((line) => (line.active &&
+            <LinePath
+                d={linePathes[line.idx]}
+                lineStyle={CURVEINFO[line.idx].lineStyle}
+                stroke={`${colorScale(CURVEINFO[line.idx].grpIdx)}cf`}
+                strokeWidth={5}
+                key={line.idx}
+            />
+        ))}
+    </>);
 }
 
-function Viewer({ svgWidth, svgHeight, ...rest }: { svgWidth: number, svgHeight: number; } & React.HTMLAttributes<SVGSVGElement>) {
+function Canvas({ svgWidth, svgHeight, ...rest }: { svgWidth: number, svgHeight: number; } & React.HTMLAttributes<SVGSVGElement>) {
     const points = useAtomValue(activePointsAtom);
     return (
         <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} {...rest} >
-            {/* <rect x={0} y={0} width={'100%'} height={'100%'} fill='red' /> */} {/* corners */}
+
+            {/* <rect x={0} y={0} width={'100%'} height={'100%'} fill='red' />  */}
+
             <g>
                 {points.map((pt, idx) =>
                     <Dot idx={idx} cx={pt[0]} cy={pt[1]} key={idx} />
@@ -120,41 +107,29 @@ function Viewer({ svgWidth, svgHeight, ...rest }: { svgWidth: number, svgHeight:
     );
 }
 
-function LinePlayground() {
+export function CanvasContainer() {
     const { viewer: { background } } = useAtomValue(SchemaAtom);
-    return (
-        <div className="mx-auto max-w-[600px] lg:max-w-max lg:w-auto select-none">
-            {/* <div className="select-none max-w-full sm:max-w-max lg:w-auto mx-auto"> */}
+    return (<>
+        {/* Viewer bg-yellow-100 lg:bg-purple-500 */}
+        {/* Viewer bg-[#bb86003b] lg:bg-purple-500 */}
 
-            {/* Viewer and Controls */}
-            <div className={`grid grid-cols-1 lg:grid-cols-[minmax(604px,1fr)_max-content]`}>
-                {/* Viewer bg-yellow-100 lg:bg-purple-500 */}
-                {/* Viewer bg-[#bb86003b] lg:bg-purple-500 */}
-
-                <div className={`
+        <div className={`
                     relative w-full 
                     border-8 shadow-lg
                     before:block before:pb-[100%]
                     after:absolute after:inset-0 after:border after:border-gray-300 after:pointer-events-none`}
-                    style={{ backgroundColor: background }}
-                >
+            style={{ backgroundColor: background }}
+        >
 
-                    <div className="absolute inset-0">
-                        <Viewer svgWidth={svgWidth} svgHeight={svgHeight} className="w-full h-full" />
-                    </div>
-
-                    <div className="absolute left-2 bottom-2">
-                        <InCanvasInfoPanel />
-                    </div>
-                    
-                </div>
-
-                <SideMenu />
+            <div className="absolute inset-0">
+                <Canvas svgWidth={svgWidth} svgHeight={svgHeight} className="w-full h-full" />
             </div>
 
-            <HintTooltip />
+            <div className="absolute left-2 bottom-2">
+                <EditorCanvasInfoPanel />
+            </div>
+
         </div>
-    );
+    </>);
 }
 
-export default LinePlayground;

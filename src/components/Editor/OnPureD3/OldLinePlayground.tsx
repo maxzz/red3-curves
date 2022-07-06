@@ -295,12 +295,10 @@ function LineEditor() {
     );
 }
 
-function LinePlayground() {
+export function LinePlayground() {
     return (
         <div className="w-full">
             <LineEditor />
         </div>
     );
 }
-
-export default LinePlayground;
