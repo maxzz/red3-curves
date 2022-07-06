@@ -9,7 +9,7 @@ import lineTypeUrl1 from '@/assets/dashed-line11.svg';
 import lineTypeUrl2 from '@/assets/dashed-line2.svg';
 import { CURVEINFO } from '@/store/datum';
 import { useHover } from 'react-use-gesture';
-import { InfoIcon } from '../UI/UIIcons';
+import { IconInfo } from '../UI/UIIcons';
 
 const CheckboxBar = styled('div', {
     position: 'relative',
@@ -61,7 +61,7 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
         <label className="flex items-center cursor-pointer" key={idx}>
             {/* Info icon */}
             <div className="mr-1 h-6 w-6 text-gray-600" data-tip="" data-class={`${tooltipStyles()}`} {...hoverRef()}>
-                <InfoIcon />
+                <IconInfo />
             </div>
 
             <div className="flex items-center">

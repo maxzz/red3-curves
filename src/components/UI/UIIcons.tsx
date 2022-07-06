@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, SVGProps, } from "react";
 
-export function DarkLightIcon({ dark, title, ...rest }: { dark: boolean; } & SVGProps<SVGSVGElement> & HTMLAttributes<SVGSVGElement>) {
+export function IconDarkLight({ dark, title, ...rest }: { dark: boolean; } & SVGProps<SVGSVGElement> & HTMLAttributes<SVGSVGElement>) {
     return (dark
         ?
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" {...rest}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" {...rest}>
             {title && <title>{title}</title>}
             <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
         </svg>
@@ -15,11 +15,29 @@ export function DarkLightIcon({ dark, title, ...rest }: { dark: boolean; } & SVG
     );
 }
 
-export function InfoIcon({ title, ...rest }: SVGProps<SVGSVGElement> & HTMLAttributes<SVGSVGElement>) {
+export function IconInfo({ title, ...rest }: SVGProps<SVGSVGElement> & HTMLAttributes<SVGSVGElement>) {
     return (
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" {...rest}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" {...rest}>
             {title && <title>{title}</title>}
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+    );
+}
+
+export function IconCode({ title, ...rest }: SVGProps<SVGSVGElement> & HTMLAttributes<SVGSVGElement>) {
+    return (
+        <svg fill="currentColor" viewBox="0 0 256 256" {...rest}>
+            {title && <title>{title}</title>}
+            <path d="M69.1 94.1 28.5 128l40.6 33.9a7.9 7.9 0 0 1 1.1 11.2A8.1 8.1 0 0 1 64 176a7.7 7.7 0 0 1-5.1-1.9l-48-40a7.9 7.9 0 0 1 0-12.2l48-40a8 8 0 1 1 10.2 12.2Zm176 27.8-48-40a8 8 0 0 0-10.2 12.2l40.6 33.9-40.6 33.9A8 8 0 0 0 192 176a7.7 7.7 0 0 0 5.1-1.9l48-40a7.9 7.9 0 0 0 0-12.2Zm-82.4-89.4a7.9 7.9 0 0 0-10.2 4.8l-64 176a7.9 7.9 0 0 0 4.8 10.2 8.6 8.6 0 0 0 2.7.5 7.9 7.9 0 0 0 7.5-5.3l64-176a7.9 7.9 0 0 0-4.8-10.2Z" />
+        </svg>
+    );
+}
+
+export function IconCopy({ title, ...rest }: SVGProps<SVGSVGElement> & HTMLAttributes<SVGSVGElement>) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"  {...rest}>
+            {title && <title>{title}</title>}
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
         </svg>
     );
 }
