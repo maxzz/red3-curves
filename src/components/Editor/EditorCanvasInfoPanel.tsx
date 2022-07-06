@@ -38,24 +38,25 @@ function PointsPathInfoPanel(props: unknown, ref: React.Ref<HTMLSpanElement>) {
     const points = useAtomValue(pointsAtom); // TODO: use nActive to show italic
     const dragginPoint = useAtomValue(DraggingPointAtom);
     return (
-        <span ref={ref} className="flex-none">
+        <span ref={ref} className="flex-none inline-block">
             [{buildPointsText(points, dragginPoint)}]
         </span>
     );
-}
+} //TODO: to atom
 
 const CombinedPathPointsRef = React.forwardRef(PointsPathInfoPanel);
 
 function GeneratedPathInfo({ open }: { open: boolean; }) {
     const [copyResult, copy] = useClipcoardCopy();
     const textRef = React.useRef<HTMLSpanElement>(null);
-    const styles = useSpring({ width: open ? '100%' : '0%', opacity: open ? 1 : 0, config: { tension: 700 }, });
+    const styles = useSpring({ width: open ? '100%' : '0%', opacity: open ? 1 : 0, config: { tension: 700, duration: 3200 }, });
     return (
-        <a.div style={styles} className="relative ml-1 text-[0.65rem] flex items-center justify-between">
+        <a.div style={styles} className="relative ml-1 text-[0.65rem] flex items-center bg-red-500/50">
+            
             {/* <CombinedPathPointsRef ref={textRef} /> */}
-            <span ref={textRef} className="flex-none">
+            <a.span ref={textRef} className="flex-none whitespace-nowrap" style={{width: styles.width}}>
                 <CombinedPathPointsRef />
-            </span>
+            </a.span>
 
             <span
                 className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
