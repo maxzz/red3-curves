@@ -26,37 +26,28 @@ function Button({ children, className, disabled = false, title, onClick }: { chi
     );
 }
 
-function buildPointsText(points: LinePointData[], dragginPoint: number) {
-    return points.map((pt, idx) => {
-        const sep = idx === points.length - 1 ? '' : ',';
-        const s = JSON.stringify(pt);
-        return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
-    });
-}
-
-function PointsPathInfoPanel(props: unknown, ref: React.Ref<HTMLSpanElement>) {
+function BuildPointsText() {
     const points = useAtomValue(pointsAtom); // TODO: use nActive to show italic
     const dragginPoint = useAtomValue(DraggingPointAtom);
-    return (
-        <span ref={ref} className="flex-none inline-block">
-            [{buildPointsText(points, dragginPoint)}]
-        </span>
-    );
-} //TODO: to atom
-
-const CombinedPathPointsRef = React.forwardRef(PointsPathInfoPanel);
+    return (<>
+        [{points.map((pt, idx) => {
+            const sep = idx === points.length - 1 ? '' : ',';
+            const str = JSON.stringify(pt);
+            return idx === dragginPoint ? <b key={idx}>{str}{sep}</b> : <span key={idx}>{str}{sep}</span>;
+        })}]
+    </>);
+}
 
 function GeneratedPathInfo({ open }: { open: boolean; }) {
     const [copyResult, copy] = useClipcoardCopy();
     const textRef = React.useRef<HTMLSpanElement>(null);
-    const styles = useSpring({ width: open ? '100%' : '0%', opacity: open ? 1 : 0, config: { tension: 700, duration: 3200 }, });
+    const styles = useSpring({ width: open ? '100%' : '0%', opacity: open ? 1 : 0, config: { tension: 700 }, });
     return (
-        <a.div style={styles} className="relative ml-1 text-[0.65rem] flex items-center bg-red-500/50">
-            
-            {/* <CombinedPathPointsRef ref={textRef} /> */}
-            <a.span ref={textRef} className="flex-none whitespace-nowrap" style={{width: styles.width}}>
-                <CombinedPathPointsRef />
-            </a.span>
+        <a.div style={styles} className="relative ml-1 text-[0.65rem] flex items-center">
+
+            <span ref={textRef} className="flex-none">
+                <BuildPointsText />
+            </span>
 
             <span
                 className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
