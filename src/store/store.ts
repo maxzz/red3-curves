@@ -121,15 +121,16 @@ export const lineCheckAtom = atom(
     }
 );
 
-//export const allLinesAtom = atom(false);
 export const allLinesSetAtom = atom(
     (get) => {
+        // 0. are all checkboxes actime
         let arr = get(linesAtom);
-        return !arr.some(line => !line.active);
+        return !arr.some((line) => !line.active);
     },
     (get, set, value: boolean) => {
+        // 0. set value to all checkboxes
         let arr = get(linesAtom);
-        arr.forEach(line => line.active = value);
+        arr.forEach((line) => line.active = value);
         set(linesAtom, [...arr]);
     }
 );
