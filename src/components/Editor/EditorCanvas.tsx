@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { activePointsAtom, colorScale, DraggingPointAtom, linePathesAtom, linesAtom, SchemaAtom, setPointAtom } from '@/store/store';
+import { activePointsAtom, colorScale, DraggingPointAtom, linePathesAtom, lineStatesAtom, SchemaAtom, setPointAtom } from '@/store/store';
 import { CURVEINFO } from '@/store/datum';
 import { clamp, withDigits } from '@/utils/numbers';
 import { useDrag } from 'react-use-gesture';
@@ -71,9 +71,9 @@ const LinePath = styled('path', {
 
 function LinePathes() {
     const linePathes = useAtomValue(linePathesAtom);
-    const lines = useAtomValue(linesAtom);
+    const lineStates = useAtomValue(lineStatesAtom);
     return (<>
-        {lines.map((line) => (line.active &&
+        {lineStates.map((line) => (line.active &&
             <LinePath
                 d={linePathes[line.idx]}
                 lineStyle={CURVEINFO[line.idx].lineStyle}
