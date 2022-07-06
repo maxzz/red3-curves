@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAtom, useAtomValue } from 'jotai';
-import { DarkShemaAtom, DraggingPointAtom, maxNPointsAtom, nActiveAtom, pointsAtom } from '@/store/store';
+import { DarkShemaAtom, DraggingPointAtom, LinePointData, maxNPointsAtom, nActiveAtom, pointsAtom } from '@/store/store';
 import { clamp } from '@/utils/numbers';
 import { a, useSpring } from '@react-spring/web';
 import useClipcoardCopy from '@/hooks/useClipcoardCopy';
@@ -26,30 +26,36 @@ function Button({ children, className, disabled = false, title, onClick }: { chi
     );
 }
 
-function CombinedPathPoints(props: unknown, ref: React.Ref<HTMLSpanElement>) {
-    const dragginPoint = useAtomValue(DraggingPointAtom);
-    const points = useAtomValue(pointsAtom); // TODO: use nActive to show italic
-    const text = points.map((pt, idx) => {
+function buildPointsText(points: LinePointData[], dragginPoint: number) {
+    return points.map((pt, idx) => {
         const sep = idx === points.length - 1 ? '' : ',';
         const s = JSON.stringify(pt);
         return idx === dragginPoint ? <b key={idx}>{s}{sep}</b> : <span key={idx}>{s}{sep}</span>;
     });
+}
+
+function PointsPathInfoPanel(props: unknown, ref: React.Ref<HTMLSpanElement>) {
+    const points = useAtomValue(pointsAtom); // TODO: use nActive to show italic
+    const dragginPoint = useAtomValue(DraggingPointAtom);
     return (
         <span ref={ref} className="flex-none">
-            [{text}]
+            [{buildPointsText(points, dragginPoint)}]
         </span>
     );
 }
 
-const CombinedPathPointsRef = React.forwardRef(CombinedPathPoints);
+const CombinedPathPointsRef = React.forwardRef(PointsPathInfoPanel);
 
-function GeneratedPathInfo({ expanded }: { expanded: boolean; }) {
+function GeneratedPathInfo({ open }: { open: boolean; }) {
     const [copyResult, copy] = useClipcoardCopy();
     const textRef = React.useRef<HTMLSpanElement>(null);
-    const styles = useSpring({ width: expanded ? '100%' : '0%', opacity: expanded ? 1 : 0, config: { tension: 700 }, });
+    const styles = useSpring({ width: open ? '100%' : '0%', opacity: open ? 1 : 0, config: { tension: 700 }, });
     return (
         <a.div style={styles} className="relative ml-1 text-[0.65rem] flex items-center justify-between">
-            <CombinedPathPointsRef ref={textRef} />
+            {/* <CombinedPathPointsRef ref={textRef} /> */}
+            <span ref={textRef} className="flex-none">
+                <CombinedPathPointsRef />
+            </span>
 
             <span
                 className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
@@ -71,10 +77,10 @@ function GeneratedPathInfo({ expanded }: { expanded: boolean; }) {
 }
 
 export function EditorCanvasInfoPanel() {
-    const [expanded, setExpanded] = React.useState(false);
-    const [nActive, setNActive] = useAtom(nActiveAtom); // const setNActive = useUpdateAtom(nActiveAtom);
-    const [maxNPoints] = useAtom(maxNPointsAtom);
+    const [nActive, setNActive] = useAtom(nActiveAtom);
     const [darkMode, setDarkMode] = useAtom(DarkShemaAtom);
+    const [showInfo, setShowInfo] = React.useState(false);
+    const maxNPoints = useAtomValue(maxNPointsAtom);
     return (
         <div className="flex items-center">
             {/* Buttons */}
@@ -105,12 +111,12 @@ export function EditorCanvasInfoPanel() {
                 {/* Info bar */}
                 <Button
                     title="Show/Hide the coordinates of points"
-                    onClick={() => setExpanded((prev) => !prev)}
+                    onClick={() => setShowInfo((prev) => !prev)}
                     className="p-0.5"
                 ><IconInfo strokeWidth={1.2} /></Button>
             </div>
 
-            <GeneratedPathInfo expanded={expanded} />
+            <GeneratedPathInfo open={showInfo} />
         </div>
     );
 }
