@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { allLinesSetAtom, colorScale, lineCheckAtom, LineData, LineHintIdxAtom, linesAtom } from '@/store/store';
+import { allLinesSetAtom, colorScale, lineStateAtom, LineState, LineHintIdxAtom, lineStatesAtom } from '@/store/store';
 import { a, useSpring } from '@react-spring/web';
 import { css, styled } from '@/stitches.config';
 import Tooltip from 'react-tooltip';
@@ -47,16 +47,14 @@ const CheckboxBar = styled('div', {
     },
 });
 
-function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
-    const [value, setValue] = useAtom(lineCheckAtom);
-    const checked = value(idx);
-    const curve = CURVEINFO[line.idx];
-
-    const { width } = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
-
+function MenuCheckboxRow({ lineState: { active: checked }, idx }: { lineState: LineState, idx: number; }) {
+    const setLineState = useSetAtom(lineStateAtom);
     const setHint = useSetAtom(LineHintIdxAtom);
     const hoverRef = useHover(({ hovering: e }) => setHint(e ? idx : -1));
 
+    const { width } = useSpring({ to: { width: checked ? 0 : 48 }, config: { tension: 500 } });
+
+    const curve = CURVEINFO[idx];
     return (
         <label className="flex items-center cursor-pointer" key={idx}>
             {/* Info icon */}
@@ -75,8 +73,8 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                         focus:outline-none
                         z-10"
                     type="checkbox"
-                    checked={value(idx)}
-                    onChange={(e) => setValue({ idx, value: e.target.checked })}
+                    checked={checked}
+                    onChange={(e) => setLineState({ idx, active: e.target.checked })}
                 />
 
                 {/* Bar */}
@@ -84,7 +82,7 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
                     <CheckboxBar
                         className="-ml-6 w-16 h-7 rounded"
                         style={{ '--color': colorScale(curve.grpIdx) } as any}
-                        lineStyle={value(idx) ? curve.lineStyle : -1}
+                        lineStyle={checked ? curve.lineStyle : -1}
                     />
                 </a.div>
 
@@ -98,11 +96,11 @@ function MenuCheckboxRow({ line, idx }: { line: LineData, idx: number; }) {
 }
 
 function Menu() {
-    const [lines] = useAtom(linesAtom);
+    const lineStates = useAtomValue(lineStatesAtom);
     return (
         <div className="p-2 space-y-1 flex flex-col text-sm select-none">
-            {lines.map((line, idx) =>
-                <MenuCheckboxRow line={line} idx={idx} key={idx} />
+            {lineStates.map((lineState, idx) =>
+                <MenuCheckboxRow lineState={lineState} idx={idx} key={idx} />
             )}
         </div>
     );

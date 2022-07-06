@@ -6,12 +6,19 @@ import * as d3 from 'd3';
 import { InputData } from '../components/Editor/OnPureD3/OldLinePlayground';
 import { CURVEINFO } from './datum';
 
+export type Point = [x: number, y: number];
+
+export type LineState = {
+    idx: number;        // index in global CURVEINFO.
+    active: boolean;    // true if line activated.
+};
+
 namespace Storage {
     const KEY = 'red3-curves';
 
     type Store = {
         points: [number, number][]; // control points coordinates as [x, y][]
-        active: LineData[];
+        active: LineState[];
         nActive: number; // Number of active points
         dark: boolean; // dark/light schema
     };
@@ -39,7 +46,7 @@ namespace Storage {
     export const saveDebounced = debounce(function _save(get: Getter) {
         let newStore: Store = {
             points: get(pointsAtom),
-            active: get(linesAtom),
+            active: get(lineStatesAtom),
             nActive: get(nActiveAtom),
             dark: get(DarkShemaAtom),
         };
@@ -47,15 +54,14 @@ namespace Storage {
     }, 1000);
 
     export const save = ({ get }: { get: Getter; }) => saveDebounced(get);
-}
 
-export type LinePointData = [number, number];
+} //namespace Storage
 
-export const pointsAtom = atomWithCallback<LinePointData[]>(Storage.initialData.points, Storage.save);
+export const pointsAtom = atomWithCallback<Point[]>(Storage.initialData.points, Storage.save);
 
 export const setPointAtom = atom(
     null,
-    (get, set, { idx, value }: { idx: number; value: [number, number]; }) => {
+    (get, set, { idx, value }: { idx: number; value: Point; }) => {
         let pts = get(pointsAtom);
         pts[idx] = value;
         set(pointsAtom, [...pts]);
@@ -64,21 +70,23 @@ export const setPointAtom = atom(
 
 // Active points
 
-export const activePointsAtom = atom<LinePointData[]>(
+export const nActiveAtom = atomWithCallback(Storage.initialData.nActive, Storage.save);
+
+export const activePointsAtom = atom<Point[]>(
     (get) => {
+        // 0. get active points as first N points.
         return get(pointsAtom).slice(0, get(nActiveAtom));
     }
 );
 
 export const maxNPointsAtom = atom(
     (get) => {
+        // 0. get max possible points
         return get(pointsAtom).length;
     }
 );
 
-export const nActiveAtom = atomWithCallback(Storage.initialData.nActive, Storage.save);
-
-// Old editor fallback
+// Old editor fallback i.e. for old editor return all as a single object
 
 export const inputDataAtom = atom<InputData>(
     get => ({
@@ -89,7 +97,7 @@ export const inputDataAtom = atom<InputData>(
 
 // Line pathes generation
 
-function generatePathes(points: LinePointData[], numActivePoints: number): string[] {
+function generatePathes(points: Point[], numActivePoints: number): string[] {
     const lineGenerator = d3.line();
     const pts = points.slice(0, numActivePoints) as any as [number, number][]; // <any> cast to remove possible trailing data from type.
 
@@ -99,39 +107,36 @@ function generatePathes(points: LinePointData[], numActivePoints: number): strin
     });
 }
 
-export const linePathesAtom = atomWithDefault<string[]>((get) => {
-    return generatePathes(get(pointsAtom), get(nActiveAtom));
-});
+export const linePathesAtom = atomWithDefault<string[]>(
+    (get) => {
+        return generatePathes(get(pointsAtom), get(nActiveAtom));
+    }
+);
 
-// Checkboxes. Lines activation
+// Checkbox state for each line
 
-export type LineData = {
-    idx: number;        // index in global CURVEINFO.
-    active: boolean;    // true if line activated.
-};
+export const lineStatesAtom = atomWithCallback<LineState[]>(Storage.initialData.active, Storage.save);
 
-export const linesAtom = atomWithCallback<LineData[]>(Storage.initialData.active, Storage.save);
-
-export const lineCheckAtom = atom(
-    (get) => (idx: number) => get(linesAtom)[idx].active,
-    (get, set, { idx, value }: { idx: number, value: boolean; }) => {
-        let arr = get(linesAtom);
-        arr[idx].active = value;
-        set(linesAtom, [...arr]);
+export const lineStateAtom = atom(
+    (get) => (idx: number) => get(lineStatesAtom)[idx].active,
+    (get, set, { idx, active }: LineState) => {
+        let arr = get(lineStatesAtom);
+        arr[idx].active = active;
+        set(lineStatesAtom, [...arr]);
     }
 );
 
 export const allLinesSetAtom = atom(
     (get) => {
         // 0. are all checkboxes actime
-        let arr = get(linesAtom);
+        let arr = get(lineStatesAtom);
         return !arr.some((line) => !line.active);
     },
     (get, set, value: boolean) => {
         // 0. set value to all checkboxes
-        let arr = get(linesAtom);
+        let arr = get(lineStatesAtom);
         arr.forEach((line) => line.active = value);
-        set(linesAtom, [...arr]);
+        set(lineStatesAtom, [...arr]);
     }
 );
 
