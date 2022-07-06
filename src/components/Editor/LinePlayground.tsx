@@ -120,20 +120,14 @@ function Viewer({ svgWidth, svgHeight, ...rest }: { svgWidth: number, svgHeight:
     );
 }
 
-const containerStyles = css({
-    '@bp3': {
-        gridTemplateColumns: 'minmax(604px, 1fr) max-content'
-    },
-});
-
 function LinePlayground() {
     const { viewer: { background } } = useAtomValue(SchemaAtom);
     return (
-        <div className="select-none max-w-[600px] lg:max-w-max lg:w-auto mx-auto">
+        <div className="mx-auto max-w-[600px] lg:max-w-max lg:w-auto select-none">
             {/* <div className="select-none max-w-full sm:max-w-max lg:w-auto mx-auto"> */}
 
             {/* Viewer and Controls */}
-            <div className={`grid grid-cols-1 ${containerStyles()}`}>
+            <div className={`grid grid-cols-1 lg:grid-cols-[minmax(604px,1fr)_max-content]`}>
                 {/* Viewer bg-yellow-100 lg:bg-purple-500 */}
                 {/* Viewer bg-[#bb86003b] lg:bg-purple-500 */}
 
@@ -144,6 +138,7 @@ function LinePlayground() {
                     after:absolute after:inset-0 after:border after:border-gray-300 after:pointer-events-none`}
                     style={{ backgroundColor: background }}
                 >
+
                     <div className="absolute inset-0">
                         <Viewer svgWidth={svgWidth} svgHeight={svgHeight} className="w-full h-full" />
                     </div>
@@ -151,6 +146,7 @@ function LinePlayground() {
                     <div className="absolute left-2 bottom-2">
                         <InCanvasInfoPanel />
                     </div>
+                    
                 </div>
 
                 <SideMenu />

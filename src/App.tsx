@@ -14,16 +14,16 @@ function Background() {
     );
 }
 
-function App() {
+export function App() {
     return (<>
         <Background />
 
-        <div className="App h-screen flex flex-col items-center text-yellow-900">
+        <div className="App h-screen flex flex-col items-center text-yellow-900 debug-screens">
             <Section1_Header />
-            <Section2_Main />
+            <main className="flex-1 w-full">
+                <Section2_Main />
+            </main>
             <Section3_Footer />
         </div>
     </>);
 }
-
-export default App;
