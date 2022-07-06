@@ -9,7 +9,7 @@ import lineTypeUrl1 from '@/assets/dashed-line11.svg';
 import lineTypeUrl2 from '@/assets/dashed-line2.svg';
 import { CURVEINFO } from '@/store/datum';
 import { useHover } from 'react-use-gesture';
-import { InfoIcon } from '../Editor/EditorCanvasInfoPanel';
+import { InfoIcon } from '../UI/UIIcons';
 
 const CheckboxBar = styled('div', {
     position: 'relative',

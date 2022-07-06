@@ -4,27 +4,7 @@ import { DarkShemaAtom, DraggingPointAtom, maxNPointsAtom, nActiveAtom, pointsAt
 import { clamp } from '@/utils/numbers';
 import { a, useSpring } from '@react-spring/web';
 import useClipcoardCopy from '@/hooks/useClipcoardCopy';
-
-function DarkLightIcon({ dark }: { dark: boolean; }) {
-    return (dark
-        ?
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-        :
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-    );
-}
-
-export function InfoIcon({stroke = 1}: {stroke?: number}) {
-    return (
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={stroke} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-    );
-}
+import { DarkLightIcon, InfoIcon } from '../UI/UIIcons';
 
 function ViewerButton({ children, className, disabled = false, title, onClick }: { children: React.ReactNode; className?: string; disabled?: boolean, title: string, onClick: () => void; }) {
     return (
@@ -59,28 +39,26 @@ function CombinedPathPoints(props: any, ref: React.Ref<HTMLSpanElement>) {
 
 const CombinedPathPointsRef = React.forwardRef(CombinedPathPoints);
 
-function PathInfo({ expanded }: { expanded: boolean; }) {
+function GeneratedPathInfo({ expanded }: { expanded: boolean; }) {
     const { width, opacity } = useSpring({ width: expanded ? '100%' : '0%', opacity: expanded ? 1 : 0, config: { tension: 700 }, });
     const textRef = React.useRef<HTMLSpanElement>(null);
     const [copyResult, copy] = useClipcoardCopy();
     return (
-        <div className="">
-            <a.div style={{ width, opacity }} className="relative ml-1 text-[0.65rem] flex items-center justify-between">
-                <CombinedPathPointsRef ref={textRef} />
-                <span
-                    className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
-                    title="Copy the coordinates of points to clipboard"
-                    onClick={async () => copy(textRef.current?.innerText)}
-                >
-                    <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-                    </svg>
-                </span>
-                {copyResult.message && <div className="absolute right-5 -top-1/2">
-                    <div className={`p-2 rounded shadow-md ${copyResult.error ? 'bg-[red] text-white' : 'bg-[green] text-white'}`}>{copyResult.error ? 'Copy failed (check console)' : 'Copied'}</div>
-                </div>}
-            </a.div>
-        </div>
+        <a.div style={{ width, opacity }} className="relative ml-1 text-[0.65rem] flex items-center justify-between">
+            <CombinedPathPointsRef ref={textRef} />
+            <span
+                className="ml-1 h-4 w-4 text-green-900 bg-green-200 border border-green-600 rounded shadow cursor-pointer select-none"
+                title="Copy the coordinates of points to clipboard"
+                onClick={async () => copy(textRef.current?.innerText)}
+            >
+                <svg className="" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                </svg>
+            </span>
+            {copyResult.message && <div className="absolute right-5 -top-1/2">
+                <div className={`p-2 rounded shadow-md ${copyResult.error ? 'bg-[red] text-white' : 'bg-[green] text-white'}`}>{copyResult.error ? 'Copy failed (check console)' : 'Copied'}</div>
+            </div>}
+        </a.div>
     );
 }
 
@@ -121,10 +99,10 @@ export function EditorCanvasInfoPanel() {
                     title="Show/Hide the coordinates of points"
                     onClick={() => setExpanded((prev) => !prev)}
                     className="p-0.5"
-                ><InfoIcon stroke={1.5} /></ViewerButton>
+                ><InfoIcon strokeWidth={1.2} /></ViewerButton>
             </div>
-            {/* Generated text */}
-            <PathInfo expanded={expanded} />
+
+            <GeneratedPathInfo expanded={expanded} />
         </div>
     );
 }

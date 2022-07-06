@@ -84,7 +84,7 @@ const FancyDoodle = doodle`
 //   background: @pick(${background}, pink);
 // `;
 
-export default function HeroAttraction() {
+export function HeroAttraction() {
     return (
         <div className="w-64 h-64">
             <FancyDoodle />
