@@ -1,6 +1,6 @@
 import { atom, Getter } from 'jotai';
 import { atomWithDefault } from 'jotai/utils';
-import atomWithCallback from '../hooks/atomsX';
+import { atomWithCallback } from '../hooks/atomsX';
 import debounce from '../utils/debounce';
 import * as d3 from 'd3';
 import { InputData } from '../components/Editor/OnPureD3/OldLinePlayground';
@@ -36,7 +36,7 @@ namespace Storage {
     }
     load();
 
-    export const save = debounce(function _save(get: Getter) {
+    export const saveDebounced = debounce(function _save(get: Getter) {
         let newStore: Store = {
             points: get(pointsAtom),
             active: get(linesAtom),
@@ -45,11 +45,13 @@ namespace Storage {
         };
         localStorage.setItem(KEY, JSON.stringify(newStore));
     }, 1000);
+
+    export const save = ({ get }: { get: Getter; }) => saveDebounced(get);
 }
 
 export type LinePointData = [number, number];
 
-export const pointsAtom = atomWithCallback<LinePointData[]>(Storage.initialData.points, (get, _) => Storage.save(get));
+export const pointsAtom = atomWithCallback<LinePointData[]>(Storage.initialData.points, Storage.save);
 
 export const setPointAtom = atom(
     null,
@@ -74,7 +76,7 @@ export const maxNPointsAtom = atom(
     }
 );
 
-export const nActiveAtom = atomWithCallback(Storage.initialData.nActive, (get, _) => Storage.save(get));
+export const nActiveAtom = atomWithCallback(Storage.initialData.nActive, Storage.save);
 
 // Old editor fallback
 
@@ -108,7 +110,7 @@ export type LineData = {
     active: boolean;    // true if line activated.
 };
 
-export const linesAtom = atomWithCallback<LineData[]>(Storage.initialData.active, (get, _) => Storage.save(get));
+export const linesAtom = atomWithCallback<LineData[]>(Storage.initialData.active, Storage.save);
 
 export const lineCheckAtom = atom(
     (get) => (idx: number) => get(linesAtom)[idx].active,
@@ -142,7 +144,7 @@ export const DraggingPointAtom = atom(-1);
 
 // Colors
 
-export const DarkShemaAtom = atomWithCallback(Storage.initialData.dark, (get, _) => Storage.save(get));
+export const DarkShemaAtom = atomWithCallback(Storage.initialData.dark, Storage.save);
 
 export type ColorsShema = {
     viewer: {

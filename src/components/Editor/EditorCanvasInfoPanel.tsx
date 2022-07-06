@@ -1,10 +1,10 @@
 import React from 'react';
 import { useAtom, useAtomValue } from 'jotai';
-import { DarkShemaAtom, DraggingPointAtom, LinePointData, maxNPointsAtom, nActiveAtom, pointsAtom } from '@/store/store';
-import { clamp } from '@/utils/numbers';
+import { DarkShemaAtom, DraggingPointAtom, maxNPointsAtom, nActiveAtom, pointsAtom } from '@/store/store';
 import { a, useSpring } from '@react-spring/web';
-import useClipcoardCopy from '@/hooks/useClipcoardCopy';
 import { IconDarkLight, IconCopy, IconInfo } from '../UI/UIIcons';
+import useClipcoardCopy from '@/hooks/useClipcoardCopy';
+import { clamp } from '@/utils/numbers';
 import { classNames } from '@/utils/classnames';
 
 function Button({ children, className, disabled = false, title, onClick }: { children: React.ReactNode; className?: string; disabled?: boolean, title: string, onClick: () => void; }) {
